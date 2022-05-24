@@ -17,14 +17,13 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
-          <Route path='/' element={<App />}>
-            <Route path='login' element={<Page.Login />} />
-            <Route path='auth' element={<Page.Auth />} />
-            <Route path='create' element={<Page.Create />} />
-            <Route path='claims' element={<Page.Claims />}>
-              <Route path=':claimId' element={<Page.Claim />} />
-            </Route>
+          <Route path='login' element={<Page.Login />} />
+          <Route path='auth' element={<Page.Auth />} />
+          <Route path='create' element={<Page.Create />} />
+          <Route path='claims' element={<Page.Claims />}>
+            <Route path=':claimId' element={<Page.Claim />} />
           </Route>
+          <Route path='/' element={<App />} />
         </Routes>
       </Provider>
     </BrowserRouter>
