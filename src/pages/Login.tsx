@@ -1,10 +1,10 @@
-import { FC, FormEvent, FormEventHandler, useState, MouseEvent } from "react"
-import { Link } from "react-router-dom"
+import { FC, FormEvent, FormEventHandler, useState, MouseEvent, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
 import { login } from "../app/store"
-import { useAppDispatch } from "../app/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 
 const emailSvg = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
     <use xlinkHref="/icon-sprite.svg#mail"></use>
@@ -22,7 +22,15 @@ export const Login: FC = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const user = useAppSelector(state => state.login.user)
     const dispatch = useAppDispatch()
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user.token && !user.error)
+            navigate('/claims')
+    }, [user])
 
     const inputHandler: FormEventHandler<HTMLInputElement> = (ev: FormEvent<HTMLInputElement>) => setEmail(ev.currentTarget.value)
     const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
