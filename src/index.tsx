@@ -34,3 +34,8 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
+
+//TODO: использовать SVG sprite
+//TODO: разработать таблицу с сортировкой по колонкам. входные параметры - данные из стейта
+//TODO: использовать react-responsive для изменения строки таблицы в карточку на низких разрешения, согласно макета
+//TODO: как передавать пароль в POST запросе?
