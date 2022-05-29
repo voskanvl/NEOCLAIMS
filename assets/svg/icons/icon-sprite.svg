@@ -1,4 +1,12 @@
 <svg display="none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="archive" viewBox="0 0 40 40">
+        <g>
+            <path d="M29 16V29H11V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M31 11H9V16H31V11Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M18 20H22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+    </symbol>
     <symbol id="bell" viewBox="0 0 40 40">
         <g>
             <path
@@ -12,6 +20,26 @@
                 d="M11 17L20 10L29 17V28C29 28.5304 28.7893 29.0391 28.4142 29.4142C28.0391 29.7893 27.5304 30 27 30H13C12.4696 30 11.9609 29.7893 11.5858 29.4142C11.2107 29.0391 11 28.5304 11 28V17Z"
                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M17 30V20H23V30" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+    </symbol>
+    <symbol id="lock" viewBox="0 0 40 40">
+        <g>
+            <path
+                d="M27 19H13C11.8954 19 11 19.8954 11 21V28C11 29.1046 11.8954 30 13 30H27C28.1046 30 29 29.1046 29 28V21C29 19.8954 28.1046 19 27 19Z"
+                stroke="#ADADAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+                d="M15 19V15C15 13.6739 15.5268 12.4021 16.4645 11.4645C17.4021 10.5268 18.6739 10 20 10C21.3261 10 22.5979 10.5268 23.5355 11.4645C24.4732 12.4021 25 13.6739 25 15V19"
+                stroke="#ADADAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+        </g>
+    </symbol>
+    <symbol id="mail" viewBox="0 0 40 40">
+        <g>
+            <path
+                d="M12 12H28C29.1 12 30 12.9 30 14V26C30 27.1 29.1 28 28 28H12C10.9 28 10 27.1 10 26V14C10 12.9 10.9 12 12 12Z"
+                stroke="#ADADAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M30 14L20 21L10 14" stroke="#ADADAD" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
         </g>
     </symbol>
     <symbol id="plus" viewBox="0 0 40 40">
