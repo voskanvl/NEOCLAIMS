@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
-import { login } from "../app/store"
+import { login } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 
 const emailSvg = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
