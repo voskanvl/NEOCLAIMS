@@ -1,8 +1,10 @@
-import { FC, FormEvent, FormEventHandler, useState } from "react"
+import { FC, FormEvent, FormEventHandler, useState, MouseEvent } from "react"
 import { Link } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
+import { login } from "../app/store"
+import { useAppDispatch } from "../app/hooks"
 
 const emailSvg = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
     <use xlinkHref="/icon-sprite.svg#mail"></use>
@@ -18,8 +20,16 @@ const sloganSvgFooter = <svg width="59.44" height="58" viewBox="0 0 165 161" fil
 </svg>
 export const Login: FC = (props) => {
     const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const dispatch = useAppDispatch()
+
     const inputHandler: FormEventHandler<HTMLInputElement> = (ev: FormEvent<HTMLInputElement>) => setEmail(ev.currentTarget.value)
-    const handlerClick = () => console.log('click')
+    const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
+        ev.preventDefault()
+        console.log(email, password)
+        dispatch(login({ email, password }))
+    }
     return <div className={style.screen}>
         <main className={style.layout}>
             <section className={style.layout__left}>
@@ -29,8 +39,8 @@ export const Login: FC = (props) => {
                 <form className={style.panel}>
                     <div>{sloganSvg}</div>
                     <div>{email}</div>
-                    <Input svg={emailSvg} label={"e-mail"} placeholder={"Type your e-mail"} onInput={inputHandler} />
-                    <Input svg={sealSvg} label={"password"} placeholder={"Type your password"} />
+                    <Input svg={emailSvg} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
+                    <Input svg={sealSvg} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} />
                     <div className={style.checkbox}>
                         <div className={style.checkbox__decorator}>
                             <input className={style.checkbox__input} type="checkbox" />
