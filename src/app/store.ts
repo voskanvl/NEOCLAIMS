@@ -8,6 +8,17 @@ import {
 } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 
+export type TUser = {
+    token: string;
+    role: {
+        name: string;
+        slug: string;
+    };
+    user_id: string;
+    fullName: string;
+    email: string;
+};
+
 export const login: AsyncThunk<any, { email: string; password: string }, {}> =
     createAsyncThunk("user/login", async (props, thunkAPI) => {
         const { email, password } = props;
@@ -24,11 +35,24 @@ export const login: AsyncThunk<any, { email: string; password: string }, {}> =
 
 const loginSlice = createSlice({
     name: "user",
-    initialState: {},
+    initialState: {
+        user: {
+            token: "",
+            role: {
+                name: "",
+                slug: "",
+            },
+            user_id: "",
+            fullName: "",
+            email: "",
+        },
+    },
     reducers: {},
     extraReducers: builder => {
         builder.addCase(login.fulfilled, (state, action) => {
-            console.log(action);
+            console.log("🚀 ~ action", action);
+            state.user = action.payload;
+            localStorage.setItem("token", action.payload.token);
         });
     },
 });
