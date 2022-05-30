@@ -13,7 +13,7 @@ export const Claims: FC = (props) => {
     }, [])
     return <>
         <div className={style.table}>
-            <div className={style.row}>
+            <div className={`${style.row} ${style.head}`}>
                 <div className={`${style.table__button} ${style.table__button_title}`}>Title</div>
                 <div className={`${style.table__button} ${style.table__button_createAt}`}>Created</div>
                 <div className={`${style.table__button} ${style.table__button_type}`}>Type</div>
@@ -22,7 +22,7 @@ export const Claims: FC = (props) => {
             </div>
             {claims.map((el: TClaim) => <div key={el._id} className={style.row}>
                 <div>{el.title}</div>
-                <div>{el.createdAt.toLocaleString()}</div>
+                <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
                 <div>{el.type.name}</div>
                 <div>{el.status.name}</div>
                 <div><Link to={`/claim/${el._id}`}>Browse</Link></div>

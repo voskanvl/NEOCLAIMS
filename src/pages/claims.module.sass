@@ -1,4 +1,7 @@
 .row
-    display: flex
-    align-items: center
-    justify-content: space-between
+    display: grid
+    grid-template-columns: repeat(5,1fr)
+    place-items: center start
+    height: 48px
+    &:not(.head):hover
+        background: #E1F3EA
