@@ -1,4 +1,4 @@
-import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type TUser = {
     token: string;
@@ -55,7 +55,8 @@ export const loginSlice = createSlice({
                 state.user.error = action.payload;
             } else {
                 state.user = action.payload;
-                localStorage.setItem("token", action.payload.token);
+                if (action.payload.token)
+                    localStorage.setItem("token", action.payload.token);
             }
         });
     },
