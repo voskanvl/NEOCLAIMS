@@ -3,14 +3,13 @@ import logo from './logo.svg'
 import { Counter } from './features/counter/Counter'
 import './App.css'
 import { Link, useNavigate } from 'react-router-dom'
+import { isTokenCorrect } from './helpers/isTokenCorrect'
 
 function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const isToken = localStorage.getItem('token')
-    console.log("🚀 ~ isToken", isToken)
-    if (isToken) {
+    if (isTokenCorrect()) {
       navigate("/claims")
     } else {
       navigate("/login")

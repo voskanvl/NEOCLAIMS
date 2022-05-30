@@ -1,16 +1,22 @@
 import { FC, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { claimsFetch } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
 
 export const Claims: FC = (props) => {
     const claims = useAppSelector(state => state.claims.claims)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     useEffect(() => {
-        if (localStorage.getItem('token')) dispatch(claimsFetch())
-    }, [])
+        if (isTokenCorrect()) {
+            dispatch(claimsFetch())
+        } else {
+            navigate("/")
+        }
+    }, [dispatch, navigate])
     return <>
         <div className={style.table}>
             <div className={`${style.row} ${style.head}`}>

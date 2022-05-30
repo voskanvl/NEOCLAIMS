@@ -55,8 +55,11 @@ export const loginSlice = createSlice({
                 state.user.error = action.payload;
             } else {
                 state.user = action.payload;
-                if (action.payload.token)
+                if (action.payload.token) {
+                    //сохраняем токен и время получения
                     localStorage.setItem("token", action.payload.token);
+                    localStorage.setItem("created", Date.now().toString());
+                }
             }
         });
     },
