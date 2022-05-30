@@ -1,17 +1,23 @@
-export type TOid = { $oid: string };
+// export type TOid = { $oid: string };
 export type TClaim = {
-    _id: TOid;
+    _id: string;
     title: string;
     description: string;
-    type: TOid;
-    status: TOid;
-    user: TOid;
-    createdAt: { $date: Date };
-    updatedAt: { $date: Date };
+    type: {
+        name: string;
+        slug: string;
+    };
+    status: {
+        name: string;
+        slug: string;
+    };
+    user: string;
+    createdAt: string | Date;
+    updatedAt: string | Date;
     _v: number;
 };
 export type TRoles = {
-    _id: TOid;
+    _id: string;
     name: string;
     slug: string;
     createdAt: { $date: Date };
@@ -19,7 +25,7 @@ export type TRoles = {
     _v: number;
 };
 export type TStatus = {
-    _id: TOid;
+    _id: string;
     name: string;
     slug: string;
     createdAt: { $date: Date };
@@ -27,7 +33,7 @@ export type TStatus = {
     _v: number;
 };
 export type TTypes = {
-    _id: TOid;
+    _id: string;
     name: string;
     slug: string;
     createdAt: { $date: Date };
@@ -35,11 +41,11 @@ export type TTypes = {
     _v: number;
 };
 export type TUsers = {
-    _id: TOid;
+    _id: string;
     fullName: string;
     email: string;
     password: string;
-    role: TOid;
+    role: string;
     createdAt: { $date: Date };
     updatedAt: { $date: Date };
     _v: number;
