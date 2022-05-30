@@ -20,15 +20,14 @@ export const claimsFetch = createAsyncThunk("claims/fetch", async () => {
 export const claimsSlice = createSlice({
     name: "claims",
     initialState: {
-        claims: {
-            error: "",
-        },
+        claims: [],
+        error: "",
     },
     reducers: {},
     extraReducers: builder => {
         builder.addCase(claimsFetch.fulfilled, (state, action) => {
             if ("message" in action.payload && "code" in action.payload) {
-                state.claims.error = action.payload.error;
+                state.error = action.payload.error;
             } else {
                 state.claims = action.payload.claims;
             }
