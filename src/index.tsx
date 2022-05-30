@@ -20,9 +20,8 @@ root.render(
           <Route path='login' element={<Page.Login />} />
           <Route path='auth' element={<Page.Auth />} />
           <Route path='create' element={<Page.Create />} />
-          <Route path='claims' element={<Page.Claims />}>
-            <Route path=':claimId' element={<Page.Claim />} />
-          </Route>
+          <Route path='claims' element={<Page.Claims />} />
+          <Route path='/claim/:claimId' element={<Page.Claim />} />
           <Route path='/' element={<App />} />
         </Routes>
       </Provider>
@@ -40,3 +39,4 @@ reportWebVitals()
 //TODO: использовать react-responsive для изменения строки таблицы в карточку на низких разрешения, согласно макета
 //TODO: как передавать пароль в POST запросе?
 //TODO: учесть время хагурзки данных. поставить прелоадер
+//TODO: сделать проверку не только на наличие токена в localstorage, но и на срок годности токена. В случае не актуальности токена удалить его иы редиректить на страницу Login
