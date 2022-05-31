@@ -7,18 +7,22 @@ import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
 
 export const Claims: FC = (props) => {
-    const claims = useAppSelector(state => state.claims.claims)
+    let claims = useAppSelector(state => state.claims.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
-        if (isTokenCorrect()) {
+        if (isTokenCorrect(true)) {
             dispatch(claimsFetch())
         } else {
             navigate("/")
         }
     }, [dispatch, navigate])
-    const sort = (field: string): void => {
-        claims.sort((a, b) => a[field] - b[field])
+    const sort = (field: keyof TClaim): void => {
+        claims = [...claims].sort((a, b) => {
+            if (a[field] > b[field]) { return 1 }
+            if (a[field] < b[field]) { return -1 }
+            return 0
+        })
     }
     return <>
         <div className={style.table}>
