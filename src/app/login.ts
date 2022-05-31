@@ -17,7 +17,7 @@ export const login: AsyncThunk<any, { email: string; password: string }, {}> =
         const { email, password } = props;
         try {
             const response = await fetch(
-                "http://macserver.local:3001/auth/login",
+                `${process.env.REACT_APP_API_SERVER}/auth/login`,
                 {
                     method: "POST",
                     body: JSON.stringify({ email, password }),

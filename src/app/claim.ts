@@ -6,7 +6,7 @@ export const currentClaimFetch = createAsyncThunk(
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-                `http://macserver.local:3001/claim/${param}`,
+                `${process.env.REACT_APP_API_SERVER}/claim/${param}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token,

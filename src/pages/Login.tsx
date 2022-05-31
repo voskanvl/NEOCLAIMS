@@ -48,7 +48,7 @@ export const Login: FC = (props) => {
             <section className={style.layout__right}>
                 <form className={style.panel}>
                     <div>{sloganSvg}</div>
-                    <div>{process.env.TZ}</div>
+                    <div>{JSON.stringify(process.env)}</div>
                     <Input svg={emailSvg} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
                     <Input svg={sealSvg} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} />
                     <div className={style.checkbox}>

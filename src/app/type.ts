@@ -3,13 +3,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const typeFetch = createAsyncThunk("type/fetch", async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://macserver.local:3001/types`, {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json",
+        const response = await fetch(
+            `${process.env.REACT_APP_API_SERVER}/types`,
+            {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                mode: "cors",
             },
-            mode: "cors",
-        });
+        );
         const result = await response.json();
         console.log("🚀 ~ result typeFetch", result);
         return result;
