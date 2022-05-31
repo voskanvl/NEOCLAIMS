@@ -17,14 +17,17 @@ export const Claims: FC = (props) => {
             navigate("/")
         }
     }, [dispatch, navigate])
+    const sort = (field: string): void => {
+        claims.sort((a, b) => a[field] - b[field])
+    }
     return <>
         <div className={style.table}>
             <div className={`${style.row} ${style.head}`}>
-                <div className={`${style.table__button} ${style.table__button_title}`}>Title</div>
-                <div className={`${style.table__button} ${style.table__button_createAt}`}>Created</div>
-                <div className={`${style.table__button} ${style.table__button_type}`}>Type</div>
-                <div className={`${style.table__button} ${style.table__button_status}`}>Status</div>
-                <div className={`${style.table__button} ${style.table__button_actioins}`}>Action</div>
+                <button className={`${style.table__button} ${style.table__button_title}`} onClick={() => sort('title')}>Title</button>
+                <button className={`${style.table__button} ${style.table__button_createAt}`} onClick={() => sort('createdAt')}>Created</button>
+                <button className={`${style.table__button} ${style.table__button_type}`} onClick={() => sort('type')}>Type</button>
+                <button className={`${style.table__button} ${style.table__button_status}`} onClick={() => sort('status')}>Status</button>
+                <button className={`${style.table__button} ${style.table__button_actioins}`} >Action</button>
             </div>
             {claims.map((el: TClaim) => <div key={el._id} className={style.row}>
                 <div>{el.title}</div>
