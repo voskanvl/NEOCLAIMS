@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { TClaim } from "../types/type";
 
 export const claimsFetch = createAsyncThunk("claims/fetch", async () => {
     try {
@@ -23,7 +24,7 @@ export const claimsFetch = createAsyncThunk("claims/fetch", async () => {
 export const claimsSlice = createSlice({
     name: "claims",
     initialState: {
-        claims: [],
+        claims: [] as TClaim[],
         error: "",
     },
     reducers: {},
