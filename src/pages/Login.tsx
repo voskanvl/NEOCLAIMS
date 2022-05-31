@@ -40,13 +40,15 @@ export const Login: FC = (props) => {
     }
     return <div className={style.screen}>
         <main className={style.layout}>
-            <section className={style.layout__left}>
-                <img src="/cod_home_section2-1536x1491 1.svg" alt="big logo" />
-            </section>
+            {matchMedia('(min-width: 1024px)').matches &&
+                <section className={style.layout__left}>
+                    <img src="/cod_home_section2-1536x1491 1.svg" alt="big logo" />
+                </section>
+            }
             <section className={style.layout__right}>
                 <form className={style.panel}>
                     <div>{sloganSvg}</div>
-                    <div>{email}</div>
+                    <div>{process.env.TZ}</div>
                     <Input svg={emailSvg} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
                     <Input svg={sealSvg} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} />
                     <div className={style.checkbox}>
