@@ -9,7 +9,8 @@ function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isTokenCorrect()) {
+    console.log(isTokenCorrect())
+    if (isTokenCorrect(true)) {
       navigate("/claims")
     } else {
       navigate("/login")

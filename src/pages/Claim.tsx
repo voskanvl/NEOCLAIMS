@@ -16,8 +16,8 @@ export const Claim: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        if (isTokenCorrect() && claimId) dispatch(currentClaimFetch(claimId))
-        if (isTokenCorrect() && claimId) dispatch(typeFetch())
+        if (isTokenCorrect(true) && claimId) dispatch(currentClaimFetch(claimId))
+        if (isTokenCorrect(true) && claimId) dispatch(typeFetch())
     }, [dispatch])
 
     return <>
