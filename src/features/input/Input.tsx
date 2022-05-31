@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, FormEventHandler } from "react"
+import { ChangeEventHandler, FC, FormEventHandler, memo } from "react"
 import style from "./input.module.sass"
 
 type TInput = {
@@ -10,7 +10,7 @@ type TInput = {
     onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-export const Input: FC<TInput> = ({ svg, label, ...props }) => {
+export const Input: FC<TInput> = memo(({ svg, label, ...props }) => {
     return (
         <div className={style.input__wrapper} >
             <label className={style.input__label} >{label}</label>
@@ -20,4 +20,4 @@ export const Input: FC<TInput> = ({ svg, label, ...props }) => {
             </div>
         </div>
     )
-}
+})
