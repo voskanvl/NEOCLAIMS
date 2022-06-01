@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom"
 import { claimsFetch } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
+import { shallowFlat } from "../helpers/shallowFlat"
 import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
 
+type Claim = TClaim & { type: string, status: string }
 export const Claims: FC = (props) => {
-    const [claims, setClaims] = useState<TClaim[]>()
-    const [didSort, setDidSort] = useState<{ attribute: keyof TClaim, method: 'asc' | 'desc' }>()
+    const [claims, setClaims] = useState<Claim[]>()
+    const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
     const claimsFromServer = useAppSelector(state => state.claims.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -20,15 +22,15 @@ export const Claims: FC = (props) => {
         }
     }, [dispatch, navigate])
     useEffect(() => {
-        setClaims(claimsFromServer)
+        return setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
     }, [claimsFromServer])
-    const sort = (field: keyof TClaim): void => {
-        const asc = (field: keyof TClaim) => [...claimsFromServer].sort((a, b) => {
+    const sort = (field: keyof Claim): void => {
+        const asc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
             if (a[field] > b[field]) { return 1 }
             if (a[field] < b[field]) { return -1 }
             return 0
         })
-        const desc = (field: keyof TClaim) => [...claimsFromServer].sort((a, b) => {
+        const desc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
             if (a[field] < b[field]) { return 1 }
             if (a[field] > b[field]) { return -1 }
             return 0
@@ -59,11 +61,11 @@ export const Claims: FC = (props) => {
                 <button className={`${style.table__button} ${style.table__button_status}`} onClick={() => sort('status')}>Status</button>
                 <button className={`${style.table__button} ${style.table__button_actions}`} >Action</button>
             </div>
-            {(claims && claims.length) && claims.map((el: TClaim) => <div key={el._id} className={style.row}>
+            {(claims && claims.length) && claims.map((el: Claim) => <div key={el._id} className={style.row}>
                 <div>{el.title}</div>
                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                <div>{el.type.name}</div>
-                <div>{el.status.name}</div>
+                <div>{el.type}</div>
+                <div>{el.status}</div>
                 <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
             </div>)}
         </div>
