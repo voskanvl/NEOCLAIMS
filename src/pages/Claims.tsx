@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { claimsFetch } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
@@ -7,7 +7,8 @@ import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
 
 export const Claims: FC = (props) => {
-    let claims = useAppSelector(state => state.claims.claims)
+    const [claims, setClaims] = useState<TClaim[]>()
+    const claimsFromServer = useAppSelector(state => state.claims.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
@@ -17,12 +18,17 @@ export const Claims: FC = (props) => {
             navigate("/")
         }
     }, [dispatch, navigate])
+    useEffect(() => {
+        setClaims(claimsFromServer)
+    }, [claimsFromServer])
     const sort = (field: keyof TClaim): void => {
-        claims = [...claims].sort((a, b) => {
-            if (a[field] > b[field]) { return 1 }
-            if (a[field] < b[field]) { return -1 }
-            return 0
-        })
+        setClaims(
+            [...claimsFromServer].sort((a, b) => {
+                if (a[field] > b[field]) { return 1 }
+                if (a[field] < b[field]) { return -1 }
+                return 0
+            })
+        )
     }
     return <>
         <div className={style.table}>
@@ -33,7 +39,7 @@ export const Claims: FC = (props) => {
                 <button className={`${style.table__button} ${style.table__button_status}`} onClick={() => sort('status')}>Status</button>
                 <button className={`${style.table__button} ${style.table__button_actioins}`} >Action</button>
             </div>
-            {claims.map((el: TClaim) => <div key={el._id} className={style.row}>
+            {(claims && claims.length) && claims.map((el: TClaim) => <div key={el._id} className={style.row}>
                 <div>{el.title}</div>
                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
                 <div>{el.type.name}</div>
