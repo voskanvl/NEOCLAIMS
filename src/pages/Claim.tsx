@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { ChangeEvent, FC, SetStateAction, useCallback, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 import { currentClaimFetch } from "../app/claim"
@@ -19,13 +19,19 @@ export const Claim: FC = (props) => {
         if (isTokenCorrect(true) && claimId) dispatch(currentClaimFetch(claimId))
         if (isTokenCorrect(true) && claimId) dispatch(typeFetch())
     }, [dispatch])
+    useEffect(() => {
+        setTitle(currentClaim.title)
+        setTypeVal(currentClaim.type.name)
+        setDescription(currentClaim.description)
+    }, [currentClaim])
+    const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
     return <>
-        <Input label={"title"} value={currentClaim.title} onChange={ev => setTitle(ev.currentTarget.value)} />
-        <Input label={"type"} value={currentClaim.type.name} onChange={ev => setTypeVal(ev.currentTarget.value)} />
+        <Input label={"title"} value={title} onChange={handler(setTitle)} />
+        <Input label={"type"} value={typeVal} onChange={handler(setTypeVal)} />
         <select>
             {type.map(el => <option key={el.slug} value={el.name} defaultChecked={el.name === currentClaim.type.name}>{el.name}</option>)}
         </select>
-        <Input label={"description"} value={currentClaim.description} onChange={ev => setDescription(ev.currentTarget.value)} />
+        <Input label={"description"} value={description} onChange={handler(setDescription)} />
     </>
 }
