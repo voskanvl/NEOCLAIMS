@@ -52,7 +52,11 @@ export const Claims: FC = (props) => {
         }
 
     }
+    const plus = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+        <use xlinkHref="/icon-sprite.svg#plus"></use>
+    </svg>
     return <>
+        <button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button>
         <div className={style.table}>
             <div className={`${style.row} ${style.head}`}>
                 <button className={`${style.table__button} ${style.table__button_title}`} onClick={() => sort('title')}>Title</button>

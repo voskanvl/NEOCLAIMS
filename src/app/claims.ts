@@ -27,7 +27,11 @@ export const claimsSlice = createSlice({
         claims: [] as TClaim[],
         error: "",
     },
-    reducers: {},
+    reducers: {
+        add: (state, action) => {
+            state.claims.push(action.payload);
+        },
+    },
     extraReducers: builder => {
         builder.addCase(claimsFetch.fulfilled, (state, action) => {
             if ("message" in action.payload && "code" in action.payload) {
@@ -38,3 +42,5 @@ export const claimsSlice = createSlice({
         });
     },
 });
+
+export const { add } = claimsSlice.actions;
