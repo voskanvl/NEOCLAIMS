@@ -5,6 +5,7 @@ import { currentClaimFetch } from "../app/claim"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { typeFetch } from "../app/type"
 import { Input } from "../features/input/Input"
+import { Select } from "../features/select/Select"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 
 export const Claim: FC = (props) => {
@@ -15,6 +16,7 @@ export const Claim: FC = (props) => {
     const { currentClaim } = useAppSelector(state => state.currentClaim)
     const { type } = useAppSelector(state => state.type)
     const dispatch = useAppDispatch()
+
     useEffect(() => {
         if (isTokenCorrect(true) && claimId) dispatch(currentClaimFetch(claimId))
         if (isTokenCorrect(true) && claimId) dispatch(typeFetch())
@@ -28,10 +30,10 @@ export const Claim: FC = (props) => {
 
     return <>
         <Input label={"title"} value={title} onChange={handler(setTitle)} />
-        <Input label={"type"} value={typeVal} onChange={handler(setTypeVal)} />
-        <select>
-            {type.map(el => <option key={el.slug} value={el.name} defaultChecked={el.name === currentClaim.type.name}>{el.name}</option>)}
-        </select>
+        <Select label={'type'} options={type.map(e => e.name)} selected={currentClaim.type.name} />
+        {/* <select onChange={ev => setTypeVal(ev.target.value)}>
+            {type.map(el => <option key={el.slug} value={el.name} selected={el.name === currentClaim.type.name}>{el.name}</option>)}
+        </select> */}
         <Input label={"description"} value={description} onChange={handler(setDescription)} />
     </>
 }
