@@ -6,6 +6,7 @@ import { clear, createFetch } from "../app/create"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { typeFetch } from "../app/type"
 import { Input } from "../features/input/Input"
+import { Select } from "../features/select/Select"
 
 export const Create: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
@@ -18,7 +19,7 @@ export const Create: FC = (props) => {
     const [typeVal, setTypeVal] = useState('')
     const [description, setDescription] = useState('')
     const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
-
+    const hadlerSelect = useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
     useEffect(() => {
         if (!type.length) dispatch(typeFetch())
     }, [type])
@@ -33,9 +34,7 @@ export const Create: FC = (props) => {
 
     return <>
         <Input label={"title"} value={title} onChange={handler(setTitle)} />
-        <select onChange={(ev) => setTypeVal(type.filter(e => e.name === ev.target.value)[0].slug)}>
-            {type.map(el => <option key={el.slug} value={el.name}>{el.name}</option>)}
-        </select>
+        <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
         <Input label={"description"} value={description} onChange={handler(setDescription)} />
         <div className="row">
             <button className="create__cancel" onClick={() => navigate(-1)}>Cancel</button>
