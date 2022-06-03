@@ -6,6 +6,7 @@ import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { shallowFlat } from "../helpers/shallowFlat"
 import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
+import ColorMap from "../helpers/colorMap"
 
 type Claim = TClaim & { type: string, status: string }
 export const Claims: FC = (props) => {
@@ -69,7 +70,7 @@ export const Claims: FC = (props) => {
                 <div>{el.title}</div>
                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
                 <div>{el.type}</div>
-                <div>{el.status}</div>
+                <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
                 <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
             </div>)}
         </div>
