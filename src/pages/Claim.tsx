@@ -31,9 +31,6 @@ export const Claim: FC = (props) => {
     return <>
         <Input label={"title"} value={title} onChange={handler(setTitle)} />
         <Select label={'type'} options={type.map(e => e.name)} selected={currentClaim.type.name} />
-        {/* <select onChange={ev => setTypeVal(ev.target.value)}>
-            {type.map(el => <option key={el.slug} value={el.name} selected={el.name === currentClaim.type.name}>{el.name}</option>)}
-        </select> */}
         <Input label={"description"} value={description} onChange={handler(setDescription)} />
     </>
 }
