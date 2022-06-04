@@ -4,12 +4,13 @@ import { claimsFetch } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { shallowFlat } from "../helpers/shallowFlat"
-import { TClaim } from "../types/type"
+import { TClaim, Claim } from "../types/type"
 import style from "./claims.module.sass"
 import ColorMap from "../helpers/colorMap"
 import SortControl from "../features/sortControl/SortControl"
+import ClaimCard from "../features/claimCard/claimCard"
 
-type Claim = TClaim & { type: string, status: string }
+
 export const Claims: FC = (props) => {
     const [claims, setClaims] = useState<Claim[]>()
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
@@ -58,7 +59,7 @@ export const Claims: FC = (props) => {
         <use xlinkHref="/icon-sprite.svg#plus"></use>
     </svg>
     return <>
-        <button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button>
+        <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
         <div className={style.table}>
             <div className={`${style.row} ${style.head}`}>
 
@@ -77,16 +78,20 @@ export const Claims: FC = (props) => {
                 </button>
                 <button className={style.table__button}>Action</button>
             </div>
-            {(claims && claims.length) && claims.map((el: Claim) => <div key={el._id} className={style.row}>
-                <div>{el.title}</div>
-                <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                <div className={style.type}>
-                    <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
-                    <span>{el.type}</span>
-                </div>
-                <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
-                <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
-            </div>)}
+            {
+                matchMedia('(max-width: 768px)').matches
+                    ? <ClaimCard claims={claims} />
+                    : (claims && claims.length) && claims.map((el: Claim) => <div key={el._id} className={style.row}>
+                        <div>{el.title}</div>
+                        <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
+                        <div className={style.type}>
+                            <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
+                            <span>{el.type}</span>
+                        </div>
+                        <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
+                        <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                    </div>)
+            }
         </div>
 
 

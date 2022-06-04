@@ -50,3 +50,4 @@ export type TUsers = {
     updatedAt: { $date: Date };
     _v: number;
 };
+export type Claim = TClaim & { type: string, status: string }
