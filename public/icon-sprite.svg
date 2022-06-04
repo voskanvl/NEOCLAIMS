@@ -1,4 +1,14 @@
 <svg display="none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="sortup" viewBox="0 0 7 4">
+        <g>
+            <path d="M0 3.75L3.5 0L7 3.75H0Z" />
+        </g>
+    </symbol>
+    <symbol id="sortdown" viewBox="0 0 7 4">
+        <g>
+            <path d="M0 0.25L3.5 4L7 0.25H0Z" />
+        </g>
+    </symbol>
     <symbol id="archive" viewBox="0 0 40 40">
         <g>
             <path d="M29 16V29H11V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

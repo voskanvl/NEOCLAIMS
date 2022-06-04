@@ -7,6 +7,7 @@ import { shallowFlat } from "../helpers/shallowFlat"
 import { TClaim } from "../types/type"
 import style from "./claims.module.sass"
 import ColorMap from "../helpers/colorMap"
+import SortControl from "../features/sortControl/SortControl"
 
 type Claim = TClaim & { type: string, status: string }
 export const Claims: FC = (props) => {
@@ -60,16 +61,29 @@ export const Claims: FC = (props) => {
         <button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button>
         <div className={style.table}>
             <div className={`${style.row} ${style.head}`}>
-                <button className={`${style.table__button} ${style.table__button_title}`} onClick={() => sort('title')}>Title</button>
-                <button className={`${style.table__button} ${style.table__button_createAt}`} onClick={() => sort('createdAt')}>Created</button>
-                <button className={`${style.table__button} ${style.table__button_type}`} onClick={() => sort('type')}>Type</button>
-                <button className={`${style.table__button} ${style.table__button_status}`} onClick={() => sort('status')}>Status</button>
-                <button className={`${style.table__button} ${style.table__button_actions}`} >Action</button>
+
+                <button className={style.table__button} onClick={() => sort('title')}>
+                    <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
+                </button>
+                <button className={style.table__button} onClick={() => sort('createdAt')}>
+                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
+                </button>
+                <button className={style.table__button} onClick={() => sort('type')}>
+                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
+                </button>
+                <button className={style.table__button} onClick={() => sort('status')}>
+                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
+
+                </button>
+                <button className={style.table__button}>Action</button>
             </div>
             {(claims && claims.length) && claims.map((el: Claim) => <div key={el._id} className={style.row}>
                 <div>{el.title}</div>
                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                <div>{el.type}</div>
+                <div className={style.type}>
+                    <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
+                    <span>{el.type}</span>
+                </div>
                 <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
                 <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
             </div>)}
