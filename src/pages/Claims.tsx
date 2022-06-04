@@ -69,10 +69,10 @@ export const Claims: FC = (props) => {
                     <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
                 </button>
                 <button className={style.table__button} onClick={() => sort('type')}>
-                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
+                    <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
                 </button>
                 <button className={style.table__button} onClick={() => sort('status')}>
-                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
+                    <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
 
                 </button>
                 <button className={style.table__button}>Action</button>
