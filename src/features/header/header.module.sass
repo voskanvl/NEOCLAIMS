@@ -7,6 +7,9 @@
 
     border-bottom: 1px solid #C2C2C2
     padding: 24px 0
+    @media screen and ( max-width: 768px )
+        background: #7DB59A
+        color: #fff
 .children
     width: calc(585 / 1920 * 100%)
     & > *
@@ -15,6 +18,8 @@
         & > div
             margin: 0
             padding: 0
+    @media screen and ( max-width: 768px )
+        display: none
 .logout
     width: 40px
     height: 40px
@@ -26,3 +31,19 @@
     border-radius: 50%
     background: url("https://fakeface.rest/thumb/view") no-repeat
     background-size: cover
+.bell,.logout
+    & > svg
+        stroke: #fff
+.name
+    @media screen and ( max-width: 768px )
+        display: none
+
+.burger
+    background: none
+    display: none
+    border: none
+    cursor: pointer
+    position: absolute
+    left: 1rem
+    @media screen and ( max-width: 768px )
+        display: block
