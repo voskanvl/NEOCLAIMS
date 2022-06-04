@@ -61,7 +61,7 @@ export const Claims: FC = (props) => {
     return <>
         <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
         <div className={style.table}>
-            <div className={`${style.row} ${style.head}`}>
+            {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
 
                 <button className={style.table__button} onClick={() => sort('title')}>
                     <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
@@ -77,7 +77,7 @@ export const Claims: FC = (props) => {
 
                 </button>
                 <button className={style.table__button}>Action</button>
-            </div>
+            </div>}
             {
                 (claims && claims.length) && claims.map((el: Claim) => matchMedia('(max-width: 768px)').matches
                     ? <ClaimCard claim={el} key={el._id} />
