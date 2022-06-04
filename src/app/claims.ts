@@ -21,6 +21,29 @@ export const claimsFetch = createAsyncThunk("claims/fetch", async () => {
         return error;
     }
 });
+export const claimsSearch = createAsyncThunk(
+    "claims/search",
+    async (search: string) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+                `${process.env.REACT_APP_API_SERVER}/claim?search=${search}`,
+                {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                    mode: "cors",
+                },
+            );
+            const result = await response.json();
+            console.log("🚀 ~ result", result);
+            return result;
+        } catch (error) {
+            return error;
+        }
+    },
+);
 export const claimsSlice = createSlice({
     name: "claims",
     initialState: {
@@ -34,6 +57,13 @@ export const claimsSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(claimsFetch.fulfilled, (state, action) => {
+            if ("message" in action.payload && "code" in action.payload) {
+                state.error = action.payload.error;
+            } else {
+                state.claims = action.payload.claims;
+            }
+        });
+        builder.addCase(claimsSearch.fulfilled, (state, action) => {
             if ("message" in action.payload && "code" in action.payload) {
                 state.error = action.payload.error;
             } else {
