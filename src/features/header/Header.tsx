@@ -1,7 +1,24 @@
-import { FC, memo, ReactNode } from "react"
+import { FC, memo, ReactNode, useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { currentUser } from "../../app/login"
+import style from "./header.module.sass"
 
 const Header: FC<{ children: ReactNode }> = ({ children }) => {
-    return <header className="header">{children}</header>
+    let userName = useAppSelector(state => state.login.user.fullName)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (!userName) {
+            const id = JSON.parse(atob(token!.split(".")[1])).id
+            console.log("🚀 ~ id", id)
+            dispatch(currentUser(id))
+        }
+    }, [userName])
+
+    return <header className={style.header}>
+        <span className={style.children}>{children}</span>
+        <span>{userName}</span>
+    </header>
 }
 
 export default memo(Header)

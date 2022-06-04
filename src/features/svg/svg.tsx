@@ -1,5 +1,5 @@
 const slogan = (
-    <svg viewBox="0 0 72 72" width="40" height="40" fill="none">
+    <svg viewBox="0 0 72 72" width="72" height="72" fill="none">
         <use xlinkHref="/icon-sprite.svg#sloganSmall"></use>
     </svg>
 )
@@ -38,6 +38,11 @@ const navigation = (
         <use xlinkHref="/icon-sprite.svg#navigation"></use>
     </svg>
 )
+const search = (
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+        <use xlinkHref="/icon-sprite.svg#search"></use>
+    </svg>
+)
 
 export const svg: { [key: string]: JSX.Element } = {
     slogan: slogan,
@@ -48,4 +53,5 @@ export const svg: { [key: string]: JSX.Element } = {
     dollar,
     database,
     navigation,
+    search
 }

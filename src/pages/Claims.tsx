@@ -11,6 +11,8 @@ import SortControl from "../features/sortControl/SortControl"
 import ClaimCard from "../features/claimCard/claimCard"
 import { Aside } from "../features/aside/Aside"
 import Header from "../features/header/Header"
+import { Input } from "../features/input/Input"
+import { svg } from "../features/svg/svg"
 
 
 export const Claims: FC = (props) => {
@@ -64,42 +66,44 @@ export const Claims: FC = (props) => {
         <Aside />
         <main className={style.main}>
             <Header>
-                <input type="text" className="search" onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
+                <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
             </Header>
-            <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
-            <div className={style.table}>
-                {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
+            <section className={style.claims}>
+                <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
+                <div className={style.table}>
+                    {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
 
-                    <button className={style.table__button} onClick={() => sort('title')}>
-                        <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
-                    </button>
-                    <button className={style.table__button} onClick={() => sort('createdAt')}>
-                        <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
-                    </button>
-                    <button className={style.table__button} onClick={() => sort('type')}>
-                        <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
-                    </button>
-                    <button className={style.table__button} onClick={() => sort('status')}>
-                        <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
+                        <button className={style.table__button} onClick={() => sort('title')}>
+                            <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
+                        </button>
+                        <button className={style.table__button} onClick={() => sort('createdAt')}>
+                            <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
+                        </button>
+                        <button className={style.table__button} onClick={() => sort('type')}>
+                            <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
+                        </button>
+                        <button className={style.table__button} onClick={() => sort('status')}>
+                            <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
 
-                    </button>
-                    <button className={style.table__button}>Action</button>
-                </div>}
-                {
-                    (claims && claims.length) && claims.map((el: Claim) => matchMedia('(max-width: 768px)').matches
-                        ? <ClaimCard claim={el} key={el._id} />
-                        : <div key={el._id} className={style.row}>
-                            <div>{el.title}</div>
-                            <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                            <div className={style.type}>
-                                <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
-                                <span>{el.type}</span>
-                            </div>
-                            <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
-                            <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
-                        </div>)
-                }
-            </div>
+                        </button>
+                        <button className={style.table__button}>Action</button>
+                    </div>}
+                    {
+                        claims?.map((el: Claim) => matchMedia('(max-width: 768px)').matches
+                            ? <ClaimCard claim={el} key={el._id} />
+                            : <div key={el._id} className={style.row}>
+                                <div>{el.title}</div>
+                                <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
+                                <div className={style.type}>
+                                    <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
+                                    <span>{el.type}</span>
+                                </div>
+                                <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
+                                <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                            </div>)
+                    }
+                </div>
+            </section>
         </main>
 
     </div>
