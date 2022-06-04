@@ -1,6 +1,7 @@
-import { memo } from "react"
+import { memo, useEffect, useRef } from "react"
 import style from "./aside.module.sass"
 import { svg } from "../svg/svg"
+import { useAppSelector } from "../../app/hooks"
 
 export const Aside = () => {
     const refs: { slug: string, name: string }[] = [
@@ -12,7 +13,17 @@ export const Aside = () => {
         { slug: 'database', name: 'Base' },
         { slug: 'navigation', name: 'Navigation' }
     ]
-    return <div className={style.aside}>
+    const show = useAppSelector(state => state.aside.show)
+    const match = matchMedia('(max-width: 1024px)').matches
+    /*
+        show | match | reuslt
+         0      0       1
+         0      1       0
+         1      0       1   
+         1      1       1
+    */
+    const display = !(!show && match)
+    return <div className={style.aside} style={{ display: display ? 'flex' : 'none' }}>
         <a className={style.slogan} href="#">{svg.slogan}</a>
         {
             refs.map(e => <a className={style.item} href="#">
@@ -20,5 +31,5 @@ export const Aside = () => {
                 <span className={style.name}>{e.name}</span>
             </a>)
         }
-    </div>
+    </div >
 }

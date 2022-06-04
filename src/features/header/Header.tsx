@@ -1,6 +1,7 @@
 import { FC, memo, ReactNode, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { currentUser } from "../../app/login"
+import { show } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"
 
@@ -17,11 +18,12 @@ const Header: FC<{ children: ReactNode }> = ({ children }) => {
     }, [userName])
 
     return <header className={style.header}>
-        <span className={style.children}>{children}</span>
-        <div>{svg.bell}</div>
+        <button className={style.burger} onClick={() => dispatch(show())}>{svg.burger}</button>
+        <div className={style.children}>{children}</div>
+        <div className={style.bell}>{svg.bell}</div>
         <div className={style.face}></div>
-        <div>{userName}</div>
-        <div className="logout">{svg.logout}</div>
+        <div className={style.name}>{userName}</div>
+        <div className={style.logout}>{svg.logout}</div>
     </header>
 }
 

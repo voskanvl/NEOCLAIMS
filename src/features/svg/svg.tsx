@@ -1,3 +1,8 @@
+const burger = (
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+        <use xlinkHref="/icon-sprite.svg#burger"></use>
+    </svg>
+)
 const bell = (
     <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
         <use xlinkHref="/icon-sprite.svg#bell"></use>
@@ -65,5 +70,6 @@ export const svg: { [key: string]: JSX.Element } = {
     navigation,
     search,
     logout,
-    bell
+    bell,
+    burger
 }
