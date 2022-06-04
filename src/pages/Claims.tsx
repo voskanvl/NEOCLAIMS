@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { claimsFetch } from "../app/claims"
+import { claimsFetch, claimsSearch } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { shallowFlat } from "../helpers/shallowFlat"
@@ -9,6 +9,7 @@ import style from "./claims.module.sass"
 import ColorMap from "../helpers/colorMap"
 import SortControl from "../features/sortControl/SortControl"
 import ClaimCard from "../features/claimCard/claimCard"
+import { Aside } from "../features/aside/Aside"
 
 
 export const Claims: FC = (props) => {
@@ -58,42 +59,47 @@ export const Claims: FC = (props) => {
     const plus = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
         <use xlinkHref="/icon-sprite.svg#plus"></use>
     </svg>
-    return <>
-        <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
-        <div className={style.table}>
-            {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
+    return <div className={style.layout}>
+        <Aside />
+        <main className={style.main}>
+            {/* <Header> */}
+            <input type="text" className="search" onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
+            {/* </Header> */}
+            <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
+            <div className={style.table}>
+                {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
 
-                <button className={style.table__button} onClick={() => sort('title')}>
-                    <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
-                </button>
-                <button className={style.table__button} onClick={() => sort('createdAt')}>
-                    <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
-                </button>
-                <button className={style.table__button} onClick={() => sort('type')}>
-                    <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
-                </button>
-                <button className={style.table__button} onClick={() => sort('status')}>
-                    <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
+                    <button className={style.table__button} onClick={() => sort('title')}>
+                        <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
+                    </button>
+                    <button className={style.table__button} onClick={() => sort('createdAt')}>
+                        <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
+                    </button>
+                    <button className={style.table__button} onClick={() => sort('type')}>
+                        <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
+                    </button>
+                    <button className={style.table__button} onClick={() => sort('status')}>
+                        <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
 
-                </button>
-                <button className={style.table__button}>Action</button>
-            </div>}
-            {
-                (claims && claims.length) && claims.map((el: Claim) => matchMedia('(max-width: 768px)').matches
-                    ? <ClaimCard claim={el} key={el._id} />
-                    : <div key={el._id} className={style.row}>
-                        <div>{el.title}</div>
-                        <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                        <div className={style.type}>
-                            <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
-                            <span>{el.type}</span>
-                        </div>
-                        <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
-                        <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
-                    </div>)
-            }
-        </div>
+                    </button>
+                    <button className={style.table__button}>Action</button>
+                </div>}
+                {
+                    (claims && claims.length) && claims.map((el: Claim) => matchMedia('(max-width: 768px)').matches
+                        ? <ClaimCard claim={el} key={el._id} />
+                        : <div key={el._id} className={style.row}>
+                            <div>{el.title}</div>
+                            <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
+                            <div className={style.type}>
+                                <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
+                                <span>{el.type}</span>
+                            </div>
+                            <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
+                            <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                        </div>)
+                }
+            </div>
+        </main>
 
-
-    </>
+    </div>
 }
