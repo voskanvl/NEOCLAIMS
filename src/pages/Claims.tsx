@@ -10,6 +10,7 @@ import ColorMap from "../helpers/colorMap"
 import SortControl from "../features/sortControl/SortControl"
 import ClaimCard from "../features/claimCard/claimCard"
 import { Aside } from "../features/aside/Aside"
+import Header from "../features/header/Header"
 
 
 export const Claims: FC = (props) => {
@@ -62,9 +63,9 @@ export const Claims: FC = (props) => {
     return <div className={style.layout}>
         <Aside />
         <main className={style.main}>
-            {/* <Header> */}
-            <input type="text" className="search" onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
-            {/* </Header> */}
+            <Header>
+                <input type="text" className="search" onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
+            </Header>
             <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
             <div className={style.table}>
                 {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
