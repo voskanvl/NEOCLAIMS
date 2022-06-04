@@ -69,7 +69,12 @@ export const Claims: FC = (props) => {
                 <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
             </Header>
             <section className={style.claims}>
-                <div className={style.line}><h1 className={style.title}>Your claims</h1><button className={`${style.createButton}`} onClick={() => navigate('/create')}><span>{plus}</span><span>Create claim</span></button></div>
+                <div className={style.line}>
+                    <h1 className={style.title}>Your claims</h1>
+                    <button className={`${style.createButton}`} onClick={() => navigate('/create')}>
+                        <span className={style.createButton__cross}>{plus}</span>
+                        <span className={style.createButton__title}>Create claim</span>
+                    </button></div>
                 <div className={style.table}>
                     {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
 

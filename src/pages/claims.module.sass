@@ -50,6 +50,21 @@
     padding-right: 16px
     border-radius: 16px
     border: none
+    @media screen and ( max-width: 768px )
+        padding-right: 0
+    &__cross
+        position: relative
+        & > svg
+            width: 100%
+            @media screen and ( max-width: 768px )
+                position: absolute
+                top: 50%
+                left: 45%
+                transform: translate(-50%,-50%)
+
+    &__title
+        @media screen and ( max-width: 768px )
+            display: none
 
 .line
     display: flex
