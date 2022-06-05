@@ -32,13 +32,18 @@ export const Create: FC = (props) => {
         }
     }, [dispatch, created])
 
+    useEffect(() => {
+        console.log('title,typeVal,description', getSlug(typeVal), title, typeVal, description)
+    }, [title, typeVal, description])
+
+    const getSlug = (name: string) => type.find(el => el.name === name)!.slug
     return <>
         <Input label={"title"} value={title} onChange={handler(setTitle)} />
         <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
         <Input label={"description"} value={description} onChange={handler(setDescription)} />
         <div className="row">
             <button className="create__cancel" onClick={() => navigate(-1)}>Cancel</button>
-            <button className="create__create" onClick={() => dispatch(createFetch({ type: typeVal, description, status: 'new', title }))}>Create</button>
+            <button className="create__create" onClick={() => dispatch(createFetch({ type: getSlug(typeVal), description, status: 'new', title }))}>Create</button>
         </div>
     </>
 }
