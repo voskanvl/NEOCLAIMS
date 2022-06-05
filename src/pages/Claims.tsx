@@ -70,7 +70,7 @@ export const Claims: FC = (props) => {
         <use xlinkHref="/icon-sprite.svg#plus"></use>
     </svg>
 
-    const handlePageClick = (arg: any) => console.log('handlePageClick', arg)
+    const handlePageClick = ({ selected }: { selected: number }) => dispatch(claimsFetch(selected))
 
     return <div className={style.layout}>
         <Aside />
@@ -119,15 +119,17 @@ export const Claims: FC = (props) => {
                                     <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
                                 </div>)
                         }
-                        <ReactPaginate
-                            breakLabel="..."
-                            nextLabel="next >"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={5}
-                            pageCount={Math.ceil(totalItems / 10)}
-                            previousLabel="< previous"
-                            renderOnZeroPageCount={(arg) => console.log(arg)}
-                        />
+                        <div className={style.pagination}>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel=">"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={Math.ceil(totalItems / 10)}
+                                previousLabel="<"
+                                renderOnZeroPageCount={(arg) => console.log(arg)}
+                            />
+                        </div>
                     </div>
                 </section>}
         </main>
