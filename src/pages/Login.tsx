@@ -37,7 +37,7 @@ export const Login: FC = (props) => {
             }
             <section className={style.layout__right}>
                 <form className={style.panel}>
-                    <div>{svg.slogan}</div>
+                    <div>{svg.sloganBig}</div>
                     <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
                     <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} />
                     <div className={style.checkbox}>
