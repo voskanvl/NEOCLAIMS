@@ -94,9 +94,9 @@ export const Claims: FC = (props) => {
                         <button className={style.table__button}>Action</button>
                     </div>}
                     {
-                        claims?.map((el: Claim) => matchMedia('(max-width: 1024px)').matches
-                            ? <ClaimCard claim={el} key={el._id} />
-                            : <div key={el._id} className={style.row}>
+                        matchMedia('(max-width: 1024px)').matches
+                            ? claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)
+                            : claims?.map((el: Claim) => <div key={el._id} className={style.row}>
                                 <div>{el.title}</div>
                                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
                                 <div className={style.type}>
