@@ -22,6 +22,11 @@ const logout = (
         <use xlinkHref="/icon-sprite.svg#logout"></use>
     </svg>
 )
+const sloganBig = (
+    <svg viewBox="0 0 165 161" width="165" height="161" fill="none">
+        <use xlinkHref="/icon-sprite.svg#sloganSmall"></use>
+    </svg>
+)
 const slogan = (
     <svg viewBox="0 0 72 72" width="72" height="72" fill="none">
         <use xlinkHref="/icon-sprite.svg#sloganSmall"></use>
@@ -70,6 +75,7 @@ const search = (
 
 export const svg = {
     slogan,
+    sloganBig,
     home,
     globe,
     archive,
