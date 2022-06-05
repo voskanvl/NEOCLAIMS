@@ -5,7 +5,7 @@ export const claimsFetch = createAsyncThunk("claims/fetch", async () => {
     try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-            `${process.env.REACT_APP_API_SERVER}/claim`,
+            `${process.env.REACT_APP_API_SERVER}/claim?limit=10`,
             {
                 headers: {
                     "Authorization": "Bearer " + token,
@@ -48,6 +48,7 @@ export const claimsSlice = createSlice({
     name: "claims",
     initialState: {
         claims: [] as TClaim[],
+        totalItems: 0,
         error: "",
     },
     reducers: {
@@ -61,6 +62,7 @@ export const claimsSlice = createSlice({
                 state.error = action.payload.error;
             } else {
                 state.claims = action.payload.claims;
+                state.totalItems = action.payload.totalItems;
             }
         });
         builder.addCase(claimsSearch.fulfilled, (state, action) => {
