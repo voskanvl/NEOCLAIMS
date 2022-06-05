@@ -22,6 +22,9 @@ export const Create: FC = (props) => {
     const hadlerSelect = useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
     useEffect(() => {
         if (!type.length) dispatch(typeFetch())
+    }, [])
+    useEffect(() => {
+        if (!type.length) dispatch(typeFetch())
     }, [type])
 
     useEffect(() => {
@@ -36,14 +39,15 @@ export const Create: FC = (props) => {
         console.log('title,typeVal,description', getSlug(typeVal), title, typeVal, description)
     }, [title, typeVal, description])
 
-    const getSlug = (name: string) => type.find(el => el.name === name)!.slug
+    const getSlug = (name: string) => type.find(el => el.name === name)?.slug
+
     return <>
         <Input label={"title"} value={title} onChange={handler(setTitle)} />
         <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
         <Input label={"description"} value={description} onChange={handler(setDescription)} />
         <div className="row">
             <button className="create__cancel" onClick={() => navigate(-1)}>Cancel</button>
-            <button className="create__create" onClick={() => dispatch(createFetch({ type: getSlug(typeVal), description, status: 'new', title }))}>Create</button>
+            <button className="create__create" onClick={() => dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))}>Create</button>
         </div>
     </>
 }
