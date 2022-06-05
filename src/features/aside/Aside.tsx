@@ -1,10 +1,10 @@
 import { memo, useEffect, useRef } from "react"
 import style from "./aside.module.sass"
-import { svg } from "../svg/svg"
+import { svg, TSvg } from "../svg/svg"
 import { useAppSelector } from "../../app/hooks"
 
 export const Aside = () => {
-    const refs: { slug: string, name: string }[] = [
+    const refs: { slug: keyof TSvg, name: string }[] = [
         { slug: 'home', name: 'Home' },
         { slug: 'globe', name: 'Service' },
         { slug: 'archive', name: 'Storage' },

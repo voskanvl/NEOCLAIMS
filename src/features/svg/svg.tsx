@@ -1,3 +1,12 @@
+const email = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+    <use xlinkHref="/icon-sprite.svg#mail"></use>
+</svg>
+const seal = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+    <use xlinkHref="/icon-sprite.svg#lock"></use>
+</svg>
+const sloganSvgFooter = <svg width="59.44" height="58" viewBox="0 0 165 161" fill="#fff">
+    <use xlinkHref="/icon-sprite.svg#sloganWhite"></use>
+</svg>
 const burger = (
     <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
         <use xlinkHref="/icon-sprite.svg#burger"></use>
@@ -59,7 +68,7 @@ const search = (
     </svg>
 )
 
-export const svg: { [key: string]: JSX.Element } = {
+export const svg = {
     slogan,
     home,
     globe,
@@ -71,5 +80,9 @@ export const svg: { [key: string]: JSX.Element } = {
     search,
     logout,
     bell,
-    burger
+    burger,
+    sloganSvgFooter,
+    seal,
+    email
 }
+export type TSvg = typeof svg
