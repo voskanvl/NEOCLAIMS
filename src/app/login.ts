@@ -70,9 +70,9 @@ export const loginSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(login.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action);
-            if ("message" in action.payload && "code" in action.payload) {
-                state.user.error = action.payload;
+            console.log("🚀 ~ action", action.payload instanceof Error, action);
+            if (action.payload instanceof Error) {
+                state.user.error = action.payload.message;
             } else {
                 state.user = action.payload;
                 if (action.payload.token) {
@@ -83,9 +83,9 @@ export const loginSlice = createSlice({
             }
         });
         builder.addCase(currentUser.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action);
-            if ("message" in action.payload && "code" in action.payload) {
-                state.user.error = action.payload;
+            console.log("🚀 ~ action", action.payload instanceof Error, action);
+            if (action.payload instanceof Error) {
+                state.user.error = action.payload.message;
             } else {
                 state.user = action.payload;
                 if (action.payload.token) {

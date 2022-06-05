@@ -13,14 +13,18 @@ import { Aside } from "../features/aside/Aside"
 import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { svg } from "../features/svg/svg"
+import ReactPaginate from "react-paginate"
 
 
 export const Claims: FC = (props) => {
     const [claims, setClaims] = useState<Claim[]>()
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
     const claimsFromServer = useAppSelector(state => state.claims.claims)
+    const error = useAppSelector(state => state.login.user.error)
+    const totalItems = useAppSelector(state => state.claims.totalItems)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
     useEffect(() => {
         if (isTokenCorrect(true)) {
             dispatch(claimsFetch())
@@ -28,9 +32,11 @@ export const Claims: FC = (props) => {
             navigate("/")
         }
     }, [dispatch, navigate])
+
     useEffect(() => {
         return setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
     }, [claimsFromServer])
+
     const sort = (field: keyof Claim): void => {
         const asc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
             if (a[field] > b[field]) { return 1 }
@@ -59,57 +65,72 @@ export const Claims: FC = (props) => {
         }
 
     }
+
     const plus = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
         <use xlinkHref="/icon-sprite.svg#plus"></use>
     </svg>
+
+    const handlePageClick = (arg: any) => console.log('handlePageClick', arg)
+
     return <div className={style.layout}>
         <Aside />
         <main className={style.main}>
             <Header>
                 <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
             </Header>
-            <section className={style.claims}>
-                <div className={style.line}>
-                    <h1 className={style.title}>Your claims</h1>
-                    <button className={`${style.createButton}`} onClick={() => navigate('/create')}>
-                        <span className={style.createButton__cross}>{plus}</span>
-                        <span className={style.createButton__title}>Create claim</span>
-                    </button></div>
-                <div className={style.table}>
-                    {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
+            {error
+                ? <div>{error}</div>
+                : <section className={style.claims}>
+                    <div className={style.line}>
+                        <h1 className={style.title}>Your claims</h1>
+                        <button className={`${style.createButton}`} onClick={() => navigate('/create')}>
+                            <span className={style.createButton__cross}>{plus}</span>
+                            <span className={style.createButton__title}>Create claim</span>
+                        </button></div>
+                    <div className={style.table}>
+                        {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
 
-                        <button className={style.table__button} onClick={() => sort('title')}>
-                            <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
-                        </button>
-                        <button className={style.table__button} onClick={() => sort('createdAt')}>
-                            <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
-                        </button>
-                        <button className={style.table__button} onClick={() => sort('type')}>
-                            <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
-                        </button>
-                        <button className={style.table__button} onClick={() => sort('status')}>
-                            <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
+                            <button className={style.table__button} onClick={() => sort('title')}>
+                                <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
+                            </button>
+                            <button className={style.table__button} onClick={() => sort('createdAt')}>
+                                <span className={style.table__buttonName}>Created</span><SortControl sorted={didSort?.attribute === 'createdAt' ? didSort.method : undefined} />
+                            </button>
+                            <button className={style.table__button} onClick={() => sort('type')}>
+                                <span className={style.table__buttonName}>Type</span><SortControl sorted={didSort?.attribute === 'type' ? didSort.method : undefined} />
+                            </button>
+                            <button className={style.table__button} onClick={() => sort('status')}>
+                                <span className={style.table__buttonName}>Status</span><SortControl sorted={didSort?.attribute === 'status' ? didSort.method : undefined} />
 
-                        </button>
-                        <button className={style.table__button}>Action</button>
-                    </div>}
-                    {
-                        matchMedia('(max-width: 1024px)').matches
-                            ? claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)
-                            : claims?.map((el: Claim) => <div key={el._id} className={style.row}>
-                                <div>{el.title}</div>
-                                <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                                <div className={style.type}>
-                                    <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
-                                    <span>{el.type}</span>
-                                </div>
-                                <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
-                                <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
-                            </div>)
-                    }
-                </div>
-            </section>
+                            </button>
+                            <button className={style.table__button}>Action</button>
+                        </div>}
+                        {
+                            matchMedia('(max-width: 1024px)').matches
+                                ? claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)
+                                : claims?.map((el: Claim) => <div key={el._id} className={style.row}>
+                                    <div>{el.title}</div>
+                                    <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
+                                    <div className={style.type}>
+                                        <span className={style.mark} style={{ background: ColorMap.Type.byName[el.type] }}></span>
+                                        <span>{el.type}</span>
+                                    </div>
+                                    <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
+                                    <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                                </div>)
+                        }
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={Math.ceil(totalItems / 10)}
+                            previousLabel="< previous"
+                            renderOnZeroPageCount={(arg) => console.log(arg)}
+                        />
+                    </div>
+                </section>}
         </main>
-
     </div>
+
 }

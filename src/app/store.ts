@@ -1,9 +1,4 @@
-import {
-    configureStore,
-    ThunkAction,
-    Action,
-    createSlice,
-} from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 import { loginSlice } from "./login";
 import { claimsSlice } from "./claims";
