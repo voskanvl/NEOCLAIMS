@@ -26,7 +26,7 @@ export const Aside = () => {
     return <div className={style.aside} style={{ display: display ? 'flex' : 'none' }}>
         <a className={style.slogan} href="#">{svg.slogan}</a>
         {
-            refs.map(e => <a className={style.item} href="#">
+            refs.map(e => <a className={style.item} href="#" key={e.slug}>
                 <span className={style.img}>{svg[e.slug]}</span>
                 <span className={style.name}>{e.name}</span>
             </a>)
