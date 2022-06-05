@@ -23,8 +23,14 @@
 .logout
     width: 40px
     height: 40px
+    border: none
+    background: none
+    cursor: pointer
+    @media screen and ( max-width: 1024px )
+        display: none
     & > svg
         width: 100%
+
 .face
     width: 50px
     height: 50px
@@ -34,8 +40,8 @@
 .bell,.logout
     & > svg
         stroke: #5C5C5C
-    @media screen and ( max-width: 1024px )
-        stroke: #fff
+        @media screen and ( max-width: 1024px )
+            stroke: #fff
 .name
     @media screen and ( max-width: 1024px )
         display: none
