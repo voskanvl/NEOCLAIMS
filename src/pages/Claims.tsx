@@ -122,7 +122,7 @@ export const Claims: FC = (props) => {
                                         <span>{el.type}</span>
                                     </div>
                                     <div className={style.status} style={{ background: ColorMap.Status.byName[el.status] }}>{el.status}</div>
-                                    <div><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                                    <div className={style.link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
                                 </div>)
                         }
                         <div className={style.pagination}>
