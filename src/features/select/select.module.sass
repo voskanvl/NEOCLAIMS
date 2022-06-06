@@ -2,6 +2,7 @@
     &__wrapper
         margin-top: 32px
         width: 100%
+
     &__control
         display: flex
         align-items: center
@@ -11,6 +12,7 @@
         border: none
         margin-top: 8px
         flex: 1 1 100%
+        position: relative
         & > svg
             width: 40px
         & > select
@@ -19,7 +21,8 @@
             background: none
             font-size: 18px
             color: #2D3436
-            padding: 0.5em 1em
+            padding: 0.5em 1em 0.5em 2em
+            margin-right: 0.5em
             &::placeholder
                 color: #2D3436
     &__label
@@ -27,3 +30,10 @@
         font-size: 12px
         font-weight: 900
         color: #ADADAD
+.mark
+    width: 1rem
+    height: 1rem
+    border-radius: 50%
+    background: red
+    position: absolute
+    left: 1rem
