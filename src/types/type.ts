@@ -14,7 +14,6 @@ export type TClaim = {
     user: string;
     createdAt: string | Date;
     updatedAt: string | Date;
-    _v: number;
 };
 export type TRoles = {
     _id: string;
@@ -50,4 +49,4 @@ export type TUsers = {
     updatedAt: { $date: Date };
     _v: number;
 };
-export type Claim = TClaim & { type: string, status: string }
+export type Claim = TClaim & { type: string; status: string };

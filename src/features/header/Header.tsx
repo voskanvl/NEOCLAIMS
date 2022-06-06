@@ -17,7 +17,7 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
             console.log("🚀 ~ id", id)
             dispatch(currentUser(id))
         }
-    }, [userName])
+    }, [userName, dispatch])
 
     const logout = () => {
         localStorage.clear()

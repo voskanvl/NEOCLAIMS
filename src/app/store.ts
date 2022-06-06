@@ -6,6 +6,7 @@ import { currentClaimSlice } from "./claim";
 import { typeSlice } from "./type";
 import { createClaimSlice } from "./create";
 import { showAside } from "./showAside";
+import { statusSlice } from "./status";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         claims: claimsSlice.reducer,
         currentClaim: currentClaimSlice.reducer,
         type: typeSlice.reducer,
+        status: statusSlice.reducer,
         create: createClaimSlice.reducer,
         counter: counterReducer,
         aside: showAside.reducer,

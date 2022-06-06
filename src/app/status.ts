@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const typeFetch = createAsyncThunk("type/fetch", async () => {
+export const statusFetch = createAsyncThunk("status/fetch", async () => {
     try {
+        console.log("Now I try get status");
         const token = localStorage.getItem("token");
         const response = await fetch(
-            `${process.env.REACT_APP_API_SERVER}/types`,
+            `${process.env.REACT_APP_API_SERVER}/status`,
             {
                 headers: {
                     "Authorization": "Bearer " + token,
@@ -14,26 +15,26 @@ export const typeFetch = createAsyncThunk("type/fetch", async () => {
             },
         );
         const result = await response.json();
-        console.log("🚀 ~ result typeFetch", result);
+        console.log("🚀 ~ statusFetch", result);
         return result;
     } catch (error) {
         return error;
     }
 });
-export const typeSlice = createSlice({
-    name: "type",
+export const statusSlice = createSlice({
+    name: "status",
     initialState: {
-        type: [] as { name: string; slug: string }[],
+        status: [] as { name: string; slug: string }[],
         error: "",
     },
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(typeFetch.fulfilled, (state, action) => {
-            console.log("🚀 ~ action typeFetch", action);
+        builder.addCase(statusFetch.fulfilled, (state, action) => {
+            console.log("🚀 ~ action statusFetch", action);
             if (action.payload instanceof Error) {
                 state.error = action.payload.name;
             } else {
-                state.type = action.payload;
+                state.status = action.payload;
             }
         });
     },

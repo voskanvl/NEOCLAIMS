@@ -6,11 +6,11 @@ import { useParams } from "react-router-dom"
 type TSelect = {
     label: string,
     options?: string[],
-    selected?: string,
+    defaultValue?: string,
     onChange?: ChangeEventHandler<HTMLSelectElement>
 }
 
-export const Select: FC<TSelect> = memo(({ label, options, selected, ...props }) => {
+export const Select: FC<TSelect> = memo(({ label, options, defaultValue, ...props }) => {
     const { claimId } = useParams()
     console.log("🚀 ~ claimId", claimId)
 
@@ -18,9 +18,9 @@ export const Select: FC<TSelect> = memo(({ label, options, selected, ...props })
         <div className={style.select__wrapper} >
             <label className={style.select__label} >{label}</label>
             <div className={style.select__control} >
-                {claimId && <div className={style.mark} style={{ background: colorMap.Type.byName[selected!] }}></div>}
+                {claimId && <div className={style.mark} style={{ background: colorMap.Type.byName[defaultValue!] }}></div>}
                 <select {...props} className={claimId ? "" : style.shift}>
-                    {options && options.map(el => <option key={el} value={el} selected={el === selected}>{el}</option>)}
+                    {options && options.map(el => <option key={el} value={el} selected={el === defaultValue}>{el}</option>)}
                 </select>
             </div>
         </div>
