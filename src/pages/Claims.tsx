@@ -38,7 +38,6 @@ export const Claims: FC = (props) => {
     }, [claimsFromServer])
 
     useEffect(() => {
-        console.log("🚀 ~ fetch", fetch)
         dispatch(claimsFetch(fetch))
     }, [fetch])
 
@@ -83,9 +82,7 @@ export const Claims: FC = (props) => {
         <Aside />
         <main className={style.main}>
             <Header>
-                {/* <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch({ search: ev.currentTarget.value }))} /> */}
                 <Input label="" svg={svg.search} onChange={handleInput} />
-                {/* <Input label="" svg={svg.search} onChange={ev => console.log(ev.currentTarget.value)} /> */}
             </Header>
             {error
                 ? <div>{error}</div>
@@ -145,4 +142,3 @@ export const Claims: FC = (props) => {
     </div>
 
 }
-//TODO: пагинация при поисковом запросе
