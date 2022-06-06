@@ -4,43 +4,21 @@ import { RootState } from "./store";
 
 const STEP = 10; //volume claims in request
 
-// export const claimsNextFetch = createAsyncThunk(
-//     "claims/next",
-//     async (page: number) => {
-//         try {
-//             const token = localStorage.getItem("token");
-//             const response = await fetch(
-//                 `${
-//                     process.env.REACT_APP_API_SERVER
-//                 }/claim?limit=${STEP}&offset=${page * STEP}`,
-//                 {
-//                     headers: {
-//                         "Authorization": "Bearer " + token,
-//                         "Content-Type": "application/json",
-//                     },
-//                     mode: "cors",
-//                 },
-//             );
-//             const result = await response.json();
-//             console.log("🚀 ~ result", result);
-//             return result;
-//         } catch (error) {
-//             return error;
-//         }
-//     },
-// );
+export type TFetchArgs = {
+    search?: string;
+    page?: number | undefined;
+};
 export const claimsFetch = createAsyncThunk(
     "claims/fetch",
-    async (page?: number | undefined, thunkApi?) => {
+    async ({ search = "", page = 0 }: TFetchArgs, thunkApi?) => {
         page = page || 0;
+        const STEP = (thunkApi.getState() as RootState).claims.claimsPerPage;
         try {
-            const STEP = (thunkApi.getState() as RootState).claims
-                .claimsPerPage;
             const token = localStorage.getItem("token");
             const response = await fetch(
                 `${
                     process.env.REACT_APP_API_SERVER
-                }/claim?limit=${STEP}&offset=${page * STEP}`,
+                }/claim?search=${search}&limit=${STEP}&offset=${page * STEP}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -59,11 +37,18 @@ export const claimsFetch = createAsyncThunk(
 );
 export const claimsSearch = createAsyncThunk(
     "claims/search",
-    async (search: string) => {
+    async (
+        { search, page }: { search: string; page?: number | undefined },
+        thunkApi?,
+    ) => {
+        page = page || 0;
+        const STEP = (thunkApi.getState() as RootState).claims.claimsPerPage;
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-                `${process.env.REACT_APP_API_SERVER}/claim?search=${search}`,
+                `${
+                    process.env.REACT_APP_API_SERVER
+                }/claim?search=${search}&limit=${STEP}&offset=${page * STEP}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -99,26 +84,19 @@ export const claimsSlice = createSlice({
             if ("message" in action.payload || "code" in action.payload) {
                 state.error = action.payload;
             } else {
-                state.page = action.meta.arg ?? 0;
+                state.page = action.meta.arg.page ?? 0;
                 state.claims = action.payload.claims;
                 state.totalItems = action.payload.totalItems;
             }
         });
-        // builder.addCase(claimsNextFetch.fulfilled, (state, action) => {
-        //     console.log("🚀 ~ claimsNextFetch.fulfilled action", action);
-        //     if ("message" in action.payload && "code" in action.payload) {
-        //         state.error = action.payload.error;
-        //     } else {
-        //         state.page = action.meta.arg;
-        //         state.claims = action.payload.claims;
-        //         state.totalItems = action.payload.totalItems;
-        //     }
-        // });
         builder.addCase(claimsSearch.fulfilled, (state, action) => {
-            if ("message" in action.payload && "code" in action.payload) {
-                state.error = action.payload.error;
+            if (action.payload instanceof Error) {
+                state.error = action.payload.name;
             } else {
+                console.log(action);
+                state.page = action.meta.arg.page || 0;
                 state.claims = action.payload.claims;
+                state.totalItems = action.payload.totalItems;
             }
         });
     },

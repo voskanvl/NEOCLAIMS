@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, FC, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { claimsFetch, claimsSearch } from "../app/claims"
+import { claimsFetch, claimsSearch, TFetchArgs } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { shallowFlat } from "../helpers/shallowFlat"
@@ -18,24 +18,29 @@ import ReactPaginate from "react-paginate"
 
 export const Claims: FC = (props) => {
     const [claims, setClaims] = useState<Claim[]>()
+    const [fetch, setFetch] = useState<TFetchArgs>({})
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
-    const claimsFromServer = useAppSelector(state => state.claims.claims)
     const error = useAppSelector(state => state.login.user.error)
-    const totalItems = useAppSelector(state => state.claims.totalItems)
+    const { totalItems, claimsPerPage, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
         if (isTokenCorrect(true)) {
-            dispatch(claimsFetch())
+            dispatch(claimsFetch({}))
         } else {
             navigate("/")
         }
     }, [dispatch, navigate])
 
     useEffect(() => {
-        return setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
+        setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
     }, [claimsFromServer])
+
+    useEffect(() => {
+        console.log("🚀 ~ fetch", fetch)
+        dispatch(claimsFetch(fetch))
+    }, [fetch])
 
     const sort = (field: keyof Claim): void => {
         const asc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
@@ -70,13 +75,17 @@ export const Claims: FC = (props) => {
         <use xlinkHref="/icon-sprite.svg#plus"></use>
     </svg>
 
-    const handlePageClick = ({ selected }: { selected: number }) => dispatch(claimsFetch(selected))
-
+    // const handle = ({ search,page }: TFetchArgs) => dispatch(claimsFetch())
+    const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
+        setFetch(state => ({ ...state, search: ev.target.value }))
+    }
     return <div className={style.layout}>
         <Aside />
         <main className={style.main}>
             <Header>
-                <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch(ev.currentTarget.value))} />
+                {/* <Input label="" svg={svg.search} onChange={ev => dispatch(claimsSearch({ search: ev.currentTarget.value }))} /> */}
+                <Input label="" svg={svg.search} onChange={handleInput} />
+                {/* <Input label="" svg={svg.search} onChange={ev => console.log(ev.currentTarget.value)} /> */}
             </Header>
             {error
                 ? <div>{error}</div>
@@ -123,7 +132,7 @@ export const Claims: FC = (props) => {
                             <ReactPaginate
                                 breakLabel="..."
                                 nextLabel=">"
-                                onPageChange={handlePageClick}
+                                onPageChange={({ selected }) => setFetch(state => ({ ...state, page: selected }))}
                                 pageRangeDisplayed={5}
                                 pageCount={Math.ceil(totalItems / 10)}
                                 previousLabel="<"
@@ -136,3 +145,4 @@ export const Claims: FC = (props) => {
     </div>
 
 }
+//TODO: пагинация при поисковом запросе
