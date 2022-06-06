@@ -6,7 +6,7 @@ import { show } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"
 
-const Header: FC<{ children: ReactNode }> = ({ children }) => {
+const Header: FC<{ children?: ReactNode }> = ({ children }) => {
     let userName = useAppSelector(state => state.login.user.fullName)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()

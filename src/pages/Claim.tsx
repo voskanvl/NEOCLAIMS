@@ -4,9 +4,12 @@ import { useParams } from "react-router-dom"
 import { currentClaimFetch } from "../app/claim"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { typeFetch } from "../app/type"
+import { Aside } from "../features/aside/Aside"
+import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { Select } from "../features/select/Select"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
+import style from "./claims.module.sass"
 
 export const Claim: FC = (props) => {
     const [title, setTitle] = useState('')
@@ -28,9 +31,16 @@ export const Claim: FC = (props) => {
     }, [currentClaim])
     const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
-    return <>
-        <Input label={"title"} value={title} onChange={handler(setTitle)} />
-        <Select label={'type'} options={type.map(e => e.name)} selected={currentClaim.type.name} />
-        <Input label={"description"} value={description} onChange={handler(setDescription)} />
-    </>
+    return <div className={style.layout}>
+        <Aside />
+        <main className={style.main}>
+            <Header />
+            <div className={style.block}>
+                <h1>Incoming claim</h1>
+                <Input label={"title"} value={title} onChange={handler(setTitle)} />
+                <Select label={'type'} options={type.map(e => e.name)} selected={currentClaim.type.name} />
+                <Input label={"description"} value={description} onChange={handler(setDescription)} />
+            </div>
+        </main >
+    </div >
 }

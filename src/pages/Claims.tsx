@@ -133,7 +133,7 @@ export const Claims: FC = (props) => {
                                 pageRangeDisplayed={5}
                                 pageCount={Math.ceil(totalItems / 10)}
                                 previousLabel="<"
-                                renderOnZeroPageCount={(arg) => console.log(arg)}
+                                renderOnZeroPageCount={(arg) => console.log('renderOnZeroPageCount', arg)}
                             />
                         </div>
                     </div>
