@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, FormEventHandler, memo } from "react"
+import { ChangeEventHandler, FC, memo } from "react"
 import style from "./select.module.sass"
 import colorMap from "../../helpers/colorMap"
 import { useParams } from "react-router-dom"

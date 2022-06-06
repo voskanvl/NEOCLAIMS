@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
-import logo from './logo.svg'
-import { Counter } from './features/counter/Counter'
 import './App.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isTokenCorrect } from './helpers/isTokenCorrect'
 
 function App() {
@@ -16,7 +14,7 @@ function App() {
       navigate("/login")
     }
   }, [navigate])
-  return <></>
+  return null
 
 }
 

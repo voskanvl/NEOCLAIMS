@@ -1,6 +1,6 @@
-import { ChangeEvent, ChangeEventHandler, FC, useEffect, useState } from "react"
+import { ChangeEvent, FC, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { claimsFetch, claimsSearch, TFetchArgs } from "../app/claims"
+import { claimsFetch, TFetchArgs } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import { shallowFlat } from "../helpers/shallowFlat"
@@ -14,6 +14,7 @@ import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { svg } from "../features/svg/svg"
 import ReactPaginate from "react-paginate"
+import { Error500 } from "../features/Error/Error500"
 
 
 export const Claims: FC = (props) => {
@@ -21,16 +22,12 @@ export const Claims: FC = (props) => {
     const [fetch, setFetch] = useState<TFetchArgs>({})
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
     const error = useAppSelector(state => state.login.user.error)
-    const { totalItems, claimsPerPage, claims: claimsFromServer } = useAppSelector(state => state.claims)
+    const { totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (isTokenCorrect(true)) {
-            dispatch(claimsFetch({}))
-        } else {
-            navigate("/")
-        }
+        if (!isTokenCorrect(true)) navigate("/")
     }, [dispatch, navigate])
 
     useEffect(() => {
@@ -39,7 +36,7 @@ export const Claims: FC = (props) => {
 
     useEffect(() => {
         dispatch(claimsFetch(fetch))
-    }, [fetch])
+    }, [fetch, dispatch])
 
     const sort = (field: keyof Claim): void => {
         const asc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
@@ -85,7 +82,9 @@ export const Claims: FC = (props) => {
                 <Input label="" svg={svg.search} onChange={handleInput} />
             </Header>
             {error
-                ? <div>{error}</div>
+                ? <div>{
+                    error === 'Failed to fetch' && <Error500 />
+                }</div>
                 : <section className={style.claims}>
                     <div className={style.line}>
                         <h1 className={style.title}>Your claims</h1>

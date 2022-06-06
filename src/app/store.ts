@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
 import { loginSlice } from "./login";
 import { claimsSlice } from "./claims";
 import { currentClaimSlice } from "./claim";
@@ -16,7 +15,6 @@ export const store = configureStore({
         type: typeSlice.reducer,
         status: statusSlice.reducer,
         create: createClaimSlice.reducer,
-        counter: counterReducer,
         aside: showAside.reducer,
     },
 });
