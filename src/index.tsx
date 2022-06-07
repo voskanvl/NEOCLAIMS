@@ -18,7 +18,7 @@ root.render(
       <Provider store={store}>
         <Routes>
           <Route path='login' element={<Page.Login />} />
-          <Route path='auth' element={<Page.Auth />} />
+          <Route path='reg' element={<Page.Reg />} />
           <Route path='create' element={<Page.Create />} />
           <Route path='claims' element={<Page.Claims />} />
           <Route path='/claim/:claimId' element={<Page.Claim />} />

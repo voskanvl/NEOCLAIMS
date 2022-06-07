@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
 
 
-export const Login: FC = (props) => {
+export const Reg: FC = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -48,7 +48,7 @@ export const Login: FC = (props) => {
                     </div>
                     <Button label="Login" onClick={handlerClick} />
                     <div className={style.notAMember}>
-                        Not a member? <Link to={"/reg"}>Request registration.</Link>
+                        Not a member? <Link to={"/auth"}>Request registration.</Link>
                     </div>
                 </form>
             </section>
