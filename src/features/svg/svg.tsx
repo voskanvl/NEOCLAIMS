@@ -72,8 +72,14 @@ const search = (
         <use xlinkHref="/icon-sprite.svg#search"></use>
     </svg>
 )
+const sloganColor = (
+    <svg viewBox="0 0 165 161" width="165" height="161" fill="none">
+        <use xlinkHref="/icon-sprite.svg#sloganColor"></use>
+    </svg>
+)
 
 export const svg = {
+    sloganColor,
     slogan,
     sloganBig,
     home,
@@ -89,6 +95,7 @@ export const svg = {
     burger,
     sloganSvgFooter,
     seal,
-    email
+    email,
+
 }
 export type TSvg = typeof svg
