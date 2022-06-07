@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
-import { login } from "../app/login"
+import { reg } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
 
 
 export const Reg: FC = (props) => {
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -22,11 +23,10 @@ export const Reg: FC = (props) => {
             navigate('/claims')
     }, [user])
 
-    const inputHandler: FormEventHandler<HTMLInputElement> = (ev: FormEvent<HTMLInputElement>) => setEmail(ev.currentTarget.value)
     const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
         console.log(email, password)
-        dispatch(login({ email, password }))
+        dispatch(reg({ fullName: name, email, password }))
     }
     return <div className={style.screen}>
         <main className={style.layout}>
@@ -38,6 +38,7 @@ export const Reg: FC = (props) => {
             <section className={style.layout__right}>
                 <form className={style.panel}>
                     <div>{svg.sloganColor}</div>
+                    <Input label={"full name"} placeholder={"Type your full name"} onChange={ev => setName(ev.currentTarget.value)} />
                     <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
                     <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} type="password" />
                     <div className={style.checkbox}>
