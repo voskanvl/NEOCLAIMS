@@ -1,4 +1,4 @@
-import { FC, FormEvent, FormEventHandler, useState, MouseEvent, useEffect } from "react"
+import { FC, useState, MouseEvent, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
@@ -22,7 +22,6 @@ export const Login: FC = (props) => {
             navigate('/claims')
     }, [user])
 
-    const inputHandler: FormEventHandler<HTMLInputElement> = (ev: FormEvent<HTMLInputElement>) => setEmail(ev.currentTarget.value)
     const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
         console.log(email, password)

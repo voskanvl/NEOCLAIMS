@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TClaim } from "../types/type";
 import { RootState } from "./store";
 
-const STEP = 10; //volume claims in request
-
 export type TFetchArgs = {
     search?: string;
     page?: number | undefined;
