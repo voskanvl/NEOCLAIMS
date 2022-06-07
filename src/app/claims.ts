@@ -18,7 +18,9 @@ export const claimsFetch = createAsyncThunk(
             const response = await fetch(
                 `${
                     process.env.REACT_APP_API_SERVER
-                }/claim?search=${search}&limit=${STEP}&offset=${page * STEP}`,
+                }/claim?search=${encodeURIComponent(
+                    search,
+                )}&limit=${STEP}&offset=${page * STEP}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token,
