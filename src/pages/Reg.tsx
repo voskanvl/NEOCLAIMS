@@ -38,7 +38,7 @@ export const Reg: FC = (props) => {
             <section className={style.layout__right}>
                 <form className={style.panel}>
                     <div>{svg.sloganColor}</div>
-                    <Input label={"full name"} placeholder={"Type your full name"} onChange={ev => setName(ev.currentTarget.value)} />
+                    <Input svg={svg.name} label={"full name"} placeholder={"Type your full name"} onChange={ev => setName(ev.currentTarget.value)} />
                     <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setEmail(ev.currentTarget.value)} />
                     <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setPassword(ev.currentTarget.value)} type="password" />
                     <div className={style.checkbox}>
