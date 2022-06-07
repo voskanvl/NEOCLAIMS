@@ -47,7 +47,7 @@ export const Login: FC = (props) => {
                         </div>
                         <label className={style.checkbox__label}>Keep me logged in</label>
                     </div>
-                    <Button label="Login" onClick={handlerClick} preload={preload} />
+                    <Button label="Login" onClick={handlerClick} preload={preload} error={!!user.error} errorMessage={user.error} />
                     <div className={style.notAMember}>
                         Not a member? <Link to={"/reg"}>Request registration.</Link>
                     </div>
