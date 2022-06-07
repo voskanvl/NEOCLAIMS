@@ -11,6 +11,7 @@ import { svg } from "../features/svg/svg"
 export const Login: FC = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [preload, setPreload] = useState<boolean>(false)
 
     const user = useAppSelector(state => state.login.user)
     const dispatch = useAppDispatch()
@@ -26,6 +27,7 @@ export const Login: FC = (props) => {
         ev.preventDefault()
         console.log(email, password)
         dispatch(login({ email, password }))
+        setPreload(true)
     }
     return <div className={style.screen}>
         <main className={style.layout}>
@@ -45,7 +47,7 @@ export const Login: FC = (props) => {
                         </div>
                         <label className={style.checkbox__label}>Keep me logged in</label>
                     </div>
-                    <Button label="Login" onClick={handlerClick} />
+                    <Button label="Login" onClick={handlerClick} preload={preload} />
                     <div className={style.notAMember}>
                         Not a member? <Link to={"/reg"}>Request registration.</Link>
                     </div>

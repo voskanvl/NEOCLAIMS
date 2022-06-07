@@ -11,3 +11,11 @@
         cursor: pointer
         font-size: 18px
         font-weight: 600
+    &__preloading
+        background: linear-gradient(to left,#7DB59A 0%, #aadbc2 50%, #7DB59A 100%)
+        transition: background
+        animation: preloading 2s infinite linear
+
+@keyframes preloading
+    100%
+        background-position: 454px 0
