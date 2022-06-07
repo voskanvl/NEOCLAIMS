@@ -22,9 +22,12 @@ export const Claims: FC = (props) => {
     const [fetch, setFetch] = useState<TFetchArgs>({})
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
     const error = useAppSelector(state => state.login.user.error)
+    const { claimsPerPage } = useAppSelector(state => state.claims)
     const { totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const [forcePage, setForcePage] = useState<number>(0)
 
     useEffect(() => {
         if (!isTokenCorrect(true)) navigate("/")
@@ -32,35 +35,42 @@ export const Claims: FC = (props) => {
 
     useEffect(() => {
         setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
+        didSort?.attribute && setClaims(state => sortMethod[didSort.method](state!, didSort.attribute))
     }, [claimsFromServer])
 
     useEffect(() => {
         dispatch(claimsFetch(fetch))
     }, [fetch, dispatch])
 
+    const asc = (arr: any[], field: keyof Claim) => arr && [...arr].sort((a, b) => {
+        if (a[field] > b[field]) { return 1 }
+        if (a[field] < b[field]) { return -1 }
+        return 0
+    })
+    const desc = (arr: any[], field: keyof Claim) => arr && [...arr].sort((a, b) => {
+        if (a[field] < b[field]) { return 1 }
+        if (a[field] > b[field]) { return -1 }
+        return 0
+    })
+
+    const sortMethod = {
+        asc, desc
+    }
+
     const sort = (field: keyof Claim): void => {
-        const asc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
-            if (a[field] > b[field]) { return 1 }
-            if (a[field] < b[field]) { return -1 }
-            return 0
-        })
-        const desc = (field: keyof Claim) => claims && [...claims].sort((a, b) => {
-            if (a[field] < b[field]) { return 1 }
-            if (a[field] > b[field]) { return -1 }
-            return 0
-        })
+
         if (didSort?.attribute === field && didSort?.method === 'desc') {
-            setClaims(asc(field))
+            setClaims(asc(claims!, field))
             setDidSort({ attribute: field, method: 'asc' })
             return
         }
         if (didSort?.attribute === field && didSort?.method === 'asc') {
-            setClaims(desc(field))
+            setClaims(desc(claims!, field))
             setDidSort({ attribute: field, method: 'desc' })
             return
         }
         if (didSort?.attribute !== field) {
-            setClaims(asc(field))
+            setClaims(asc(claims!, field))
             setDidSort({ attribute: field, method: 'asc' })
             return
         }
@@ -73,12 +83,15 @@ export const Claims: FC = (props) => {
 
     // const handle = ({ search,page }: TFetchArgs) => dispatch(claimsFetch())
     const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
-        setFetch(state => ({ ...state, search: ev.target.value }))
+        console.log(forcePage)
+        setForcePage(0)
+        setFetch(state => ({ ...state, search: ev.target.value, page: 0 }))
     }
     return <div className={style.layout}>
         <Aside />
         <main className={style.main}>
             <Header>
+                <input onChange={(ev) => setForcePage(+ev.currentTarget.value)} />
                 <Input label="" svg={svg.search} onChange={handleInput} />
             </Header>
             {error
@@ -126,11 +139,12 @@ export const Claims: FC = (props) => {
                         }
                         <div className={style.pagination}>
                             <ReactPaginate
+                                forcePage={forcePage}
                                 breakLabel="..."
                                 nextLabel=">"
                                 onPageChange={({ selected }) => setFetch(state => ({ ...state, page: selected }))}
                                 pageRangeDisplayed={5}
-                                pageCount={Math.ceil(totalItems / 10)}
+                                pageCount={Math.ceil(totalItems / claimsPerPage)}
                                 previousLabel="<"
                                 renderOnZeroPageCount={(arg) => console.log('renderOnZeroPageCount', arg)}
                             />
