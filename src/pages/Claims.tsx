@@ -83,7 +83,7 @@ export const Claims: FC = (props) => {
             </Header>
             {error
                 ? <div>{
-                    error === 'Failed to fetch' && <Error500 />
+                    error === 'Failed to fetch' ? <Error500 /> : error
                 }</div>
                 : <section className={style.claims}>
                     <div className={style.line}>
