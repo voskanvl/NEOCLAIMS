@@ -8,9 +8,12 @@ export type TFetchArgs = {
 };
 export const claimsFetch = createAsyncThunk(
     "claims/fetch",
-    async ({ search = "", page = 0 }: TFetchArgs, thunkApi?) => {
+    async (
+        { search = "", page = 0 }: TFetchArgs,
+        { rejectWithValue, getState },
+    ) => {
         page = page || 0;
-        const STEP = (thunkApi.getState() as RootState).claims.claimsPerPage;
+        const STEP = (getState() as RootState).claims.claimsPerPage;
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(
@@ -31,37 +34,7 @@ export const claimsFetch = createAsyncThunk(
             console.log("🚀 ~ result", result);
             return result;
         } catch (error) {
-            return error;
-        }
-    },
-);
-export const claimsSearch = createAsyncThunk(
-    "claims/search",
-    async (
-        { search, page }: { search: string; page?: number | undefined },
-        thunkApi?,
-    ) => {
-        page = page || 0;
-        const STEP = (thunkApi.getState() as RootState).claims.claimsPerPage;
-        try {
-            const token = localStorage.getItem("token");
-            const response = await fetch(
-                `${
-                    process.env.REACT_APP_API_SERVER
-                }/claim?search=${search}&limit=${STEP}&offset=${page * STEP}`,
-                {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                    mode: "cors",
-                },
-            );
-            const result = await response.json();
-            console.log("🚀 ~ result", result);
-            return result;
-        } catch (error) {
-            return error;
+            return rejectWithValue(error);
         }
     },
 );
@@ -89,15 +62,8 @@ export const claimsSlice = createSlice({
                 state.totalItems = action.payload.totalItems;
             }
         });
-        builder.addCase(claimsSearch.fulfilled, (state, action) => {
-            if (action.payload instanceof Error) {
-                state.error = action.payload.name;
-            } else {
-                console.log(action);
-                state.page = action.meta.arg.page || 0;
-                state.claims = action.payload.claims;
-                state.totalItems = action.payload.totalItems;
-            }
+        builder.addCase(claimsFetch.rejected, (state, action) => {
+            state.error = action.error.name!;
         });
     },
 });
