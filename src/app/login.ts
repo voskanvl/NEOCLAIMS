@@ -1,5 +1,9 @@
-import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { idText } from "typescript";
+import {
+    AsyncThunk,
+    createAsyncThunk,
+    createSlice,
+    PayloadAction,
+} from "@reduxjs/toolkit";
 
 export type TUser = {
     token: string;
@@ -14,13 +18,26 @@ export type TUser = {
 };
 export type TError = { message: string; code: string };
 export type TReg = { email: string; password: string; fullName: string };
-export const reg: AsyncThunk<any, TReg, {}> = createAsyncThunk(
+
+const inCaseError = (
+    state: StateType,
+    action: {
+        type: string;
+        payload?: any;
+        error: { name?: string; message?: string; code?: string };
+    },
+) => {
+    // state.user.error =
+    //     action.error.name || action.error.message || action.error.code || "";
+    if ("message" in action.payload) state.user.error = action.payload.message;
+};
+
+export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(
     "user/reg",
-    async props => {
-        const { email, password, fullName } = props;
+    async ({ email, password, fullName }, { rejectWithValue }) => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_API_SERVER}/auth/login`,
+                `${process.env.REACT_APP_API_SERVER}/auth/registration`,
                 {
                     method: "POST",
                     body: JSON.stringify({ email, password, fullName }),
@@ -32,13 +49,17 @@ export const reg: AsyncThunk<any, TReg, {}> = createAsyncThunk(
             const result = await response.json();
             return result;
         } catch (error) {
-            return error;
+            return rejectWithValue(error);
         }
     },
 );
-export const login: AsyncThunk<any, { email: string; password: string }, {}> =
-    createAsyncThunk("user/login", async (props, thunkAPI) => {
-        const { email, password } = props;
+export const loginFetch: AsyncThunk<
+    any,
+    { email: string; password: string },
+    {}
+> = createAsyncThunk(
+    "user/login",
+    async ({ email, password }, { rejectWithValue }) => {
         try {
             const response = await fetch(
                 `${process.env.REACT_APP_API_SERVER}/auth/login`,
@@ -53,9 +74,10 @@ export const login: AsyncThunk<any, { email: string; password: string }, {}> =
             const result = await response.json();
             return result;
         } catch (error) {
-            return error;
+            return rejectWithValue(error);
         }
-    });
+    },
+);
 export const currentUser = createAsyncThunk("user/user", async (id: string) => {
     try {
         const token = localStorage.getItem("token");
@@ -92,44 +114,33 @@ export const loginSlice = createSlice({
     },
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(reg.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action.payload instanceof Error, action);
-            if (action.payload instanceof Error) {
-                state.user.error = action.payload.message;
-            } else {
-                state.user = action.payload;
-                if (action.payload.token) {
-                    //сохраняем токен и время получения
-                    localStorage.setItem("token", action.payload.token);
-                    localStorage.setItem("created", Date.now().toString());
-                }
+        builder.addCase(regFetch.fulfilled, (state, action) => {
+            state.user = action.payload;
+            if (action.payload.token) {
+                //сохраняем токен и время получения
+                localStorage.setItem("token", action.payload.token);
+                localStorage.setItem("created", Date.now().toString());
             }
         });
-        builder.addCase(login.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action.payload instanceof Error, action);
-            if (action.payload instanceof Error) {
-                state.user.error = action.payload.message;
-            } else {
-                state.user = action.payload;
-                if (action.payload.token) {
-                    //сохраняем токен и время получения
-                    localStorage.setItem("token", action.payload.token);
-                    localStorage.setItem("created", Date.now().toString());
-                }
+        builder.addCase(regFetch.rejected, inCaseError);
+        builder.addCase(loginFetch.fulfilled, (state, action) => {
+            state.user = action.payload;
+            if (action.payload.token) {
+                //сохраняем токен и время получения
+                localStorage.setItem("token", action.payload.token);
+                localStorage.setItem("created", Date.now().toString());
             }
         });
+        builder.addCase(loginFetch.rejected, inCaseError);
         builder.addCase(currentUser.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action.payload instanceof Error, action);
-            if (action.payload instanceof Error) {
-                state.user.error = action.payload.message;
-            } else {
-                state.user = action.payload;
-                if (action.payload.token) {
-                    //сохраняем токен и время получения
-                    localStorage.setItem("token", action.payload.token);
-                    localStorage.setItem("created", Date.now().toString());
-                }
+            state.user = action.payload;
+            if (action.payload.token) {
+                //сохраняем токен и время получения
+                localStorage.setItem("token", action.payload.token);
+                localStorage.setItem("created", Date.now().toString());
             }
         });
+        builder.addCase(currentUser.rejected, inCaseError);
     },
 });
+type StateType = ReturnType<typeof loginSlice.getInitialState>;
