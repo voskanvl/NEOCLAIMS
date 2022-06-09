@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
-import { reg } from "../app/login"
+import { regFetch } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
 
@@ -26,7 +26,7 @@ export const Reg: FC = (props) => {
     const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
         console.log(email, password)
-        dispatch(reg({ fullName: name, email, password }))
+        dispatch(regFetch({ fullName: name, email, password }))
     }
     return <div className={style.screen}>
         <main className={style.layout}>

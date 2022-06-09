@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./login.module.sass"
-import { login } from "../app/login"
+import { loginFetch } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
 
@@ -26,7 +26,7 @@ export const Login: FC = (props) => {
     const handlerClick = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
         console.log(email, password)
-        dispatch(login({ email, password }))
+        dispatch(loginFetch({ email, password }))
         setPreload(true)
     }
     return <div className={style.screen}>
