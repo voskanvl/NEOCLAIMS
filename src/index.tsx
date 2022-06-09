@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals'
 import './index.module.sass'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Page from "./pages"
+import { Input } from './features/input/Input'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
@@ -17,8 +18,8 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
-          <Route path='login' element={<Page.Login />} />
-          <Route path='reg' element={<Page.Reg />} />
+          <Route path='login' element={<Page.LoginReg />} />
+          <Route path='reg' element={<Page.LoginReg FullNameInput={Input} />} />
           <Route path='create' element={<Page.Create />} />
           <Route path='claims' element={<Page.Claims />} />
           <Route path='/claim/:claimId' element={<Page.Claim />} />
