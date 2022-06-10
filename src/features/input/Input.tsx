@@ -9,7 +9,7 @@ type TInput = JSX.IntrinsicElements["input"] & {
     onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-export const Input: FC<TInput> = memo(({ svg, label, ...props }) => {
+export const Input: FC<TInput> = ({ svg, label, ...props }) => {
     return (
         <div className={style.input__wrapper} >
             <label className={style.input__label} >{label}</label>
@@ -19,4 +19,4 @@ export const Input: FC<TInput> = memo(({ svg, label, ...props }) => {
             </div>
         </div>
     )
-})
+}
