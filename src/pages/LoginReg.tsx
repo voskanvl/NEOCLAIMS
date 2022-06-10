@@ -42,9 +42,9 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                 <form className={style.panel}>
                     <div>{svg.sloganColor}</div>
                     {/* <Input svg={svg.name} label={"full name"} placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} /> */}
-                    {fullNameInput && <Input label="full name" placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} />}
-                    <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setAttribs(state => ({ ...state, email: ev.currentTarget.value }))} />
-                    <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setAttribs(state => ({ ...state, password: ev.currentTarget.value }))} type="password" />
+                    {fullNameInput && <Input label="full name" placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.target.value }))} />}
+                    <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setAttribs(state => ({ ...state, email: ev.target.value }))} />
+                    <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setAttribs(state => ({ ...state, password: ev.target.value }))} type="password" />
                     <div className={style.checkbox}>
                         <div className={style.checkbox__decorator}>
                             <input className={style.checkbox__input} type="checkbox" />
