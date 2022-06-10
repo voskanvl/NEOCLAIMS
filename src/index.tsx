@@ -19,7 +19,7 @@ root.render(
       <Provider store={store}>
         <Routes>
           <Route path='login' element={<Page.LoginReg />} />
-          <Route path='reg' element={<Page.LoginReg FullNameInput={Input} />} />
+          <Route path='reg' element={<Page.LoginReg fullNameInput={true} />} />
           <Route path='create' element={<Page.Create />} />
           <Route path='claims' element={<Page.Claims />} />
           <Route path='/claim/:claimId' element={<Page.Claim />} />

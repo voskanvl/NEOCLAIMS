@@ -8,9 +8,9 @@ import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
 
 type TLoginReg = {
-    FullNameInput?: typeof Input,
+    fullNameInput?: boolean,
 }
-export const LoginReg: FC<TLoginReg> = ({ FullNameInput }) => {
+export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
     const [{ fullName, email, password }, setAttribs] = useState<{ fullName?: string, email?: string, password?: string }>({ fullName: undefined, email: undefined, password: undefined })
     const [preload, setPreload] = useState<boolean>(false)
 
@@ -42,7 +42,7 @@ export const LoginReg: FC<TLoginReg> = ({ FullNameInput }) => {
                 <form className={style.panel}>
                     <div>{svg.sloganColor}</div>
                     {/* <Input svg={svg.name} label={"full name"} placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} /> */}
-                    {FullNameInput && <FullNameInput label="full name" placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} />}
+                    {fullNameInput && <Input label="full name" placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} />}
                     <Input svg={svg.email} label={"e-mail"} placeholder={"Type your e-mail"} onChange={ev => setAttribs(state => ({ ...state, email: ev.currentTarget.value }))} />
                     <Input svg={svg.seal} label={"password"} placeholder={"Type your password"} onChange={ev => setAttribs(state => ({ ...state, password: ev.currentTarget.value }))} type="password" />
                     <div className={style.checkbox}>
