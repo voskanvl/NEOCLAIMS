@@ -21,7 +21,7 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
 
     const logout = () => {
         localStorage.clear()
-        navigate('/')
+        navigate('/login')
     }
 
     return <header className={style.header}>
