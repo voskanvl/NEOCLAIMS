@@ -6,6 +6,7 @@ import style from "./login.module.sass"
 import { loginFetch, regFetch } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
+import { isTokenCorrect } from "../helpers/isTokenCorrect"
 
 type TLoginReg = {
     fullNameInput?: boolean,
@@ -20,7 +21,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (user.token && !user.error)
+        if (isTokenCorrect(true) && !user.error)
             navigate('/claims')
     }, [user])
 
