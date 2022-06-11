@@ -7,6 +7,7 @@ import { typeFetch } from "../app/type"
 import { Aside } from "../features/aside/Aside"
 import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
+import { Layout } from "../features/layout/Layout"
 import { Select } from "../features/select/Select"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import style from "./claims.module.sass"
@@ -53,21 +54,17 @@ export const Claim: FC = (props) => {
         }
     }
 
-    return <div className={style.layout}>
-        <Aside />
-        <main className={style.main}>
-            <Header />
-            <div className={style.block}>
-                <h1>Incoming claim</h1>
-                <Input label={"title"} value={title} onChange={handler(setTitle)} />
-                <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} />
-                <Input label={"description"} value={description} onChange={handler(setDescription)} />
-                <div className={style.create__controls}>
-                    <button className={style.create__cancel} onClick={changeStatus('in-progress')}>Cancel</button>
-                    <button className={style.create__create} disabled={role.slug === 'work'} onClick={changeStatus('done')}>Done</button>
-                    <button className={style.create__decline} disabled={(role.slug === 'work')} onClick={changeStatus('decl')}>Decline</button>
-                </div>
+    return <Layout>
+        <div className={style.block}>
+            <h1>Incoming claim</h1>
+            <Input label={"title"} value={title} onChange={handler(setTitle)} />
+            <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} />
+            <Input label={"description"} value={description} onChange={handler(setDescription)} />
+            <div className={style.create__controls}>
+                <button className={style.create__cancel} onClick={changeStatus('in-progress')}>Cancel</button>
+                <button className={style.create__create} disabled={role.slug === 'work'} onClick={changeStatus('done')}>Done</button>
+                <button className={style.create__decline} disabled={(role.slug === 'work')} onClick={changeStatus('decl')}>Decline</button>
             </div>
-        </main >
-    </div >
+        </div>
+    </Layout>
 }

@@ -1,14 +1,14 @@
-import { ReactNode } from "react"
+import { ReactNode, memo } from "react"
 import { FC } from "react"
 import { Aside } from "../aside/Aside"
 import Header from "../header/Header"
-import style from "./styles/claims.module.sass"
+import style from "../../pages/claims.module.sass"
 
 type TLayout = {
-    headerChildren: ReactNode,
-    children: ReactNode
+    headerChildren?: ReactNode,
+    children?: ReactNode
 }
-export const Layout: FC<TLayout> = ({ headerChildren, children }) => {
+export const Layout: FC<TLayout> = memo(({ headerChildren, children }) => {
     return <div className={style.layout}>
         <Aside />
         <main className={style.main}>
@@ -18,4 +18,5 @@ export const Layout: FC<TLayout> = ({ headerChildren, children }) => {
             {children}
         </main>
     </div>
-}
+})
+

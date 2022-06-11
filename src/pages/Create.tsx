@@ -8,6 +8,7 @@ import { typeFetch } from "../app/type"
 import { Aside } from "../features/aside/Aside"
 import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
+import { Layout } from "../features/layout/Layout"
 import { Select } from "../features/select/Select"
 import style from "./claims.module.sass"
 
@@ -44,19 +45,15 @@ export const Create: FC = (props) => {
 
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
-    return <div className={style.layout}>
-        <Aside />
-        <main className={style.main}>
-            <Header />
-            <div className={style.block}>
-                <Input label={"title"} value={title} onChange={handler(setTitle)} />
-                <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
-                <Input label={"description"} value={description} onChange={handler(setDescription)} />
-                <div className={style.create__controls}>
-                    <button className={style.create__cancel} onClick={() => navigate(-1)}>Cancel</button>
-                    <button className={style.create__create} onClick={() => dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))}>Create</button>
-                </div>
+    return <Layout>
+        <div className={style.block}>
+            <Input label={"title"} value={title} onChange={handler(setTitle)} />
+            <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
+            <Input label={"description"} value={description} onChange={handler(setDescription)} />
+            <div className={style.create__controls}>
+                <button className={style.create__cancel} onClick={() => navigate(-1)}>Cancel</button>
+                <button className={style.create__create} onClick={() => dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))}>Create</button>
             </div>
-        </main>
-    </div>
+        </div>
+    </Layout>
 }
