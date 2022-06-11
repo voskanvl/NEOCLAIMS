@@ -83,7 +83,6 @@ export const Claims: FC = (props) => {
 
     // const handle = ({ search,page }: TFetchArgs) => dispatch(claimsFetch())
     const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
-        console.log(forcePage)
         setForcePage(0)
         setFetch(state => ({ ...state, search: ev.target.value, page: 0 }))
     }
@@ -91,7 +90,6 @@ export const Claims: FC = (props) => {
         <Aside />
         <main className={style.main}>
             <Header>
-                <input onChange={(ev) => setForcePage(+ev.currentTarget.value)} />
                 <Input label="" svg={svg.search} onChange={handleInput} />
             </Header>
             {error
