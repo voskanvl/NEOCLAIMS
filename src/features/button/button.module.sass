@@ -11,6 +11,10 @@
         cursor: pointer
         font-size: 18px
         font-weight: 600
+        &[disabled]
+            filter: grayscale(0.5)
+            cursor: default
+            pointer-events: none
     &__preloading
         background: linear-gradient(to left,#7DB59A 0%, #aadbc2 50%, #7DB59A 100%)
         transition: background
