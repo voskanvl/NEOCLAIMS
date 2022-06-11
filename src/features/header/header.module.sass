@@ -4,56 +4,57 @@
     column-gap: 20px
     align-items: center
     justify-content: flex-end
-
     border-bottom: 1px solid #C2C2C2
     padding: 24px 24px 24px 0
     @media screen and ( max-width: 1024px )
         background: #7DB59A
         color: #fff
-.children
-    width: calc(585 / 1920 * 100%)
-    & > *
-        margin: 0
-        padding: 0
-        & > div
+
+    &__children
+        width: calc(585 / 1920 * 100%)
+        & > *
             margin: 0
             padding: 0
-    & div[class^="input"]
-        margin-top: 0
-    @media screen and ( max-width: 1024px )
-        display: none
-.logout
-    width: 40px
-    height: 40px
-    border: none
-    background: none
-    cursor: pointer
-    @media screen and ( max-width: 1024px )
-        display: none
-    & > svg
-        width: 100%
-
-.face
-    width: 50px
-    height: 50px
-    border-radius: 50%
-    background: url("https://fakeface.rest/thumb/view") no-repeat
-    background-size: cover
-.bell,.logout
-    & > svg
-        stroke: #5C5C5C
+            & > div
+                margin: 0
+                padding: 0
+        & div[class^="input"]
+            margin-top: 0
         @media screen and ( max-width: 1024px )
-            stroke: #fff
-.name
-    @media screen and ( max-width: 1024px )
-        display: none
+            display: none
 
-.burger
-    background: none
-    display: none
-    border: none
-    cursor: pointer
-    position: absolute
-    left: 1rem
-    @media screen and ( max-width: 1024px )
-        display: block
+    &__logout
+        width: 40px
+        height: 40px
+        border: none
+        background: none
+        cursor: pointer
+        & > svg
+            width: 100%
+
+    &__face
+        width: 50px
+        height: 50px
+        border-radius: 50%
+        background: url("https://fakeface.rest/thumb/view") no-repeat
+        background-size: cover
+
+    &__bell,&__logout
+        & > svg
+            stroke: #5C5C5C
+            @media screen and ( max-width: 1024px )
+                stroke: #fff
+
+    &__name
+        @media screen and ( max-width: 1024px )
+            display: none
+
+    &__burger
+        background: none
+        display: none
+        border: none
+        cursor: pointer
+        position: absolute
+        left: 1rem
+        @media screen and ( max-width: 1024px )
+            display: block

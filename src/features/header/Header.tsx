@@ -25,12 +25,12 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
     }
 
     return <header className={style.header}>
-        <button className={style.burger} onClick={() => dispatch(show())}>{svg.burger}</button>
-        <div className={style.children}>{children}</div>
-        <div className={style.bell}>{svg.bell}</div>
-        <div className={style.face}></div>
-        <div className={style.name}>{userName}</div>
-        <button className={style.logout} onClick={logout}>{svg.logout}</button>
+        <button className={style.header__burger} onClick={() => dispatch(show())}>{svg.burger}</button>
+        <div className={style.header__children}>{children}</div>
+        <div className={style.header__bell}>{svg.bell}</div>
+        <div className={style.header__face}></div>
+        <div className={style.header__name}>{userName}</div>
+        <button className={style.header__logout} onClick={logout}>{svg.logout}</button>
     </header>
 }
 
