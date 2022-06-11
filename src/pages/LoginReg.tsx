@@ -30,7 +30,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
             navigate('/claims')
     }, [user])
 
-    const validForm = validFullName === Valid.valid && validEMail === Valid.valid && validPassword === Valid.valid
+    const validForm = (fullNameInput ? validFullName === Valid.valid : true) && validEMail === Valid.valid && validPassword === Valid.valid
 
     const submit = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
@@ -88,7 +88,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         </div>
                         <label className={style.checkbox__label}>Keep me logged in</label>
                     </div>
-                    <Button label="Login" onClick={submit} preload={preload} error={!!user.error} errorMessage={user.error} disabled={(validFullName + validEMail + validPassword) !== 3} />
+                    <Button label="Login" onClick={submit} preload={preload} error={!!user.error} errorMessage={user.error} disabled={!validForm} />
                     <div className={style.notAMember}>
                         Not a member? <Link to={"/reg"}>Request registration.</Link>
                     </div>
