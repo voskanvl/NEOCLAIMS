@@ -35,19 +35,21 @@ export const Claim: FC = (props) => {
     }, [currentClaim])
 
     useEffect(() => {
-        console.log("🚀 ~ status", status)
         if (!status.length) dispatch(statusFetch())
     }, [status])
 
+    // useEffect(() => {
+    //     if (role.slug === "admin" && currentClaim.status.slug === 'new') changeStatus('in-progress', false)
+    //     console.log('change status in-progress')
+    // }, [])
+
     const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
-    const changeStatus = (newStatus: string) => () => {
+    const changeStatus = (newStatus: string, done = true) => () => {
         const selectedStatus = status.find(e => e.name === newStatus || e.slug === newStatus)
-        console.log("🚀 ~ selectedStatus", newStatus, selectedStatus)
         if (selectedStatus) {
-            //insert  ----    role.slug !== 'work'
             dispatch(changeClaimFetch({ ...currentClaim, status: selectedStatus }))
-            navigate(-1)
+            if (done) navigate(-1)
         }
     }
 
@@ -61,7 +63,7 @@ export const Claim: FC = (props) => {
                 <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} />
                 <Input label={"description"} value={description} onChange={handler(setDescription)} />
                 <div className={style.create__controls}>
-                    <button className={style.create__cancel} onClick={() => navigate(-1)}>Cancel</button>
+                    <button className={style.create__cancel} onClick={changeStatus('in-progress')}>Cancel</button>
                     <button className={style.create__create} disabled={role.slug === 'work'} onClick={changeStatus('done')}>Done</button>
                     <button className={style.create__decline} disabled={(role.slug === 'work')} onClick={changeStatus('decl')}>Decline</button>
                 </div>
