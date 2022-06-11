@@ -5,11 +5,13 @@ type TInput = JSX.IntrinsicElements["input"] & {
     svg?: JSX.Element,
     label: string,
     value?: string,
+    errorName?: string,
+    error?: boolean,
     onInput?: FormEventHandler<HTMLInputElement>,
     onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-export const Input: FC<TInput> = ({ svg, label, ...props }) => {
+export const Input: FC<TInput> = ({ svg, label, error, errorName, ...props }) => {
     return (
         <div className={style.input__wrapper} >
             <label className={style.input__label} >{label}</label>
@@ -17,6 +19,7 @@ export const Input: FC<TInput> = ({ svg, label, ...props }) => {
                 <input {...props} />
                 {svg}
             </div>
+            <label className={style.input__error}>{!error && errorName}</label>
         </div>
     )
 }
