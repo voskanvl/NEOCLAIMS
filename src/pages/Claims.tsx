@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, TFetchArgs } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
@@ -9,8 +9,6 @@ import style from "./claims.module.sass"
 import ColorMap from "../helpers/colorMap"
 import SortControl from "../features/sortControl/SortControl"
 import ClaimCard from "../features/claimCard/claimCard"
-import { Aside } from "../features/aside/Aside"
-import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { svg } from "../features/svg/svg"
 import ReactPaginate from "react-paginate"
@@ -30,9 +28,18 @@ export const Claims: FC = (props) => {
 
     const [forcePage, setForcePage] = useState<number>(0)
 
+    const { page } = useParams()
+
+    useEffect(() => {
+        console.log("🚀 ~ page", page)
+        setFetch(state => ({ ...state, page: Number(page) }))
+        dispatch(claimsFetch(fetch))
+        setForcePage(+page! - 1)
+    }, [page])
+
     useEffect(() => {
         if (!isTokenCorrect(true)) navigate("/")
-    }, [dispatch, navigate])
+    }, [navigate])
 
     useEffect(() => {
         setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
@@ -100,7 +107,7 @@ export const Claims: FC = (props) => {
                         <span className={style.createButton__title}>Create claim</span>
                     </button></div>
                 <div className={style.table}>
-                    {matchMedia('(min-width: 769px)').matches && <div className={`${style.row} ${style.head}`}>
+                    {matchMedia('(min-width: 1024px)').matches && <div className={`${style.row} ${style.head}`}>
 
                         <button className={style.table__button} onClick={() => sort('title')}>
                             <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
@@ -133,10 +140,10 @@ export const Claims: FC = (props) => {
                     }
                     <div className={style.pagination}>
                         <ReactPaginate
-                            forcePage={forcePage}
+                            forcePage={forcePage + 1}
                             breakLabel="..."
                             nextLabel=">"
-                            onPageChange={({ selected }) => setFetch(state => ({ ...state, page: selected }))}
+                            onPageChange={({ selected }) => navigate("/claims/" + selected)}
                             pageRangeDisplayed={5}
                             pageCount={Math.ceil(totalItems / claimsPerPage)}
                             previousLabel="<"
@@ -146,20 +153,4 @@ export const Claims: FC = (props) => {
                 </div>
             </section>}
     </Layout>
-
-
-
-
-
-
-    // <div className={style.layout}>
-    //     <Aside />
-    //     <main className={style.main}>
-    //         <Header>
-    //             <Input label="" svg={svg.search} onChange={handleInput} />
-    //         </Header>
-
-    //     </main>
-    // </div>
-
 }

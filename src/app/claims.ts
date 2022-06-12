@@ -31,7 +31,6 @@ export const claimsFetch = createAsyncThunk(
                 },
             );
             const result = await response.json();
-            console.log("🚀 ~ result", result);
             return result;
         } catch (error) {
             return rejectWithValue(error);

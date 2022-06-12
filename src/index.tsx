@@ -21,7 +21,9 @@ root.render(
           <Route path='login' element={<Page.LoginReg />} />
           <Route path='reg' element={<Page.LoginReg fullNameInput={true} />} />
           <Route path='create' element={<Page.Create />} />
-          <Route path='claims' element={<Page.Claims />} />
+          <Route path='claims' element={<Page.Claims />}>
+            <Route path=':page' element={<Page.Claims />} />
+          </Route>
           <Route path='/claim/:claimId' element={<Page.Claim />} />
           <Route path='/' element={<App />} />
         </Routes>
@@ -40,3 +42,4 @@ reportWebVitals()
 //TODO: ловить ошибку неактуальности токена с сервера
 //TODO: валидация форм
 //TODO: обнуление пагинации при поиске
+//TODO: связать пагинацию с роутингом /claims/{page} -> pagination
