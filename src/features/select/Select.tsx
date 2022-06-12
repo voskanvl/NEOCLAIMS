@@ -7,15 +7,15 @@ type TSelect = {
     label: string,
     options?: string[],
     defaultValue?: string,
-    onChange?: ChangeEventHandler<HTMLSelectElement>
+    onChange?: ChangeEventHandler<HTMLSelectElement>,
+    className?: string
 }
 
-export const Select: FC<TSelect> = memo(({ label, options, defaultValue, ...props }) => {
+export const Select: FC<TSelect> = memo(({ label, options, defaultValue, className, ...props }) => {
     const { claimId } = useParams()
-    console.log("🚀 ~ claimId", claimId)
 
     return (
-        <div className={style.select__wrapper} >
+        <div className={`${style.select__wrapper} ${className}`} >
             <label className={style.select__label} >{label}</label>
             <div className={style.select__control} >
                 {claimId && <div className={style.mark} style={{ background: colorMap.Type.byName[defaultValue!] }}></div>}

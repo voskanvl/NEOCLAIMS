@@ -15,20 +15,13 @@ export const Aside = memo(() => {
     ]
     const show = useAppSelector(state => state.aside.show)
     const match = matchMedia('(max-width: 1024px)').matches
-    /*
-        show | match | reuslt
-         0      0       1
-         0      1       0
-         1      0       1   
-         1      1       1
-    */
     const display = !(!show && match)
     return <div className={style.aside} style={{ display: display ? 'flex' : 'none' }}>
-        <a className={style.slogan} href="#">{svg.slogan}</a>
+        <a className={style.aside__slogan} href="#">{svg.slogan}</a>
         {
-            refs.map(e => <a className={style.item} href="#" key={e.slug}>
-                <span className={style.img}>{svg[e.slug]}</span>
-                <span className={style.name}>{e.name}</span>
+            refs.map(e => <a className={style.aside__item} href="#" key={e.slug}>
+                <span className={style.aside__img}>{svg[e.slug]}</span>
+                <span className={style.aside__name}>{e.name}</span>
             </a>)
         }
     </div >

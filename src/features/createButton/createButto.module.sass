@@ -1,0 +1,30 @@
+.createButton
+    display: flex
+    align-items: center
+    color: #fff
+    font-size: 18px
+    font-weight: 600
+    background: #7DB59A
+    padding-right: 16px
+    border-radius: 16px
+    border: none
+    cursor: pointer
+    @media screen and ( max-width: 1024px )
+        padding-right: 0
+        width: 48px
+        height: 48px
+    &__cross
+        position: relative
+        @media screen and ( max-width: 1024px )
+            width: 100%
+        & > svg
+            @media screen and ( max-width: 1024px )
+                width: 100%
+                position: absolute
+                top: 50%
+                left: 45%
+                transform: translate(-50%,-50%)
+
+    &__title
+        @media screen and ( max-width: 1024px )
+            display: none

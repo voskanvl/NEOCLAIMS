@@ -11,6 +11,7 @@ import { Layout } from "../features/layout/Layout"
 import { Select } from "../features/select/Select"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
 import style from "./claims.module.sass"
+import create from "./styles/create.module.sass"
 
 export const Claim: FC = (props) => {
     const [title, setTitle] = useState('')
@@ -39,12 +40,8 @@ export const Claim: FC = (props) => {
         if (!status.length) dispatch(statusFetch())
     }, [status])
 
-    // useEffect(() => {
-    //     if (role.slug === "admin" && currentClaim.status.slug === 'new') changeStatus('in-progress', false)
-    //     console.log('change status in-progress')
-    // }, [])
-
-    const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
+    const handler = useCallback((eventHandler: Function) =>
+        (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
     const changeStatus = (newStatus: string, done = true) => () => {
         const selectedStatus = status.find(e => e.name === newStatus || e.slug === newStatus)
@@ -55,15 +52,28 @@ export const Claim: FC = (props) => {
     }
 
     return <Layout>
-        <div className={style.block}>
-            <h1>Incoming claim</h1>
+        <div className={style.claim__block}> <h1>Incoming claim</h1>
             <Input label={"title"} value={title} onChange={handler(setTitle)} />
             <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} />
             <Input label={"description"} value={description} onChange={handler(setDescription)} />
             <div className={style.create__controls}>
-                <button className={style.create__cancel} onClick={changeStatus('in-progress')}>Cancel</button>
-                <button className={style.create__create} disabled={role.slug === 'work'} onClick={changeStatus('done')}>Done</button>
-                <button className={style.create__decline} disabled={(role.slug === 'work')} onClick={changeStatus('decl')}>Decline</button>
+                <button
+                    className={create.create__cancel}
+                    onClick={changeStatus('in-progress')}>
+                    Cancel
+                </button>
+                <button
+                    className={create.create__create}
+                    disabled={role.slug === 'work'}
+                    onClick={changeStatus('done')}>
+                    Done
+                </button>
+                <button
+                    className={create.create__decline}
+                    disabled={(role.slug === 'work')}
+                    onClick={changeStatus('decl')}>
+                    Decline
+                </button>
             </div>
         </div>
     </Layout>

@@ -9,6 +9,8 @@
         background: #E1F3EA
     &.head
         background: #F1F1F1
+        @media screen and ( max-width: 1024px )
+            display: none
 .table
     &__button
         // background: #F1F1F1
@@ -40,35 +42,6 @@
         align-items: center
     &__buttonName
         margin-right: 1em
-.createButton
-    display: flex
-    align-items: center
-    color: #fff
-    font-size: 18px
-    font-weight: 600
-    background: #7DB59A
-    padding-right: 16px
-    border-radius: 16px
-    border: none
-    @media screen and ( max-width: 1024px )
-        padding-right: 0
-        width: 48px
-        height: 48px
-    &__cross
-        position: relative
-        @media screen and ( max-width: 1024px )
-            width: 100%
-        & > svg
-            @media screen and ( max-width: 1024px )
-                width: 100%
-                position: absolute
-                top: 50%
-                left: 45%
-                transform: translate(-50%,-50%)
-
-    &__title
-        @media screen and ( max-width: 1024px )
-            display: none
 
 .line
     display: flex
@@ -83,69 +56,10 @@
     width: 100%
     padding: 0 56px 0 64px
     overflow-y: auto
-.pagination
-    position: absolute
-    right: 3rem
-    bottom: 0.5rem
 
-    display: flex
-    align-items: center
-    justify-content: flex-end
-    @media screen and ( max-width: 1024px )
-        display: none
-
-    & > ul
-        display: flex
-        align-items: center
-        column-gap: 8px
-        & > li
-            list-style: none
-            padding: 7px
-            border-radius: 2px
-            border: 1px solid #D9D9D9
-            width: 32px
-            height: 32px
-            display: flex
-            align-items: center
-            justify-content: center
-            cursor: pointer
-            position: relative
-            & > a::before
-                content: ""
-                position: absolute
-                inset: 0
-
-        & > li[class="selected"]
-            border: 1px solid #7DB59A
-.block
+.claim__block
     margin-left: 4rem
     max-width: 589px
-.create
-    &__controls
-        margin-top: 3rem
-        display: flex
-        column-gap: 1.5rem
-        & > *
-            border-radius: 1rem
-            width: 82px
-            height: 48px
-            border: none
-            background: none
-            font-size: 18px
-            font-weight: bold
-            cursor: pointer
-            &[disabled]
-                filter: grayscale(0.9)
-                cursor: default
-
-    &__cancel
-        border: 1px solid #ADADAD
-    &__create
-        background: #7DB59A
-        color: #fff
-    &__decline
-        background: #E84393
-        color: #fff
 
 .link
     & > a

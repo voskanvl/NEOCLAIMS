@@ -20,7 +20,6 @@ export const changeClaimFetch = createAsyncThunk(
                 },
             );
             const result = await response.json();
-            console.log("🚀 ~ result", result);
             return result;
         } catch (error) {
             return error;
@@ -43,7 +42,6 @@ export const currentClaimFetch = createAsyncThunk(
                 },
             );
             const result = await response.json();
-            console.log("🚀 ~ result", result);
             return result;
         } catch (error) {
             return error;
@@ -75,7 +73,6 @@ export const currentClaimSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(currentClaimFetch.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action);
             if (action.payload instanceof Error) {
                 state.error = action.payload.name;
             } else {

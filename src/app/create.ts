@@ -11,8 +11,6 @@ type TCreate = {
 export const createFetch = createAsyncThunk(
     "create/fetch",
     async (body: TCreate) => {
-        console.log("🚀 ~ body", body);
-
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(
@@ -28,7 +26,6 @@ export const createFetch = createAsyncThunk(
                 },
             );
             const result = await response.json();
-            console.log("🚀 ~ result", result);
             return result;
         } catch (error) {
             return error;
@@ -49,7 +46,6 @@ export const createClaimSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(createFetch.fulfilled, (state, action) => {
-            console.log("🚀 ~ action", action);
             if ("message" in action.payload && "code" in action.payload) {
                 state.error = action.payload.error;
             } else {

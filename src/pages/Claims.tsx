@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, TFetchArgs } from "../app/claims"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
@@ -14,6 +14,8 @@ import { svg } from "../features/svg/svg"
 import ReactPaginate from "react-paginate"
 import { Error500 } from "../features/Error/Error500"
 import { Layout } from "../features/layout/Layout"
+import paginationStyle from "./styles/pagination.module.sass"
+import { CreateButton } from "../features/createButton/CreateButton"
 
 
 export const Claims: FC = (props) => {
@@ -25,21 +27,22 @@ export const Claims: FC = (props) => {
     const { totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [forcePage, setForcePage] = useState<number>(0)
 
     const { page } = useParams()
 
+
     useEffect(() => {
-        console.log("🚀 ~ page", page)
         setFetch(state => ({ ...state, page: Number(page) }))
         dispatch(claimsFetch(fetch))
-        setForcePage(+page! - 1)
+        if (page) setForcePage(+page! - 1)
     }, [page])
 
     useEffect(() => {
         if (!isTokenCorrect(true)) navigate("/")
-    }, [navigate])
+    }, [location])
 
     useEffect(() => {
         setClaims(claimsFromServer.map((e: TClaim) => shallowFlat(e, 'name') as Claim))
@@ -85,14 +88,11 @@ export const Claims: FC = (props) => {
 
     }
 
-    const plus = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
-        <use xlinkHref="/icon-sprite.svg#plus"></use>
-    </svg>
 
     // const handle = ({ search,page }: TFetchArgs) => dispatch(claimsFetch())
     const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
-        setForcePage(0)
         setFetch(state => ({ ...state, search: ev.target.value, page: 0 }))
+        navigate("/claims/0")
     }
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
         {error
@@ -102,12 +102,9 @@ export const Claims: FC = (props) => {
             : <section className={style.claims}>
                 <div className={style.line}>
                     <h1 className={style.title}>Your claims</h1>
-                    <button className={`${style.createButton}`} onClick={() => navigate('/create')}>
-                        <span className={style.createButton__cross}>{plus}</span>
-                        <span className={style.createButton__title}>Create claim</span>
-                    </button></div>
+                    <CreateButton /></div>
                 <div className={style.table}>
-                    {matchMedia('(min-width: 1024px)').matches && <div className={`${style.row} ${style.head}`}>
+                    <div className={`${style.row} ${style.head}`}>
 
                         <button className={style.table__button} onClick={() => sort('title')}>
                             <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
@@ -123,7 +120,7 @@ export const Claims: FC = (props) => {
 
                         </button>
                         <button className={style.table__button}>Action</button>
-                    </div>}
+                    </div>
                     {
                         matchMedia('(max-width: 1024px)').matches
                             ? claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)
@@ -138,7 +135,7 @@ export const Claims: FC = (props) => {
                                 <div className={style.link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
                             </div>)
                     }
-                    <div className={style.pagination}>
+                    <div className={paginationStyle.pagination}>
                         <ReactPaginate
                             forcePage={forcePage + 1}
                             breakLabel="..."

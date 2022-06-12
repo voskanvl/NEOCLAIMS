@@ -82,6 +82,9 @@ const name = (
         <use xlinkHref="/icon-sprite.svg#name"></use>
     </svg>
 )
+const plus = <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+    <use xlinkHref="/icon-sprite.svg#plus"></use>
+</svg>
 
 export const svg = {
     sloganColor,
@@ -101,7 +104,8 @@ export const svg = {
     sloganSvgFooter,
     seal,
     email,
-    name
+    name,
+    plus
 
 }
 export type TSvg = typeof svg

@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const statusFetch = createAsyncThunk("status/fetch", async () => {
     try {
-        console.log("Now I try get status");
         const token = localStorage.getItem("token");
         const response = await fetch(
             `${process.env.REACT_APP_API_SERVER}/status`,
@@ -15,7 +14,6 @@ export const statusFetch = createAsyncThunk("status/fetch", async () => {
             },
         );
         const result = await response.json();
-        console.log("🚀 ~ statusFetch", result);
         return result;
     } catch (error) {
         return error;
@@ -30,7 +28,6 @@ export const statusSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(statusFetch.fulfilled, (state, action) => {
-            console.log("🚀 ~ action statusFetch", action);
             if (action.payload instanceof Error) {
                 state.error = action.payload.name;
             } else {

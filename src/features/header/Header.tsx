@@ -14,7 +14,6 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
         const token = localStorage.getItem('token')
         if (!userName) {
             const id = JSON.parse(atob(token!.split(".")[1])).id
-            console.log("🚀 ~ id", id)
             dispatch(currentUser(id))
         }
     }, [userName, dispatch])

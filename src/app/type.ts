@@ -14,7 +14,6 @@ export const typeFetch = createAsyncThunk("type/fetch", async () => {
             },
         );
         const result = await response.json();
-        console.log("🚀 ~ result typeFetch", result);
         return result;
     } catch (error) {
         return error;
@@ -29,7 +28,6 @@ export const typeSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(typeFetch.fulfilled, (state, action) => {
-            console.log("🚀 ~ action typeFetch", action);
             if (action.payload instanceof Error) {
                 state.error = action.payload.name;
             } else {

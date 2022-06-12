@@ -10,7 +10,7 @@ import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { Layout } from "../features/layout/Layout"
 import { Select } from "../features/select/Select"
-import style from "./claims.module.sass"
+import style from "./styles/create.module.sass"
 
 export const Create: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
@@ -39,17 +39,14 @@ export const Create: FC = (props) => {
         }
     }, [dispatch, created])
 
-    useEffect(() => {
-        console.log('title,typeVal,description', getSlug(typeVal), title, typeVal, description)
-    }, [title, typeVal, description])
-
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
     return <Layout>
-        <div className={style.block}>
-            <Input label={"title"} value={title} onChange={handler(setTitle)} />
-            <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} />
-            <Input label={"description"} value={description} onChange={handler(setDescription)} />
+        <div className={style.create}>
+            <h1 className={style.create__title}>Creating new claim</h1>
+            <Input label={"title"} value={title} onChange={handler(setTitle)} className={style.create__control} />
+            <Select label={'type'} options={type.map(e => e.name)} onChange={hadlerSelect} className={style.create__control} />
+            <Input label={"description"} value={description} onChange={handler(setDescription)} className={style.create__control} />
             <div className={style.create__controls}>
                 <button className={style.create__cancel} onClick={() => navigate(-1)}>Cancel</button>
                 <button className={style.create__create} onClick={() => dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))}>Create</button>
