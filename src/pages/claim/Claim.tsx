@@ -1,15 +1,15 @@
 import { ChangeEvent, FC, SetStateAction, useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { changeClaimFetch, currentClaimFetch } from "../app/claim"
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { statusFetch } from "../app/status"
-import { typeFetch } from "../app/type"
-import { Input } from "../features/input/Input"
-import { Layout } from "../features/layout/Layout"
-import { Select } from "../features/select/Select"
-import { isTokenCorrect } from "../helpers/isTokenCorrect"
-import claimStyle from "./styles/claim.module.sass"
-import create from "./styles/create.module.sass"
+import { changeClaimFetch, currentClaimFetch } from "../../app/claim"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { statusFetch } from "../../app/status"
+import { typeFetch } from "../../app/type"
+import { Input } from "../../features/input/Input"
+import { Layout } from "../../features/layout/Layout"
+import { Select } from "../../features/select/Select"
+import { isTokenCorrect } from "../../helpers/isTokenCorrect"
+import claimStyle from "./claim.module.sass"
+import create from "../create/create.module.sass"
 
 export const Claim: FC = (props) => {
     const [title, setTitle] = useState('')
@@ -20,6 +20,7 @@ export const Claim: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
     const { role } = useAppSelector(state => state.login.user)
     const { status } = useAppSelector(state => state.status)
+    const { page } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -45,7 +46,7 @@ export const Claim: FC = (props) => {
         const selectedStatus = status.find(e => e.name === newStatus || e.slug === newStatus)
         if (selectedStatus) {
             dispatch(changeClaimFetch({ ...currentClaim, status: selectedStatus }))
-            if (done) navigate(-1)
+            if (done) navigate("/claims/" + page)
         }
     }
 
