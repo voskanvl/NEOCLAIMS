@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../features/button/Button"
 import { Input } from "../features/input/Input"
 import style from "./styles/login.module.sass"
+import footer from "./styles/footer.module.sass"
+import checkbox from "./styles/checkbox.module.sass"
 import { loginFetch, regFetch } from "../app/login"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { svg } from "../features/svg/svg"
@@ -41,15 +43,15 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
         }
 
     }
-    return <div className={style.screen}>
-        <main className={style.layout}>
+    return <div className={style.login__screen}>
+        <main className={style.login__layout}>
             {matchMedia('(min-width: 1024px)').matches &&
-                <section className={style.layout__left}>
+                <section className={style.login__layoutLeft}>
                     <img src="/cod_home_section2-1536x1491 1.svg" alt="big logo" />
                 </section>
             }
-            <section className={style.layout__right}>
-                <form className={style.panel}>
+            <section className={style.login__layoutRight}>
+                <form className={style.login__panel}>
                     <div>{svg.sloganColor}</div>
                     {/* <Input svg={svg.name} label={"full name"} placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} /> */}
                     {fullNameInput && <Input
@@ -60,6 +62,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         onChange={ev => setAttribs(state => ({ ...state, fullName: ev.target.value }))}
                         onInput={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
                         onBlur={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
+                        className={style.login__control}
                     />}
                     <Input
                         svg={svg.email}
@@ -70,6 +73,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         onChange={ev => setAttribs(state => ({ ...state, email: ev.target.value }))}
                         onInput={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
                         onBlur={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
+                        className={style.login__control}
                     />
                     <Input
                         svg={svg.seal}
@@ -81,22 +85,30 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         type="password"
                         onInput={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}
                         onBlur={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}
+                        className={style.login__control}
                     />
-                    <div className={style.checkbox}>
-                        <div className={style.checkbox__decorator}>
-                            <input className={style.checkbox__input} type="checkbox" />
+                    <div className={checkbox.checkbox}>
+                        <div className={checkbox.checkbox__decorator}>
+                            <input className={checkbox.checkbox__input} type="checkbox" />
                         </div>
-                        <label className={style.checkbox__label}>Keep me logged in</label>
+                        <label className={checkbox.checkbox__label}>Keep me logged in</label>
                     </div>
-                    <Button label="Login" onClick={submit} preload={preload} error={!!user.error} errorMessage={user.error} disabled={!validForm} />
-                    <div className={style.notAMember}>
+                    <Button
+                        label="Login"
+                        onClick={submit}
+                        preload={preload}
+                        error={!!user.error}
+                        errorMessage={user.error}
+                        disabled={!validForm}
+                    />
+                    <div className={style.login__notAMember}>
                         Not a member? <Link to={"/reg"}>Request registration.</Link>
                     </div>
                 </form>
             </section>
         </main>
-        <footer className={style.footer}>
-            <div className={style.fooler__logo}>{svg.sloganSvgFooter}</div>
+        <footer className={footer.footer}>
+            <div className={footer.fooler__logo}>{svg.sloganSvgFooter}</div>
         </footer>
     </div>
 }

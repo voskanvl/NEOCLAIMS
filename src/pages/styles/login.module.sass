@@ -4,74 +4,65 @@
     justify-content: center
 *,*::before,*::after
     box-sizing: border-box
-.container
-    +center
-    height: 100vh
+
+.login
+    &__control
+        margin-top: 36px
+        @media screen and ( max-width: 1024px )
+            margin-top: 24px
+
+    &__panel
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        max-width: 466px
+        padding: 0
+        flex: 1 1 100%
+
+    &__screen
+        height: 100vh
+        display: flex
+        flex-direction: column
+
+    &__layout
+        display: grid
+        grid-template-columns: repeat(2,1fr)
+        flex: 1 1 100%
+
+        &Right
+            +center
+
+        &Left
+            +center
+            background: rgba(211, 237, 225, 0.97)
+            & > img
+                max-width: 699px
+                width: 100%
+
+        @media screen and ( max-width: 1024px)
+            grid-template-columns: 1fr
+
+    &__notAMember
+        margin-top: 1em
+        text-align: center
+
 svg
     width: 100%
-.wrap
-    margin-bottom: 96px
-    width: 100%
-.panel
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    max-width: 466px
-    padding: 0
-    flex: 1 1 100%
 
-.checkbox
-    width: 100%
-    display: flex
-    align-items: center
-    margin-top: 28px
-    &__input
-        width: 18px
-        height: 18px
-        margin: 11px
-    &__label
-        font-size: 14px
-.submit
-    width: 100%
-    &__control
-        background: #7DB59A
-        color: #fff
-        border: none
-        border-radius: 16px
-        width: 100%
-        height: 52px
-.notAMember
-    margin-top: 1em
-    text-align: center
-.layout
-    display: grid
-    grid-template-columns: repeat(2,1fr)
-    flex: 1 1 100%
-    &__right
-        +center
-    &__left
-        +center
-        background: rgba(211, 237, 225, 0.97)
-        & > img
-            max-width: 699px
-            width: 100%
-    @media screen and ( max-width: 1024px)
-        grid-template-columns: 1fr
+// .container
+//     +center
+//     height: 100vh
+// .wrap
+//     margin-bottom: 96px
+//     width: 100%
 
-.footer
-    background: #7DB59A
-    display: flex
-    justify-content: flex-start
-    padding: 16px 30px
-    height: 91px
-    &__logo
-        fill: #fff
-        stroke: #fff
-        & > path
-            fill: #fff
-            stroke: #fff
-.screen
-    height: 100vh
-    display: flex
-    flex-direction: column
+// .submit
+//     width: 100%
+//     &__control
+//         background: #7DB59A
+//         color: #fff
+//         border: none
+//         border-radius: 16px
+//         width: 100%
+//         height: 52px
