@@ -4,13 +4,11 @@ import { changeClaimFetch, currentClaimFetch } from "../app/claim"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { statusFetch } from "../app/status"
 import { typeFetch } from "../app/type"
-import { Aside } from "../features/aside/Aside"
-import Header from "../features/header/Header"
 import { Input } from "../features/input/Input"
 import { Layout } from "../features/layout/Layout"
 import { Select } from "../features/select/Select"
 import { isTokenCorrect } from "../helpers/isTokenCorrect"
-import style from "./claims.module.sass"
+import claimStyle from "./styles/claim.module.sass"
 import create from "./styles/create.module.sass"
 
 export const Claim: FC = (props) => {
@@ -52,11 +50,11 @@ export const Claim: FC = (props) => {
     }
 
     return <Layout>
-        <div className={style.claim__block}> <h1>Incoming claim</h1>
-            <Input label={"title"} value={title} onChange={handler(setTitle)} />
-            <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} />
-            <Input label={"description"} value={description} onChange={handler(setDescription)} />
-            <div className={style.create__controls}>
+        <div className={claimStyle.claim__block}> <h1 className={claimStyle.claim__title}>Incoming claim</h1>
+            <Input label={"title"} value={title} onChange={handler(setTitle)} className={claimStyle.claim__control} />
+            <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} className={claimStyle.claim__control} />
+            <Input label={"description"} value={description} onChange={handler(setDescription)} className={claimStyle.claim__control} />
+            <div className={create.create__controls}>
                 <button
                     className={create.create__cancel}
                     onClick={changeStatus('in-progress')}>

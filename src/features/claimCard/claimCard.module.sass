@@ -1,38 +1,70 @@
-.container
-    box-shadow: 0 4px 8px #0004
-    margin: 24px 17px
-    border-radius: 1rem
-.row
-    display: flex
-    align-items: center
-    justify-content: space-between
-    &:not(:last-child)
-        margin-bottom: 24px
-.title
-    text-align: center
-    background: #7DB59A
-    color: #fff
-    border-radius: 1rem 1rem 0 0
-    padding: 6px 0
-    font-weight: bold
-.rowLeft
-    font-weight: bold
-.mark
-    width: 1rem
-    height: 1rem
-    display: inline-block
-    border-radius: 50%
-    margin-right: 0.5rem
-.rowRight
-    display: flex
-    align-items: center
-.claimCard__button
-    border-radius: 1rem
-    border: 1px solid #ADADAD
-    color: #858585
-    font-size: 18px
-    font-weight: bold
-    background: none
-    padding: 8px
-.body
-    padding: 24px 16px
+.claimCard
+
+    &__container
+        box-shadow: 0 4px 8px #0004
+        margin: 24px 17px
+        border-radius: 1rem
+
+    &__row
+        display: flex
+        align-items: center
+        justify-content: space-between
+        &:not(:last-child)
+            margin-bottom: 24px
+
+    &__title
+        text-align: center
+        background: #7DB59A
+        color: #fff
+        border-radius: 1rem 1rem 0 0
+        padding: 6px 0
+        font-weight: bold
+
+    &__rowLeft
+        font-weight: bold
+
+    &__mark
+        width: 1rem
+        height: 1rem
+        display: inline-block
+        border-radius: 50%
+        margin-right: 0.5rem
+
+    &__rowRight
+        display: flex
+        align-items: center
+
+    &__button
+        border-radius: 1rem
+        border: 1px solid #ADADAD
+        color: #858585
+        font-size: 18px
+        font-weight: bold
+        background: none
+        padding: 8px
+
+    &__body
+        padding: 24px 16px
+
+    &__button
+        border-radius: 1rem
+        width: 82px
+        height: 48px
+        border: none
+        background: none
+        font-size: 18px
+        font-weight: bold
+        color: #858585
+        cursor: pointer
+        border: 1px solid #ADADAD
+        &[disabled]
+            filter: grayscale(0.9)
+            cursor: default
+
+    &__status
+        font-size: 8px
+        font-weight: bold
+        padding: 7px 16px
+        letter-spacing: 2.5px
+        border-radius: 16px
+        color: #fff

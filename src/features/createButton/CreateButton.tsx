@@ -1,6 +1,6 @@
 import { memo } from "react"
 import { useNavigate } from "react-router-dom"
-import style from "./createButto.module.sass"
+import style from "./createButton.module.sass"
 import { svg } from "../svg/svg"
 
 export const CreateButton = memo(() => {
