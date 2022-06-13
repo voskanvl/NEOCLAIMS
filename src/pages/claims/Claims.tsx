@@ -34,7 +34,10 @@ export const Claims: FC = () => {
         setForcePage(Number(pageLocation || 0))
     }, [pageLocation])
 
-    const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => dispatch(search(ev.target.value))
+    const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
+        dispatch(search(ev.target.value))
+        dispatch(claimsFetch())
+    }
 
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 
