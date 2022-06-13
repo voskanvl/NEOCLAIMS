@@ -57,8 +57,8 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                     {fullNameInput && <Input
                         label="full name"
                         placeholder={"Type your full name"}
-                        error={!!validFullName}
-                        errorName={'Ошибка'}
+                        error={!validFullName}
+                        errorName={'Full name must contain only letters and spaces'}
                         onChange={ev => setAttribs(state => ({ ...state, fullName: ev.target.value }))}
                         onInput={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
                         onBlur={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
@@ -68,8 +68,8 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         svg={svg.email}
                         label={"e-mail"}
                         placeholder={"Type your e-mail"}
-                        error={!!validEMail}
-                        errorName={'Ошибка'}
+                        error={!validEMail}
+                        errorName={'Input correct e-mail'}
                         onChange={ev => setAttribs(state => ({ ...state, email: ev.target.value }))}
                         onInput={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
                         onBlur={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
@@ -79,8 +79,8 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         svg={svg.seal}
                         label={"password"}
                         placeholder={"Type your password"}
-                        error={!!validPassword}
-                        errorName={'Ошибка'}
+                        error={!validPassword}
+                        errorName={'The password must contain at least 6 characters'}
                         onChange={ev => setAttribs(state => ({ ...state, password: ev.target.value }))}
                         type="password"
                         onInput={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}

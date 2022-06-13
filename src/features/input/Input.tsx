@@ -20,7 +20,7 @@ export const Input: FC<TInput> = ({ svg, label, error, errorName, className, ...
                 <input {...props} />
                 {svg}
             </div>
-            <label className={style.input__error}>{!error && errorName}</label>
+            <label className={error ? style.input__error_show : style.input__error}>{errorName}</label>
         </div>
     )
 }
