@@ -16,6 +16,7 @@ import { Error500 } from "../features/Error/Error500"
 import { Layout } from "../features/layout/Layout"
 import paginationStyle from "./styles/pagination.module.sass"
 import { CreateButton } from "../features/createButton/CreateButton"
+import { InterSection } from "../features/interSection/InterSection"
 
 
 export const Claims: FC = (props) => {
@@ -123,7 +124,7 @@ export const Claims: FC = (props) => {
                     </div>
                     {
                         matchMedia('(max-width: 1024px)').matches
-                            ? claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)
+                            ? <InterSection>{claims?.map((el: Claim) => <ClaimCard claim={el} key={el._id} />)}</InterSection>
                             : claims?.map((el: Claim) => <div key={el._id} className={style.row}>
                                 <div>{el.title}</div>
                                 <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
