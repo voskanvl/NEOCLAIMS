@@ -64,7 +64,6 @@ export const claimsSlice = createSlice({
         },
         sort: (state, action: { type: string; payload: "asc" | "desc" }) => {
             state.sort = action.payload;
-            console.log("🚀 ~ action.payload", action.payload);
         },
     },
     extraReducers: builder => {

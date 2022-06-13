@@ -14,7 +14,6 @@ export const TableHeader = memo(() => {
 
     const sortMethod = (attribute: keyof Claim) => {
         const method: 'asc' | 'desc' = sortStore === 'asc' && columnStore === attribute ? 'desc' : 'asc'
-        console.log("🚀 ~ method", method)
         setDidSort({ attribute, method })
         dispatch(sort(method))
         dispatch(column(attribute))

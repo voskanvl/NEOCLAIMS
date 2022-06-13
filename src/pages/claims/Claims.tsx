@@ -1,13 +1,10 @@
-import { ChangeEvent, ChangeEventHandler, FC, useEffect, useState } from "react"
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
-import { claimsFetch, page, search, TFetchArgs } from "../../app/claims"
+import { ChangeEventHandler, FC, useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { claimsFetch, page, search } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
-import { shallowFlat } from "../../helpers/shallowFlat"
-import { TClaim, Claim } from "../../types/type"
 import style from "./claims.module.sass"
 import ColorMap from "../../helpers/colorMap"
-import SortControl from "../../features/sortControl/SortControl"
 import ClaimCard from "../../features/claimCard/claimCard"
 import { Input } from "../../features/input/Input"
 import { svg } from "../../features/svg/svg"
@@ -21,15 +18,11 @@ import { TableHeader } from "../../features/tableHeader/TableHeader"
 
 
 export const Claims: FC = () => {
-    // const [claims, setClaims] = useState<Claim[]>()
-    // const [fetch, setFetch] = useState<TFetchArgs>({})
-    // const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
 
     const error = useAppSelector(state => state.login.user.error)
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    // const location = useLocation()
 
     const [forcePage, setForcePage] = useState<number>(0)
 
@@ -38,6 +31,7 @@ export const Claims: FC = () => {
     useEffect(() => {
         dispatch(page(+pageLocation!))
         dispatch(claimsFetch())
+        setForcePage(Number(pageLocation || 0))
     }, [pageLocation])
 
     const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => dispatch(search(ev.target.value))
@@ -73,7 +67,7 @@ export const Claims: FC = () => {
                     }
                     <div className={paginationStyle.pagination}>
                         <ReactPaginate
-                            forcePage={forcePage + 1}
+                            forcePage={forcePage}
                             breakLabel="..."
                             nextLabel=">"
                             onPageChange={({ selected }) => navigate("/claims/" + selected)}
