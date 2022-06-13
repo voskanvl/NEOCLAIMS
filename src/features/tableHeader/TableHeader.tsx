@@ -8,12 +8,14 @@ import claimsStyle from "../../pages/claims/claims.module.sass"
 
 export const TableHeader = memo(() => {
     const dispatch = useAppDispatch()
-    const { sort: sortStore } = useAppSelector(state => state.claims)
+    const { sort: sortStore, column: columnStore } = useAppSelector(state => state.claims)
 
     const [didSort, setDidSort] = useState<{ attribute: keyof Claim, method: 'asc' | 'desc' }>()
 
     const sortMethod = (attribute: keyof Claim) => {
-        const method: 'asc' | 'desc' = sortStore === 'asc' ? 'desc' : 'asc'
+        const method: 'asc' | 'desc' = sortStore === 'asc' && columnStore === attribute ? 'desc' : 'asc'
+        console.log("🚀 ~ method", method)
+        setDidSort({ attribute, method })
         dispatch(sort(method))
         dispatch(column(attribute))
         dispatch(claimsFetch())
