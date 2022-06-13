@@ -1,15 +1,15 @@
 import { FC, MouseEvent, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { Button } from "../features/button/Button"
-import { Input } from "../features/input/Input"
-import style from "./styles/login.module.sass"
-import footer from "./styles/footer.module.sass"
-import checkbox from "./styles/checkbox.module.sass"
-import { loginFetch, regFetch } from "../app/login"
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { svg } from "../features/svg/svg"
-import { isTokenCorrect } from "../helpers/isTokenCorrect"
-import { useValidate, Valid } from "../hooks/useValidate"
+import { Button } from "../../features/button/Button"
+import { Input } from "../../features/input/Input"
+import style from "./login.module.sass"
+import footer from "../styles/footer.module.sass"
+import checkbox from "../styles/checkbox.module.sass"
+import { loginFetch, regFetch } from "../../app/login"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { svg } from "../../features/svg/svg"
+import { isTokenCorrect } from "../../helpers/isTokenCorrect"
+import { useValidate, Valid } from "../../hooks/useValidate"
 
 type TLoginReg = {
     fullNameInput?: boolean,
@@ -30,7 +30,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
     useEffect(() => {
         if (isTokenCorrect(true) && !user.error)
             navigate('/claims')
-    }, [user])
+    }, [user, navigate])
 
     const validForm = (fullNameInput ? validFullName === Valid.valid : true) && validEMail === Valid.valid && validPassword === Valid.valid
 

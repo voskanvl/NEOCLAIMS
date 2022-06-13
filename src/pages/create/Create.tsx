@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { add } from "../../app/claims"
+// import { add } from "../../app/claims"
 import { clear, createFetch } from "../../app/create"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { typeFetch } from "../../app/type"
@@ -28,13 +28,13 @@ export const Create: FC = (props) => {
         if (!type.length) dispatch(typeFetch())
     }, [type])
 
-    useEffect(() => {
-        if (Object.entries(created).length) {
-            dispatch(add(created))
-            dispatch(clear())
-            navigate('/claims')
-        }
-    }, [dispatch, created])
+    // useEffect(() => {
+    //     if (Object.entries(created).length) {
+    //         dispatch(add(created))
+    //         dispatch(clear())
+    //         navigate('/claims')
+    //     }
+    // }, [dispatch, created])
 
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 

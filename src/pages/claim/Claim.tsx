@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, SetStateAction, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { changeClaimFetch, currentClaimFetch } from "../../app/claim"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
@@ -10,6 +10,7 @@ import { Select } from "../../features/select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./claim.module.sass"
 import create from "../create/create.module.sass"
+import { claimsFetch } from "../../app/claims"
 
 export const Claim: FC = (props) => {
     const [title, setTitle] = useState('')
@@ -27,7 +28,7 @@ export const Claim: FC = (props) => {
     useEffect(() => {
         if (isTokenCorrect(true) && claimId) dispatch(currentClaimFetch(claimId))
         if (isTokenCorrect(true) && claimId) dispatch(typeFetch())
-    }, [dispatch])
+    }, [dispatch, claimId])
 
     useEffect(() => {
         setTitle(currentClaim.title)
@@ -37,7 +38,7 @@ export const Claim: FC = (props) => {
 
     useEffect(() => {
         if (!status.length) dispatch(statusFetch())
-    }, [status])
+    }, [status, dispatch])
 
     const handler = useCallback((eventHandler: Function) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
@@ -46,7 +47,8 @@ export const Claim: FC = (props) => {
         const selectedStatus = status.find(e => e.name === newStatus || e.slug === newStatus)
         if (selectedStatus) {
             dispatch(changeClaimFetch({ ...currentClaim, status: selectedStatus }))
-            if (done) navigate("/claims/" + page)
+            dispatch(claimsFetch())
+            if (done) setTimeout(() => navigate("/claims/" + page), 200)
         }
     }
 

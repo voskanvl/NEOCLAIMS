@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TClaim } from "../types/type";
+import { Claim, TClaim } from "../types/type";
 import { RootState } from "./store";
 
 export type TFetchArgs = {
@@ -7,37 +7,35 @@ export type TFetchArgs = {
     page?: number | undefined;
 };
 const claimsFetchCreator = (actionType: string) =>
-    createAsyncThunk(
-        actionType,
-        async (
-            { search = "", page = 0 }: TFetchArgs,
-            { rejectWithValue, getState },
-        ) => {
-            page = page || 0;
-            const STEP = (getState() as RootState).claims.claimsPerPage;
-            try {
-                const token = localStorage.getItem("token");
-                const response = await fetch(
-                    `${
-                        process.env.REACT_APP_API_SERVER
-                    }/claim?search=${encodeURIComponent(
-                        search,
-                    )}&limit=${STEP}&offset=${page * STEP}`,
-                    {
-                        headers: {
-                            "Authorization": "Bearer " + token,
-                            "Content-Type": "application/json",
-                        },
-                        mode: "cors",
+    createAsyncThunk(actionType, async (_, { rejectWithValue, getState }) => {
+        // page = page || 0;
+        const { column, page, search, sort, claimsPerPage } = (
+            getState() as RootState
+        ).claims;
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+                `${
+                    process.env.REACT_APP_API_SERVER
+                }/claim?search=${encodeURIComponent(
+                    search,
+                )}&limit=${claimsPerPage}&offset=${
+                    page * claimsPerPage
+                }&column=${column}&sort=${sort}`,
+                {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
                     },
-                );
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                return rejectWithValue(error);
-            }
-        },
-    );
+                    mode: "cors",
+                },
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    });
 export const claimsFetch = claimsFetchCreator("claims/fetch");
 export const claimsPushFetch = claimsFetchCreator("claims/push");
 
@@ -49,30 +47,51 @@ export const claimsSlice = createSlice({
         claimsPerPage: 10,
         page: 0,
         error: "",
+        search: "",
+        column: "",
+        sort: "asc",
+        loading: false,
     },
     reducers: {
-        add: (state, action) => {
-            state.claims.push(action.payload);
+        search: (state, action: { type: string; payload: string }) => {
+            state.search = action.payload;
+        },
+        page: (state, action: { type: string; payload: number }) => {
+            state.page = action.payload || 0;
+        },
+        column: (state, action: { type: string; payload: keyof Claim }) => {
+            state.column = action.payload;
+        },
+        sort: (state, action: { type: string; payload: "asc" | "desc" }) => {
+            state.column = action.payload;
         },
     },
     extraReducers: builder => {
         builder.addCase(claimsFetch.fulfilled, (state, action) => {
-            state.page = action.meta.arg.page ?? 0;
             state.claims = action.payload.claims;
             state.totalItems = action.payload.totalItems;
+            state.loading = false;
         });
         builder.addCase(claimsFetch.rejected, (state, action) => {
             state.error = action.error.name!;
+            state.loading = false;
+        });
+        builder.addCase(claimsFetch.pending, (state, action) => {
+            state.loading = true;
         });
         builder.addCase(claimsPushFetch.fulfilled, (state, action) => {
-            state.page = action.meta.arg.page ?? 0;
             state.claims = [...state.claims, ...action.payload.claims];
             state.totalItems = action.payload.totalItems;
+            state.loading = false;
         });
         builder.addCase(claimsPushFetch.rejected, (state, action) => {
             state.error = action.error.name!;
+            state.loading = false;
+        });
+        builder.addCase(claimsPushFetch.pending, (state, action) => {
+            state.loading = true;
         });
     },
 });
 
-export const { add } = claimsSlice.actions;
+export const { page, sort, search, column } = claimsSlice.actions;
