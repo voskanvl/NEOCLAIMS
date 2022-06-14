@@ -27,9 +27,9 @@ const inCaseError = (
         error: { name?: string; message?: string; code?: string };
     },
 ) => {
-    // state.user.error =
-    //     action.error.name || action.error.message || action.error.code || "";
-    if ("message" in action.payload) state.user.error = action.payload.message;
+    state.user.error =
+        action.error.name || action.error.message || action.error.code || "";
+    // if ("message" in action.payload) state.user.error = action.payload.message;
 };
 
 export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(

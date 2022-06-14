@@ -39,6 +39,15 @@ const claimsFetchCreator = (actionType: string) =>
 export const claimsFetch = claimsFetchCreator("claims/fetch");
 export const claimsPushFetch = claimsFetchCreator("claims/push");
 
+const inCaseError = (
+    state: { error: any; loading: boolean },
+    action: { error: { name?: string; message?: string; code?: string } },
+) => {
+    state.error =
+        action.error.name || action.error.message || action.error.code || "";
+    state.loading = false;
+};
+
 export const claimsSlice = createSlice({
     name: "claims",
     initialState: {
@@ -72,10 +81,7 @@ export const claimsSlice = createSlice({
             state.totalItems = action.payload.totalItems;
             state.loading = false;
         });
-        builder.addCase(claimsFetch.rejected, (state, action) => {
-            state.error = action.error.name!;
-            state.loading = false;
-        });
+        builder.addCase(claimsFetch.rejected, inCaseError);
         builder.addCase(claimsFetch.pending, (state, action) => {
             state.loading = true;
         });
@@ -84,10 +90,7 @@ export const claimsSlice = createSlice({
             state.totalItems = action.payload.totalItems;
             state.loading = false;
         });
-        builder.addCase(claimsPushFetch.rejected, (state, action) => {
-            state.error = action.error.name!;
-            state.loading = false;
-        });
+        builder.addCase(claimsPushFetch.rejected, inCaseError);
         builder.addCase(claimsPushFetch.pending, (state, action) => {
             state.loading = true;
         });

@@ -19,7 +19,9 @@ import { TableHeader } from "../../features/tableHeader/TableHeader"
 
 export const Claims: FC = () => {
 
-    const error = useAppSelector(state => state.login.user.error)
+    const errorLogin = useAppSelector(state => state.login.user.error)
+    const errorClaims = useAppSelector(state => state.claims.error)
+
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -29,6 +31,7 @@ export const Claims: FC = () => {
     const { page: pageLocation } = useParams()
 
     useEffect(() => {
+        if (!isTokenCorrect(true)) return navigate("/login")
         dispatch(page(+pageLocation!))
         dispatch(claimsFetch())
         setForcePage(Number(pageLocation || 0))
@@ -41,10 +44,8 @@ export const Claims: FC = () => {
 
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 
-        {error
-            ? <div>{
-                error === 'Failed to fetch' ? <Error500 /> : error
-            }</div>
+        {errorLogin || errorClaims
+            ? <Error500 />
             : <section className={style.claims__claims}>
                 <div className={style.claims__line}>
                     <h1 className={style.claims__title}>Your claims</h1>
