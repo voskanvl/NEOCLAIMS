@@ -53,7 +53,8 @@ export const Claim: FC = (props) => {
     }
 
     return <Layout>
-        <div className={claimStyle.claim__block}> <h1 className={claimStyle.claim__title}>Incoming claim</h1>
+        <div className={claimStyle.claim__block}>
+            <h1 className={claimStyle.claim__title}>Incoming claim</h1>
             <Input label={"title"} value={title} onChange={handler(setTitle)} className={claimStyle.claim__control} />
             <Select label={'type'} options={type.map(e => e.name)} defaultValue={typeVal} className={claimStyle.claim__control} />
             <Input label={"description"} value={description} onChange={handler(setDescription)} className={claimStyle.claim__control} />
