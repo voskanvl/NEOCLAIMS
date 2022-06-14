@@ -63,6 +63,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         onInput={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
                         onBlur={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
                         className={style.login__control}
+                        autoComplete={"name"}
                     />}
                     <Input
                         svg={svg.email}
@@ -74,6 +75,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         onInput={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
                         onBlur={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
                         className={style.login__control}
+                        autoComplete={"email"}
                     />
                     <Input
                         svg={svg.seal}
@@ -86,6 +88,7 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
                         onInput={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}
                         onBlur={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}
                         className={style.login__control}
+                        autoComplete={"current-password"}
                     />
                     <div className={checkbox.checkbox}>
                         <div className={checkbox.checkbox__decorator}>
