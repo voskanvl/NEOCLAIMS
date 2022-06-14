@@ -45,10 +45,11 @@ export const Claims: FC = () => {
             ? <div>{
                 error === 'Failed to fetch' ? <Error500 /> : error
             }</div>
-            : <section className={style.claims}>
-                <div className={style.line}>
-                    <h1 className={style.title}>Your claims</h1>
-                    <CreateButton /></div>
+            : <section className={style.claims__claims}>
+                <div className={style.claims__line}>
+                    <h1 className={style.claims__title}>Your claims</h1>
+                    <CreateButton />
+                </div>
                 <div className={style.table}>
                     {
                         matchMedia('(max-width: 1024px)').matches
@@ -56,15 +57,15 @@ export const Claims: FC = () => {
                             : <>
                                 <TableHeader />
                                 {claimsFromServer?.map((el) =>
-                                    <div key={el._id} className={style.row}>
+                                    <div key={el._id} className={style.claims__row}>
                                         <div>{el.title}</div>
                                         <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
-                                        <div className={style.type}>
-                                            <span className={style.mark} style={{ background: el.type?.name ? ColorMap.Type.byName[el.type?.name] : "" }}></span>
+                                        <div className={style.claims__type}>
+                                            <span className={style.claims__mark} style={{ background: el.type?.name ? ColorMap.Type.byName[el.type?.name] : "" }}></span>
                                             <span>{el.type?.name || ""}</span>
                                         </div>
-                                        <div className={style.status} style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>{el.status?.name || ""}</div>
-                                        <div className={style.link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                                        <div className={style.claims__status} style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>{el.status?.name || ""}</div>
+                                        <div className={style.claims__link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
                                     </div>)}
                             </>
                     }

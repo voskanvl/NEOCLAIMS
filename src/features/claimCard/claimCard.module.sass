@@ -4,6 +4,8 @@
         box-shadow: 0 4px 8px #0004
         margin: 24px 17px
         border-radius: 1rem
+        @media screen and ( max-width: 1024px )
+            margin: 24px 0
 
     &__row
         display: flex
@@ -62,7 +64,7 @@
             cursor: default
 
     &__status
-        font-size: 8px
+        font-size: clamp(8px, 2.13vw ,16px)
         font-weight: bold
         padding: 7px 16px
         letter-spacing: 2.5px

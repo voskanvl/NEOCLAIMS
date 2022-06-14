@@ -1,52 +1,55 @@
-.row
-    display: grid
-    grid-template-columns: repeat(5,1fr)
-    place-items: center start
-    height: 48px
-    border-bottom: 1px solid #C2C2C2
-    padding: 0 24px
-    &:not(.head):hover
-        background: #E1F3EA
-    &.head
-        background: #F1F1F1
-        @media screen and ( max-width: 1024px )
-            display: none
-
-.status
-    color: #fff
-    text-align: center
-    border-radius: 16px
-    width: 124px
-    padding: 9px 0
-    font-size: 12px
-    font-weight: 900
-.type
-    display: flex
-    align-items: center
-
-.mark
-    display: inline-block
-    width: 1em
-    height: 1em
-    border-radius: 50%
-    margin-right: 1em
-
-.line
-    display: flex
-    align-items: center
-    justify-content: space-between
-
-.title
-    font-size: 36px
-    font-weight: bold
-
 .claims
-    width: 100%
-    padding: 0 56px 0 64px
-    overflow-y: auto
+    &__claims
+        width: 100%
+        padding: 0 56px 0 64px
+        overflow-y: auto
     @media screen and ( max-width: 1024px )
         margin-top: 64px
+        padding: 0 15px
 
-.link
-    & > a
-        color: #148BFF
+    &__line
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+    &__title
+        font-size: 36px
+        font-weight: bold
+
+    &__row
+        display: grid
+        grid-template-columns: repeat(5,1fr)
+        place-items: center start
+        height: 48px
+        border-bottom: 1px solid #C2C2C2
+        padding: 0 24px
+        &:not(.head):hover
+            background: #E1F3EA
+        &.head
+            background: #F1F1F1
+            @media screen and ( max-width: 1024px )
+                display: none
+
+    &__status
+        color: #fff
+        text-align: center
+        border-radius: 16px
+        width: 124px
+        padding: 9px 0
+        font-size: 12px
+        font-weight: 900
+
+    &__type
+        display: flex
+        align-items: center
+
+    &__mark
+        display: inline-block
+        width: 1em
+        height: 1em
+        border-radius: 50%
+        margin-right: 1em
+
+    &__link
+        & > a
+            color: #148BFF

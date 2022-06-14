@@ -20,7 +20,7 @@ export const TableHeader = memo(() => {
         dispatch(claimsFetch())
     }
 
-    return <div className={`${claimsStyle.row} ${claimsStyle.head}`}>
+    return <div className={`${claimsStyle.claims__row} ${claimsStyle.head}`}>
 
         <button className={style.table__button} onClick={() => sortMethod('title')}>
             <span className={style.table__buttonName}>Title</span><SortControl sorted={didSort?.attribute === 'title' ? didSort.method : undefined} />
