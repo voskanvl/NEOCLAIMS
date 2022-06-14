@@ -1,7 +1,7 @@
-import { ChangeEventHandler, FC, FormEventHandler, memo } from "react"
+import { ChangeEventHandler, FC, FormEventHandler, InputHTMLAttributes, memo } from "react"
 import style from "./input.module.sass"
 
-type TInput = JSX.IntrinsicElements["input"] & {
+type TInput = InputHTMLAttributes<HTMLInputElement> & {
     svg?: JSX.Element,
     label: string,
     value?: string,
