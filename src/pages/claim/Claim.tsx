@@ -31,6 +31,7 @@ export const Claim: FC = (props) => {
     }, [dispatch, claimId])
 
     useEffect(() => {
+        if (!isTokenCorrect(true)) return navigate("/login")
         setTitle(currentClaim.title)
         setTypeVal(currentClaim.type.name)
         setDescription(currentClaim.description)

@@ -1,12 +1,13 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 // import { add } from "../../app/claims"
-import { clear, createFetch } from "../../app/create"
+import { createFetch } from "../../app/create"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { typeFetch } from "../../app/type"
 import { Input } from "../../features/input/Input"
 import { Layout } from "../../features/layout/Layout"
 import { Select } from "../../features/select/Select"
+import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./create.module.sass"
 
 export const Create: FC = (props) => {
@@ -22,19 +23,13 @@ export const Create: FC = (props) => {
     const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
     const hadlerSelect = useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
     useEffect(() => {
+        if (!isTokenCorrect(true)) return navigate("/login")
         if (!type.length) dispatch(typeFetch())
     }, [])
     useEffect(() => {
         if (!type.length) dispatch(typeFetch())
     }, [type])
 
-    // useEffect(() => {
-    //     if (Object.entries(created).length) {
-    //         dispatch(add(created))
-    //         dispatch(clear())
-    //         navigate('/claims')
-    //     }
-    // }, [dispatch, created])
 
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
