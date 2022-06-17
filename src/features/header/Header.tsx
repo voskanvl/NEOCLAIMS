@@ -6,7 +6,7 @@ import { show } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"
 
-const Header: FC<{ children?: ReactNode }> = ({ children }) => {
+export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
     const userName = useAppSelector(state => state.login.user.fullName)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -31,6 +31,4 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
         <div className={style.header__name}>{userName}</div>
         <button className={style.header__logout} onClick={logout}>{svg.logout}</button>
     </header>
-}
-
-export default memo(Header)
+})
