@@ -1,8 +1,8 @@
 import {
+    ActionReducerMapBuilder,
     AsyncThunk,
     createAsyncThunk,
     createSlice,
-    PayloadAction,
 } from "@reduxjs/toolkit";
 import { fullfilledHandler } from "./fullfilledHandler";
 import { request } from "./request";
@@ -93,12 +93,16 @@ export const loginSlice = createSlice({
     },
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(regFetch.fulfilled, fullfilledHandler);
-        builder.addCase(regFetch.rejected, inCaseError);
-        builder.addCase(loginFetch.fulfilled, fullfilledHandler);
-        builder.addCase(loginFetch.rejected, inCaseError);
-        builder.addCase(currentUser.fulfilled, fullfilledHandler);
-        builder.addCase(currentUser.rejected, inCaseError);
+        asyncThunkCase(builder)(regFetch);
+        asyncThunkCase(builder)(loginFetch);
+        asyncThunkCase(builder)(currentUser);
     },
 });
+
+const asyncThunkCase =
+    (builder: ActionReducerMapBuilder<any>) => (thunk: any) => {
+        builder.addCase(thunk.fulfilled, fullfilledHandler);
+        builder.addCase(thunk.rejected, inCaseError);
+    };
+
 type StateType = ReturnType<typeof loginSlice.getInitialState>;
