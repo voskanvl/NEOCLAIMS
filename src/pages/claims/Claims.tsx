@@ -30,12 +30,14 @@ export const Claims: FC = () => {
 
     const { page: pageLocation } = useParams()
 
+
     useEffect(() => {
+        console.log("dispatch(claimsFetch())")
         if (!isTokenCorrect(true)) return navigate("/login")
         dispatch(page(+pageLocation!))
         dispatch(claimsFetch())
         setForcePage(Number(pageLocation || 0))
-    }, [pageLocation])
+    }, [pageLocation, dispatch, navigate])
 
     const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
         dispatch(search(ev.target.value))
@@ -70,7 +72,8 @@ export const Claims: FC = () => {
                                     </div>)}
                             </>
                     }
-                    <div className={paginationStyle.pagination}>
+                    <div className={paginationStyle.pagination}>{
+                        forcePage < totalItems / claimsPerPage &&
                         <ReactPaginate
                             forcePage={forcePage}
                             breakLabel="..."
@@ -79,7 +82,7 @@ export const Claims: FC = () => {
                             pageRangeDisplayed={5}
                             pageCount={Math.ceil(totalItems / claimsPerPage)}
                             previousLabel="<"
-                        />
+                        />}
                     </div>
                 </div>
             </section>}
