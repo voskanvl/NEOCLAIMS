@@ -4,6 +4,7 @@ import {
     createSlice,
     PayloadAction,
 } from "@reduxjs/toolkit";
+import { request } from "./request";
 
 export type TUser = {
     token: string;
@@ -36,18 +37,7 @@ export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(
     "user/reg",
     async ({ email, password, fullName }, { rejectWithValue }) => {
         try {
-            const response = await fetch(
-                `${process.env.REACT_APP_API_SERVER}/auth/registration`,
-                {
-                    method: "POST",
-                    body: JSON.stringify({ email, password, fullName }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            const result = await response.json();
-            return result;
+            return await request("registration", { email, password, fullName });
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -61,18 +51,7 @@ export const loginFetch: AsyncThunk<
     "user/login",
     async ({ email, password }, { rejectWithValue }) => {
         try {
-            const response = await fetch(
-                `${process.env.REACT_APP_API_SERVER}/auth/login`,
-                {
-                    method: "POST",
-                    body: JSON.stringify({ email, password }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            const result = await response.json();
-            return result;
+            return await request("login", { email, password });
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -132,6 +111,7 @@ export const loginSlice = createSlice({
             }
         });
         builder.addCase(loginFetch.rejected, inCaseError);
+        // builder.addCase(loginFetch.rejected, inCaseError);
         builder.addCase(currentUser.fulfilled, (state, action) => {
             state.user = action.payload;
             if (action.payload.token) {
