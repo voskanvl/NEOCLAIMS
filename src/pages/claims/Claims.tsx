@@ -45,7 +45,7 @@ export const Claims: FC = () => {
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 
         {errorLogin || errorClaims
-            ? <Error500 />
+            ? <Error500 error={errorLogin || errorClaims} />
             : <section className={style.claims__claims}>
                 <div className={style.claims__line}>
                     <h1 className={style.claims__title}>Your claims</h1>
@@ -79,7 +79,6 @@ export const Claims: FC = () => {
                             pageRangeDisplayed={5}
                             pageCount={Math.ceil(totalItems / claimsPerPage)}
                             previousLabel="<"
-                            renderOnZeroPageCount={(arg) => console.log('renderOnZeroPageCount', arg)}
                         />
                     </div>
                 </div>
