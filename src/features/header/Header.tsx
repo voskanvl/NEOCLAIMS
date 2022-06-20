@@ -1,7 +1,7 @@
 import { FC, memo, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { currentUser } from "../../app/login"
+import { currentUser } from "../../app/loginThunks/currentUser"
 import { show } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"

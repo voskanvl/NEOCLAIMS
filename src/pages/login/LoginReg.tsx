@@ -5,11 +5,12 @@ import { Input } from "../../features/input/Input"
 import style from "./login.module.sass"
 import footer from "../styles/footer.module.sass"
 import checkbox from "../styles/checkbox.module.sass"
-import { loginFetch, regFetch } from "../../app/login"
+import { loginFetch } from "../../app/loginThunks/loginFetch"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { svg } from "../../features/svg/svg"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import { useValidate, Valid } from "../../hooks/useValidate"
+import { regFetch } from "../../app/loginThunks/regFetch"
 
 type TLoginReg = {
     fullNameInput?: boolean,
@@ -53,7 +54,6 @@ export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
             <section className={style.login__layoutRight}>
                 <form className={style.login__panel}>
                     <div>{svg.sloganColor}</div>
-                    {/* <Input svg={svg.name} label={"full name"} placeholder={"Type your full name"} onChange={ev => setAttribs(state => ({ ...state, fullName: ev.currentTarget.value }))} /> */}
                     {fullNameInput && <Input
                         label="full name"
                         placeholder={"Type your full name"}
