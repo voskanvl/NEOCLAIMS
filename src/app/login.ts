@@ -97,14 +97,7 @@ export const loginSlice = createSlice({
         builder.addCase(regFetch.rejected, inCaseError);
         builder.addCase(loginFetch.fulfilled, fullfilledHandler);
         builder.addCase(loginFetch.rejected, inCaseError);
-        builder.addCase(currentUser.fulfilled, (state, action) => {
-            state.user = action.payload;
-            if (action.payload.token) {
-                //сохраняем токен и время получения
-                localStorage.setItem("token", action.payload.token);
-                localStorage.setItem("created", Date.now().toString());
-            }
-        });
+        builder.addCase(currentUser.fulfilled, fullfilledHandler);
         builder.addCase(currentUser.rejected, inCaseError);
     },
 });

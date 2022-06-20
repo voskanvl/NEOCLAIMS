@@ -15,19 +15,30 @@ export const fullfilledHandler = (
             error: string;
         };
     }>,
-    action: PayloadAction<
-        any,
-        string,
-        {
-            arg: {
-                email: string;
-                password: string;
-            };
-            requestId: string;
-            requestStatus: "fulfilled";
-        },
-        never
-    >,
+    action:
+        | PayloadAction<
+              any,
+              string,
+              {
+                  arg: {
+                      email: string;
+                      password: string;
+                  };
+                  requestId: string;
+                  requestStatus: "fulfilled";
+              },
+              never
+          >
+        | PayloadAction<
+              any,
+              string,
+              {
+                  arg: string;
+                  requestId: string;
+                  requestStatus: "fulfilled";
+              },
+              never
+          >,
 ) => {
     state.user = action.payload;
     if (action.payload.token) {
