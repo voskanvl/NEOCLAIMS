@@ -4,6 +4,7 @@ import {
     createSlice,
     PayloadAction,
 } from "@reduxjs/toolkit";
+import { fullfilledHandler } from "./fullfilledHandler";
 import { request } from "./request";
 
 export type TUser = {
@@ -30,7 +31,6 @@ const inCaseError = (
 ) => {
     state.user.error =
         action.error.name || action.error.message || action.error.code || "";
-    // if ("message" in action.payload) state.user.error = action.payload.message;
 };
 
 export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(
@@ -93,25 +93,10 @@ export const loginSlice = createSlice({
     },
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(regFetch.fulfilled, (state, action) => {
-            state.user = action.payload;
-            if (action.payload.token) {
-                //сохраняем токен и время получения
-                localStorage.setItem("token", action.payload.token);
-                localStorage.setItem("created", Date.now().toString());
-            }
-        });
+        builder.addCase(regFetch.fulfilled, fullfilledHandler);
         builder.addCase(regFetch.rejected, inCaseError);
-        builder.addCase(loginFetch.fulfilled, (state, action) => {
-            state.user = action.payload;
-            if (action.payload.token) {
-                //сохраняем токен и время получения
-                localStorage.setItem("token", action.payload.token);
-                localStorage.setItem("created", Date.now().toString());
-            }
-        });
+        builder.addCase(loginFetch.fulfilled, fullfilledHandler);
         builder.addCase(loginFetch.rejected, inCaseError);
-        // builder.addCase(loginFetch.rejected, inCaseError);
         builder.addCase(currentUser.fulfilled, (state, action) => {
             state.user = action.payload;
             if (action.payload.token) {
