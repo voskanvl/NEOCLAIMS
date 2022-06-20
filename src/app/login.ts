@@ -1,11 +1,8 @@
-import {
-    ActionReducerMapBuilder,
-    AsyncThunk,
-    createAsyncThunk,
-    createSlice,
-} from "@reduxjs/toolkit";
+import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import { fullfilledHandler } from "./fullfilledHandler";
-import { request } from "./request";
+import { loginFetch } from "./loginThunks/loginFetch";
+import { regFetch } from "./loginThunks/regFetch";
+import { currentUser } from "./loginThunks/currentUser";
 
 export type TUser = {
     token: string;
@@ -19,7 +16,6 @@ export type TUser = {
     error?: string | object;
 };
 export type TError = { message: string; code: string };
-export type TReg = { email: string; password: string; fullName: string };
 
 const inCaseError = (
     state: StateType,
@@ -33,49 +29,6 @@ const inCaseError = (
         action.error.name || action.error.message || action.error.code || "";
 };
 
-export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(
-    "user/reg",
-    async ({ email, password, fullName }, { rejectWithValue }) => {
-        try {
-            return await request("registration", { email, password, fullName });
-        } catch (error) {
-            return rejectWithValue(error);
-        }
-    },
-);
-export const loginFetch: AsyncThunk<
-    any,
-    { email: string; password: string },
-    {}
-> = createAsyncThunk(
-    "user/login",
-    async ({ email, password }, { rejectWithValue }) => {
-        try {
-            return await request("login", { email, password });
-        } catch (error) {
-            return rejectWithValue(error);
-        }
-    },
-);
-export const currentUser = createAsyncThunk("user/user", async (id: string) => {
-    try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(
-            `${process.env.REACT_APP_API_SERVER}/user/${id}`,
-            {
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-                mode: "cors",
-            },
-        );
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        return error;
-    }
-});
 export const loginSlice = createSlice({
     name: "user",
     initialState: {
