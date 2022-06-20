@@ -1,44 +1,8 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { WritableDraft } from "immer/dist/internal";
+import { PayloadActionType, StateType } from "./types/loginTypes";
 
 export const fullfilledHandler = (
-    state: WritableDraft<{
-        user: {
-            token: string;
-            role: {
-                name: string;
-                slug: string;
-            };
-            user_id: string;
-            fullName: string;
-            email: string;
-            error: string;
-        };
-    }>,
-    action:
-        | PayloadAction<
-              any,
-              string,
-              {
-                  arg: {
-                      email: string;
-                      password: string;
-                  };
-                  requestId: string;
-                  requestStatus: "fulfilled";
-              },
-              never
-          >
-        | PayloadAction<
-              any,
-              string,
-              {
-                  arg: string;
-                  requestId: string;
-                  requestStatus: "fulfilled";
-              },
-              never
-          >,
+    state: StateType,
+    action: PayloadActionType,
 ) => {
     state.user = action.payload;
     if (action.payload.token) {

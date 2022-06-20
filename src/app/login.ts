@@ -3,30 +3,16 @@ import { fullfilledHandler } from "./fullfilledHandler";
 import { loginFetch } from "./loginThunks/loginFetch";
 import { regFetch } from "./loginThunks/regFetch";
 import { currentUser } from "./loginThunks/currentUser";
+import { ActionPayloadError, CasesType, StateType } from "./types/loginTypes";
 
-export type TUser = {
-    token: string;
-    role: {
-        name: string;
-        slug: string;
-    };
-    user_id: string;
-    fullName: string;
-    email: string;
-    error?: string | object;
-};
-export type TError = { message: string; code: string };
-
-const inCaseError = (
-    state: StateType,
-    action: {
-        type: string;
-        payload?: any;
-        error: { name?: string; message?: string; code?: string };
-    },
-) => {
+const inCaseError = (state: StateType, action: ActionPayloadError) => {
     state.user.error =
         action.error.name || action.error.message || action.error.code || "";
+};
+
+const cases: CasesType = {
+    whenFullFilled: fullfilledHandler,
+    whenError: inCaseError,
 };
 
 export const loginSlice = createSlice({
@@ -46,16 +32,15 @@ export const loginSlice = createSlice({
     },
     reducers: {},
     extraReducers: builder => {
-        asyncThunkCase(builder)(regFetch);
-        asyncThunkCase(builder)(loginFetch);
-        asyncThunkCase(builder)(currentUser);
+        asyncThunkCase(builder)(regFetch, cases);
+        asyncThunkCase(builder)(loginFetch, cases);
+        asyncThunkCase(builder)(currentUser, cases);
     },
 });
 
 const asyncThunkCase =
-    (builder: ActionReducerMapBuilder<any>) => (thunk: any) => {
-        builder.addCase(thunk.fulfilled, fullfilledHandler);
-        builder.addCase(thunk.rejected, inCaseError);
+    (builder: ActionReducerMapBuilder<any>) =>
+    (thunk: any, cases: CasesType) => {
+        builder.addCase(thunk.fulfilled, cases.whenFullFilled);
+        builder.addCase(thunk.rejected, cases.whenError);
     };
-
-type StateType = ReturnType<typeof loginSlice.getInitialState>;
