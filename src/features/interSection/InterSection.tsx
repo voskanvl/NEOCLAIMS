@@ -7,7 +7,7 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
     const refTarget = useRef(null)
     const refRoot = useRef(null)
 
-    const { claims, page: pageStore } = useAppSelector(state => state.claims)
+    const { claims, page: pageStore, claimsPerPage, totalItems } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -17,7 +17,9 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
         if (!didDisappear) return
         dispatch(page(pageStore + 1))
         dispatch(claimsPushFetch())
-        setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
+        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) {
+            setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
+        }
     }, [didDisappear])
 
     const iso = useRef(new IntersectionObserver(([{ isIntersecting }]) => {
