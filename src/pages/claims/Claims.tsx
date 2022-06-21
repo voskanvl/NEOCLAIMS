@@ -56,7 +56,7 @@ export const Claims: FC = () => {
                     <h1 className={style.claims__title}>Your claims</h1>
                     <CreateButton />
                 </div>
-                <div className={style.table}>
+                <div className={style.claims__table}>
                     {
                         match
                             ? <InterSection>{claimsFromServer?.map((el) => <ClaimCard claim={el} key={el._id} />)}</InterSection>

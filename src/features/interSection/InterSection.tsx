@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
     const refTarget = useRef(null)
+    const refRoot = useRef(null)
 
     const { claims, page: pageStore } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
@@ -21,14 +22,16 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
 
     const iso = useRef(new IntersectionObserver(([{ isIntersecting }]) => {
         setDidDisappear(isIntersecting)
-    }
+    }, { root: refRoot.current }
     ))
 
 
     if (refTarget.current && claims.length) iso.current.observe(refTarget.current)
 
-    return <div className="intersetion__container">
-        {children}
-        <div ref={refTarget} className="intersetion__target" style={{ height: '10px' }}></div>
+    return <div ref={refRoot} className="root" style={{ overflow: 'auto' }}>
+        <div className="intersection__container">
+            {children}
+            <div ref={refTarget} className="intersetion__target" style={{ height: '10px' }}></div>
+        </div>
     </div>
 }
