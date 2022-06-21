@@ -1,18 +1,18 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TClaim } from "../types/type";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { TClaim } from "../types/type"
 
 type TCreate = {
-    title: string;
-    description: string;
-    type: string;
-    status: string;
-};
+    title: string
+    description: string
+    type: string
+    status: string
+}
 
 export const createFetch = createAsyncThunk(
     "create/fetch",
-    async (body: TCreate) => {
+    async (body: TCreate, { rejectWithValue }) => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("token")
             const response = await fetch(
                 `${process.env.REACT_APP_API_SERVER}/claim`,
                 {
@@ -24,35 +24,40 @@ export const createFetch = createAsyncThunk(
                     },
                     mode: "cors",
                 },
-            );
-            const result = await response.json();
-            return result;
+            )
+            const result = await response.json()
+            return result
         } catch (error) {
-            return error;
+            return rejectWithValue(error)
         }
     },
-);
+)
 
 export const createClaimSlice = createSlice({
     name: "create",
     initialState: {
         created: {} as TClaim,
         error: "",
+        pending: false
     },
     reducers: {
         clear: state => {
-            state.created = {} as TClaim;
+            state.created = {} as TClaim
         },
     },
     extraReducers: builder => {
         builder.addCase(createFetch.fulfilled, (state, action) => {
-            if ("message" in action.payload && "code" in action.payload) {
-                state.error = action.payload.error;
-            } else {
-                state.created = action.payload;
-            }
-        });
+            state.pending = false
+            state.created = action.payload
+        })
+        builder.addCase(createFetch.rejected, (state, action) => {
+            state.pending = false
+            state.error = String(action.payload)
+        })
+        builder.addCase(createFetch.pending, (state, action) => {
+            state.pending = true
+        })
     },
-});
+})
 
-export const { clear } = createClaimSlice.actions;
+export const { clear } = createClaimSlice.actions

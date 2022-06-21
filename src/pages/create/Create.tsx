@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-// import { add } from "../../app/claims"
 import { createFetch } from "../../app/create"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { typeFetch } from "../../app/type"
@@ -12,7 +11,10 @@ import style from "./create.module.sass"
 
 export const Create: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
-    const { created } = useAppSelector(state => state.create)
+    const { error, pending } = useAppSelector(state => state.create)
+
+    const [created, setCreated] = useState(false)
+
     const dispatch = useAppDispatch()
 
     const navigate = useNavigate()
@@ -22,16 +24,26 @@ export const Create: FC = (props) => {
     const [description, setDescription] = useState('')
     const handler = useCallback((eventHandler: Function) => (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
     const hadlerSelect = useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
+
     useEffect(() => {
         if (!isTokenCorrect(true)) return navigate("/login")
         if (!type.length) dispatch(typeFetch())
     }, [])
+
     useEffect(() => {
         if (!type.length) dispatch(typeFetch())
     }, [type])
 
+    useEffect(() => {
+        if (created && !error && !pending) navigate(-1)
+    }, [error, pending, navigate, created])
 
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
+
+    const onCreate = () => {
+        dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))
+        setCreated(true)
+    }
 
     return <Layout>
         <div className={style.create}>
@@ -41,7 +53,7 @@ export const Create: FC = (props) => {
             <Input label={"description"} value={description} onChange={handler(setDescription)} className={style.create__control} />
             <div className={style.create__controls}>
                 <button className={style.create__cancel} onClick={() => navigate(-1)}>Cancel</button>
-                <button className={style.create__create} onClick={() => dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))}>Create</button>
+                <button className={style.create__create} onClick={onCreate}>Create</button>
             </div>
         </div>
     </Layout>
