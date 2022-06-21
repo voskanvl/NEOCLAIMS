@@ -12,6 +12,7 @@ import style from "./create.module.sass"
 export const Create: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
     const { error, pending } = useAppSelector(state => state.create)
+    const { totalItems, claimsPerPage } = useAppSelector(state => state.claims)
 
     const [created, setCreated] = useState(false)
 
@@ -35,8 +36,8 @@ export const Create: FC = (props) => {
     }, [type])
 
     useEffect(() => {
-        if (created && !error && !pending) navigate(-1)
-    }, [error, pending, navigate, created])
+        if (created && !error && !pending) navigate(`/claims/${(totalItems / claimsPerPage) | 0}`)
+    }, [error, pending, navigate, created, totalItems, claimsPerPage])
 
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
