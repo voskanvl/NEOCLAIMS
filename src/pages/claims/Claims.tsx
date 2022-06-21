@@ -73,20 +73,21 @@ export const Claims: FC = () => {
                                         <div className={style.claims__status} style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>{el.status?.name || ""}</div>
                                         <div className={style.claims__link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
                                     </div>)}
+                                <div className={paginationStyle.pagination}>{
+                                    forcePage < totalItems / claimsPerPage &&
+                                    <ReactPaginate
+                                        forcePage={forcePage}
+                                        breakLabel="..."
+                                        nextLabel=">"
+                                        onPageChange={({ selected }) => navigate("/claims/" + selected)}
+                                        pageRangeDisplayed={5}
+                                        pageCount={Math.ceil(totalItems / claimsPerPage)}
+                                        previousLabel="<"
+                                    />}
+                                </div>
                             </>
                     }
-                    <div className={paginationStyle.pagination}>{
-                        forcePage < totalItems / claimsPerPage &&
-                        <ReactPaginate
-                            forcePage={forcePage}
-                            breakLabel="..."
-                            nextLabel=">"
-                            onPageChange={({ selected }) => navigate("/claims/" + selected)}
-                            pageRangeDisplayed={5}
-                            pageCount={Math.ceil(totalItems / claimsPerPage)}
-                            previousLabel="<"
-                        />}
-                    </div>
+
                 </div>
             </section>}
     </Layout>
