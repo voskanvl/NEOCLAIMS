@@ -16,7 +16,7 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
         if (!didDisappear) return
         dispatch(page(pageStore + 1))
         dispatch(claimsPushFetch())
-        // setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
+        setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
     }, [didDisappear])
 
     const iso = useRef(new IntersectionObserver(([{ isIntersecting }]) => {
