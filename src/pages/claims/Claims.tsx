@@ -15,6 +15,7 @@ import paginationStyle from "../styles/pagination.module.sass"
 import { CreateButton } from "../../features/createButton/CreateButton"
 import { InterSection } from "../../features/interSection/InterSection"
 import { TableHeader } from "../../features/tableHeader/TableHeader"
+import { useMediaMatch } from "../../hooks/useMediaMatch"
 
 
 export const Claims: FC = () => {
@@ -29,6 +30,8 @@ export const Claims: FC = () => {
     const [forcePage, setForcePage] = useState<number>(0)
 
     const { page: pageLocation } = useParams()
+
+    const match = useMediaMatch(1024)
 
 
     useEffect(() => {
@@ -55,7 +58,7 @@ export const Claims: FC = () => {
                 </div>
                 <div className={style.table}>
                     {
-                        matchMedia('(max-width: 1024px)').matches
+                        match
                             ? <InterSection>{claimsFromServer?.map((el) => <ClaimCard claim={el} key={el._id} />)}</InterSection>
                             : <>
                                 <TableHeader />
