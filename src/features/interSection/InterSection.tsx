@@ -1,39 +1,32 @@
-import { FC, ReactNode, useEffect, useRef, useState } from "react"
+import { FC, ReactNode, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { claimsPushFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useIntersection } from "../../hooks/useIntersection"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
-    const refTarget = useRef(null)
     const refRoot = useRef(null)
 
-    const { claims, page: pageStore, claimsPerPage, totalItems } = useAppSelector(state => state.claims)
+    const { page: pageStore, claimsPerPage, totalItems } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [didDisappear, setDidDisappear] = useState(false)
+    const { visible, setElement } = useIntersection()
+
 
     useEffect(() => {
-        if (!didDisappear) return
+        if (!visible) return
         dispatch(page(pageStore + 1))
         dispatch(claimsPushFetch())
         if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) {
             setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
         }
-    }, [didDisappear])
-
-    const iso = useRef(new IntersectionObserver(([{ isIntersecting }]) => {
-        setDidDisappear(isIntersecting)
-    }, { root: refRoot.current }
-    ))
-
-
-    if (refTarget.current && claims.length) iso.current.observe(refTarget.current)
+    }, [visible])
 
     return <div ref={refRoot} className="root" style={{ overflow: 'auto' }}>
         <div className="intersection__container">
             {children}
-            <div ref={refTarget} className="intersetion__target" style={{ height: '10px' }}></div>
+            <div ref={setElement} className="intersetion__target" style={{ height: '10px' }}></div>
         </div>
     </div>
 }
