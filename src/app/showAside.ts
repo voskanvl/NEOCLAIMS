@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
 export const showAside = createSlice({
     name: "aside",
@@ -6,10 +6,16 @@ export const showAside = createSlice({
         show: false,
     },
     reducers: {
+        toggle: state => {
+            state.show = !state.show
+        },
         show: state => {
-            state.show = !state.show;
+            state.show = true
+        },
+        hidden: state => {
+            state.show = false
         },
     },
-});
+})
 
-export const { show } = showAside.actions;
+export const { toggle } = showAside.actions
