@@ -2,8 +2,10 @@ import { memo } from "react"
 import style from "./aside.module.sass"
 import { svg, TSvg } from "../svg/svg"
 import { useAppSelector } from "../../app/hooks"
+import { useMediaMatch } from "../../hooks/useMediaMatch"
 
 export const Aside = memo(() => {
+    const match = useMediaMatch(1024)
     const refs: { slug: keyof TSvg, name: string }[] = [
         { slug: 'home', name: 'Home' },
         { slug: 'globe', name: 'Service' },
@@ -14,9 +16,10 @@ export const Aside = memo(() => {
         { slug: 'navigation', name: 'Navigation' }
     ]
     const show = useAppSelector(state => state.aside.show)
-    const match = matchMedia('(max-width: 1024px)').matches
-    const display = !(!show && match)
-    return <div className={style.aside} style={{ display: display ? 'flex' : 'none' }}>
+
+    console.log('show && match', show, match)
+
+    return <div className={`${style.aside} ${show && match ? "" : style.aside__hidden}`} >
         <a className={style.aside__slogan} href="#">{svg.slogan}</a>
         {
             refs.map(e => <a className={style.aside__item} href="#" key={e.slug}>

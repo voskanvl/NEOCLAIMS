@@ -18,4 +18,4 @@ export const showAside = createSlice({
     },
 })
 
-export const { toggle } = showAside.actions
+export const { toggle, show, hidden } = showAside.actions
