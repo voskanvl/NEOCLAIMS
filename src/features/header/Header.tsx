@@ -2,7 +2,7 @@ import { FC, memo, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { currentUser } from "../../app/loginThunks/currentUser"
-import { show } from "../../app/showAside"
+import { toggle } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"
 
@@ -24,7 +24,7 @@ export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
     }
 
     return <header className={style.header}>
-        <button className={style.header__burger} onClick={() => dispatch(show())}>{svg.burger}</button>
+        <button className={style.header__burger} onClick={() => dispatch(toggle())}>{svg.burger}</button>
         <div className={style.header__children}>{children}</div>
         <div className={style.header__bell}>{svg.bell}</div>
         <div className={style.header__face}></div>
