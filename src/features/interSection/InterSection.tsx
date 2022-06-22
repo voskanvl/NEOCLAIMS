@@ -1,11 +1,10 @@
-import { FC, ReactNode, useEffect, useRef } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { claimsPushFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { useIntersection } from "../../hooks/useIntersection"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
-    const refRoot = useRef(null)
 
     const { page: pageStore, claimsPerPage, totalItems } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
@@ -23,7 +22,7 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
         }
     }, [visible])
 
-    return <div ref={refRoot} className="root" style={{ overflow: 'auto' }}>
+    return <div className="root" style={{ overflow: 'auto' }}>
         <div className="intersection__container">
             {children}
             <div ref={setElement} className="intersetion__target" style={{ height: '10px' }}></div>
