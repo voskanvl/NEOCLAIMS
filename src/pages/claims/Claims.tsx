@@ -23,6 +23,7 @@ export const Claims: FC = () => {
     const errorLogin = useAppSelector(state => state.login.user.error)
     const errorClaims = useAppSelector(state => state.claims.error)
 
+
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -32,6 +33,7 @@ export const Claims: FC = () => {
     const { page: pageLocation } = useParams()
 
     const match = useMediaMatch(1024)
+
 
 
     useEffect(() => {
@@ -44,6 +46,8 @@ export const Claims: FC = () => {
 
     const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
         dispatch(search(ev.target.value))
+        dispatch(page(0))
+        setForcePage(1)
         dispatch(claimsFetch())
     }
 
