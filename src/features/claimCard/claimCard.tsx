@@ -5,7 +5,7 @@ import ColorMap from "../../helpers/colorMap"
 import { useNavigate } from "react-router-dom"
 import colorMap from "../../helpers/colorMap"
 
-const ClaimCard: FC<{ claim: TClaim }> = ({ claim }) => {
+export const ClaimCard: FC<{ claim: TClaim }> = memo(({ claim }) => {
     const navigate = useNavigate()
     return <div className={style.claimCard__container}>
         {claim && <>
@@ -27,6 +27,4 @@ const ClaimCard: FC<{ claim: TClaim }> = ({ claim }) => {
             </div>
         </>}
     </div>
-}
-
-export default memo(ClaimCard)
+})

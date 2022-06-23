@@ -1,8 +1,8 @@
 import { ReactNode, memo } from "react"
 import { FC } from "react"
 import { useAppSelector } from "../../app/hooks"
-import { Aside } from "../aside/Aside"
-import { Header } from "../header/Header"
+import { Aside } from "../Aside/Aside"
+import { Header } from "../Header/Header"
 import style from "./layout.module.sass"
 
 type TLayout = {

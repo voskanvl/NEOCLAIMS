@@ -19,16 +19,15 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
     useEffect(() => {
         setFirstRender(false)
         if (!down || loading || firstRender) return
-        dispatch(page(pageStore + 1))
-        dispatch(claimsFetch())
-        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0) && !loading) {
-            navigate("/claims/" + (+pageStore + 1))
+        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) {
+            dispatch(page(pageStore + 1))
+            dispatch(claimsFetch())
+            !loading && navigate("/claims/" + (+pageStore + 1))
         }
     }, [down])
 
     useEffect(() => {
         if (!up || loading) return
-        console.log("🚀 ~ pageStore", pageStore)
         if ((+pageStore - 1) >= 0) {
             dispatch(page(pageStore - 1))
             dispatch(claimsFetch())
