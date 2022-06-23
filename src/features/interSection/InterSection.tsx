@@ -28,10 +28,11 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
 
     useEffect(() => {
         if (!up || loading) return
-        dispatch(page(pageStore + 1))
-        dispatch(claimsFetch())
-        if ((+pageStore - 1) > 0 && !loading) {
-            navigate("/claims/" + (+pageStore - 1))
+        console.log("🚀 ~ pageStore", pageStore)
+        if ((+pageStore - 1) >= 0) {
+            dispatch(page(pageStore - 1))
+            dispatch(claimsFetch())
+            !loading && navigate("/claims/" + (+pageStore - 1))
         }
     }, [up])
 
