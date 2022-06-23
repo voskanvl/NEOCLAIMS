@@ -5,23 +5,26 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./claims.module.sass"
 import ColorMap from "../../helpers/colorMap"
-import ClaimCard from "../../features/claimCard/claimCard"
-import { Input } from "../../features/input/Input"
+import { ClaimCard } from "../../features/ClaimCard/ClaimCard"
+import { Input } from "../../features/Input/Input"
 import { svg } from "../../features/svg/svg"
 import ReactPaginate from "react-paginate"
 import { Error500 } from "../../features/Error/Error500"
 import { Layout } from "../../features/layout/Layout"
 import paginationStyle from "../styles/pagination.module.sass"
-import { CreateButton } from "../../features/createButton/CreateButton"
-import { InterSection } from "../../features/interSection/InterSection"
-import { TableHeader } from "../../features/tableHeader/TableHeader"
+import { CreateButton } from "../../features/CreateButton/CreateButton"
+import { InterSection } from "../../features/InterSection/InterSection"
+import { TableHeader } from "../../features/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
+import { JustCreated } from "../../features/JustCreated/JustCreated"
 
 
 export const ClaimsPage: FC = () => {
 
     const errorLogin = useAppSelector(state => state.login.user.error)
     const errorClaims = useAppSelector(state => state.claims.error)
+
+    const { _id } = useAppSelector(state => state.create.created)
 
 
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
@@ -61,7 +64,9 @@ export const ClaimsPage: FC = () => {
                 <div className={style.claims__table}>
                     {
                         match
-                            ? <InterSection>{claimsFromServer?.map((el) => <ClaimCard claim={el} key={el._id} />)}</InterSection>
+                            ? <InterSection>
+                                {claimsFromServer?.map((el) => <ClaimCard claim={el} key={el._id} created={el._id === String(_id)} />)}
+                            </InterSection>
                             : <>
                                 <TableHeader />
                                 {claimsFromServer?.map((el) =>
