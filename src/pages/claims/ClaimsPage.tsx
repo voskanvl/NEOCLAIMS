@@ -16,7 +16,7 @@ import { CreateButton } from "../../features/CreateButton/CreateButton"
 import { InterSection } from "../../features/InterSection/InterSection"
 import { TableHeader } from "../../features/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
-import { JustCreated } from "../../features/JustCreated/JustCreated"
+// import { JustCreated } from "../../features/JustCreated/JustCreated"
 
 
 export const ClaimsPage: FC = () => {
