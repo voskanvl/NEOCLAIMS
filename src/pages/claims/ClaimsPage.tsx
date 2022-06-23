@@ -34,8 +34,6 @@ export const ClaimsPage: FC = () => {
 
     const match = useMediaMatch(1024)
 
-
-
     useEffect(() => {
         console.log("dispatch(claimsFetch())")
         if (!isTokenCorrect(true)) return navigate("/login")
@@ -56,7 +54,7 @@ export const ClaimsPage: FC = () => {
         {errorLogin || errorClaims
             ? <Error500 error={errorLogin || errorClaims} />
             : <section className={style.claims__claims}>
-                <div className={style.claims__line}>
+                <div className={`${style.claims__line} ${style.claims__header}`}>
                     <h1 className={style.claims__title}>Your claims</h1>
                     <CreateButton />
                 </div>
@@ -96,3 +94,4 @@ export const ClaimsPage: FC = () => {
             </section>}
     </Layout>
 }
+

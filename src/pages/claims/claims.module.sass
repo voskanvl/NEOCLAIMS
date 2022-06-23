@@ -8,7 +8,8 @@
 
         @media screen and ( max-width: 1024px )
             margin-top: 64px
-            padding: 0 15px
+            padding: 0 0 0 15px
+            height: calc( 100vh - 64px)
 
     &__line
         display: flex
@@ -58,4 +59,14 @@
             color: #148BFF
 
     &__table
-        // overflow: auto
+        margin-top: 104px
+        overflow: auto
+        @media screen and ( max-width: 1024px )
+            height: calc( 100vh - 168px)
+
+    &__header
+        position: fixed
+        width: 100%
+        background: #fff
+        margin-left: -15px
+        padding: 0 15px
