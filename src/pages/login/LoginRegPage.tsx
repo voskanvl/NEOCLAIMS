@@ -15,7 +15,7 @@ import { regFetch } from "../../app/loginThunks/regFetch"
 type TLoginReg = {
     fullNameInput?: boolean,
 }
-export const LoginReg: FC<TLoginReg> = ({ fullNameInput }) => {
+export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
     const [{ fullName, email, password }, setAttribs] = useState<{ fullName?: string, email?: string, password?: string }>({ fullName: undefined, email: undefined, password: undefined })
     const [preload, setPreload] = useState<boolean>(false)
 

@@ -28,13 +28,13 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
-          <Route path='login' element={<Page.LoginReg />} />
-          <Route path='reg' element={<Page.LoginReg fullNameInput={true} />} />
-          <Route path='create' element={<Page.Create />} />
-          <Route path='claims' element={<Page.Claims />}>
-            <Route path=':page' element={<Page.Claims />} />
+          <Route path='login' element={<Page.LoginRegPage />} />
+          <Route path='reg' element={<Page.LoginRegPage fullNameInput={true} />} />
+          <Route path='create' element={<Page.CreatePage />} />
+          <Route path='claims' element={<Page.ClaimsPage />}>
+            <Route path=':page' element={<Page.ClaimsPage />} />
           </Route>
-          <Route path='/claim/:claimId' element={<Page.Claim />} />
+          <Route path='/claim/:claimId' element={<Page.ClaimPage />} />
           <Route path='/' element={<CheckConnect />} />
         </Routes>
       </Provider>

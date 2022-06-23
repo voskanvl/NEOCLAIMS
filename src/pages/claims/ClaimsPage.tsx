@@ -18,7 +18,7 @@ import { TableHeader } from "../../features/tableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 
 
-export const Claims: FC = () => {
+export const ClaimsPage: FC = () => {
 
     const errorLogin = useAppSelector(state => state.login.user.error)
     const errorClaims = useAppSelector(state => state.claims.error)

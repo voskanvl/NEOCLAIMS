@@ -9,10 +9,10 @@ import { Layout } from "../../features/layout/Layout"
 import { Select } from "../../features/select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./claim.module.sass"
-import create from "../create/create.module.sass"
+import create from "../Create/create.module.sass"
 import { claimsFetch } from "../../app/claims"
 
-export const Claim: FC = (props) => {
+export const ClaimPage: FC = (props) => {
     const [title, setTitle] = useState('')
     const [typeVal, setTypeVal] = useState('')
     const [description, setDescription] = useState('')

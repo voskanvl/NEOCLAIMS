@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { SortControl } from "../sortControl/SortControl"
 import { Claim } from "../../types/type"
 import style from "./table.module.sass"
-import claimsStyle from "../../pages/claims/claims.module.sass"
+import claimsStyle from "../../pages/Claims/claims.module.sass"
 
 export const TableHeader = memo(() => {
     const dispatch = useAppDispatch()

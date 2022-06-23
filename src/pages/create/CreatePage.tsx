@@ -9,7 +9,7 @@ import { Select } from "../../features/select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./create.module.sass"
 
-export const Create: FC = (props) => {
+export const CreatePage: FC = (props) => {
     const { type } = useAppSelector(state => state.type)
     const { error, pending } = useAppSelector(state => state.create)
     const { totalItems, claimsPerPage } = useAppSelector(state => state.claims)

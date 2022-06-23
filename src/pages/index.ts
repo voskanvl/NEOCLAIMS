@@ -1,6 +1,6 @@
-import { Claim } from "./claim/Claim";
-import { Claims } from "./claims/Claims";
-import { LoginReg } from "./login/LoginReg";
-import { Create } from "./create/Create";
+import { ClaimPage } from "./Claim/ClaimPage"
+import { ClaimsPage } from "./Claims/ClaimsPage"
+import { LoginRegPage } from "./Login/LoginRegPage"
+import { CreatePage } from "./Create/CreatePage"
 
-export default { Claim, Claims, Create, LoginReg };
+export default { ClaimPage, ClaimsPage, CreatePage, LoginRegPage }
