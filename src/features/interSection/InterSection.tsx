@@ -1,31 +1,45 @@
-import { FC, ReactNode, useEffect } from "react"
+import { FC, ReactNode, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { claimsPushFetch, page } from "../../app/claims"
+import { claimsFetch, claimsPushFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { useIntersection } from "../../hooks/useIntersection"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
 
-    const { page: pageStore, claimsPerPage, totalItems } = useAppSelector(state => state.claims)
+    const { page: pageStore, claimsPerPage, totalItems, loading } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const { visible, setElement } = useIntersection()
+    const { visible: down, setElement: setDown } = useIntersection(100)
+    const { visible: up, setElement: setUp } = useIntersection(100)
+
+    const [firstRender, setFirstRender] = useState(true)
 
 
     useEffect(() => {
-        if (!visible) return
+        setFirstRender(false)
+        if (!down || loading || firstRender) return
         dispatch(page(pageStore + 1))
-        dispatch(claimsPushFetch())
-        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) {
-            setTimeout(() => { navigate("/claims/" + (+pageStore + 1)) }, 200)
+        dispatch(claimsFetch())
+        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0) && !loading) {
+            navigate("/claims/" + (+pageStore + 1))
         }
-    }, [visible])
+    }, [down])
+
+    useEffect(() => {
+        if (!up || loading) return
+        dispatch(page(pageStore + 1))
+        dispatch(claimsFetch())
+        if ((+pageStore - 1) > 0 && !loading) {
+            navigate("/claims/" + (+pageStore - 1))
+        }
+    }, [up])
 
     return <div className="root" style={{ overflow: 'auto' }}>
         <div className="intersection__container">
+            <div ref={setUp} className="intersetion__target" style={{ height: '10px' }}></div>
             {children}
-            <div ref={setElement} className="intersetion__target" style={{ height: '10px' }}></div>
+            <div ref={setDown} className="intersetion__target" style={{ height: '10px' }}></div>
         </div>
     </div>
 }
