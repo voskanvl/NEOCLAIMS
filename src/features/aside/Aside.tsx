@@ -19,7 +19,7 @@ export const Aside = memo(() => {
 
     console.log('show && match', show, match)
 
-    return <div className={`${style.aside} ${show && match ? "" : style.aside__hidden}`} >
+    return <div className={`${style.aside} ${show || !match ? "" : style.aside__hidden}`} >
         <a className={style.aside__slogan} href="#">{svg.slogan}</a>
         {
             refs.map(e => <a className={style.aside__item} href="#" key={e.slug}>
