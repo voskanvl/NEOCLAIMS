@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { claimsFetch, claimsPushFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { useIntersection } from "../../hooks/useIntersection"
+import style from "./intersection.module.sass"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
 
@@ -35,11 +36,11 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
         }
     }, [up])
 
-    return <div className="root" style={{ overflow: 'auto' }}>
-        <div className="intersection__container">
-            <div ref={setUp} className="intersetion__target" style={{ height: '10px' }}></div>
+    return <div className={style.intersection__root}>
+        <div className={style.intersection__container}>
+            <div ref={setUp} className={style.intersetion__target} ></div>
             {children}
-            <div ref={setDown} className="intersetion__target" style={{ height: '10px' }}></div>
+            <div ref={setDown} className={style.intersetion__target}></div>
         </div>
     </div>
 }
