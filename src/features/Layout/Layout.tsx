@@ -18,7 +18,7 @@ export const Layout: FC<TLayout> = memo(({ headerChildren, children }) => {
                 {headerChildren}
             </Header>
             <div className={`${style.layout__common}`} >
-                <div className={`${show && style.layout__show}`}></div>
+                <div className={`${style.layout} ${show ? style.layout__show : ""}`}></div>
                 {children}
             </div>
         </main>
