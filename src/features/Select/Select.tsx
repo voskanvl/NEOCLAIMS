@@ -19,7 +19,7 @@ export const Select: FC<TSelect> = memo(({ label, options, defaultValue, classNa
             <div className={style.select__control} >
                 <div className={style.mark} style={{ background: colorMap.Type.byName[defaultValue!] }}></div>
                 <select {...props} className={style.select__shift} defaultValue={defaultValue}>
-                    {options && options.map(el => <option key={el} value={el} selected={el === defaultValue}>{el}</option>)}
+                    {options && options.map(el => <option key={el} value={el} >{el}</option>)}
                 </select>
             </div>
         </div>
