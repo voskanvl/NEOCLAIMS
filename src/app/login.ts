@@ -14,22 +14,26 @@ const cases: CasesType = {
     whenError: inCaseError,
 };
 
+const initialState = {
+    user: {
+        token: "",
+        role: {
+            name: "",
+            slug: "",
+        },
+        user_id: "",
+        fullName: "",
+        email: "",
+        error: "",
+    },
+};
+
 export const loginSlice = createSlice({
     name: "user",
-    initialState: {
-        user: {
-            token: "",
-            role: {
-                name: "",
-                slug: "",
-            },
-            user_id: "",
-            fullName: "",
-            email: "",
-            error: "",
-        },
+    initialState,
+    reducers: {
+        reset: () => initialState,
     },
-    reducers: {},
     extraReducers: builder => {
         asyncThunkCase(builder)(regFetch, cases);
         asyncThunkCase(builder)(loginFetch, cases);
@@ -43,3 +47,5 @@ const asyncThunkCase =
         builder.addCase(thunk.fulfilled, cases.whenFullFilled);
         builder.addCase(thunk.rejected, cases.whenError);
     };
+
+export const { reset } = loginSlice.actions;

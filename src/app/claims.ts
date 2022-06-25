@@ -48,19 +48,21 @@ const inCaseError = (
     state.loading = false;
 };
 
+const initialState = {
+    claims: [] as TClaim[],
+    totalItems: 0,
+    claimsPerPage: 10,
+    page: 0,
+    error: "",
+    search: "",
+    column: "",
+    sort: "asc",
+    loading: false,
+};
+
 export const claimsSlice = createSlice({
     name: "claims",
-    initialState: {
-        claims: [] as TClaim[],
-        totalItems: 0,
-        claimsPerPage: 10,
-        page: 0,
-        error: "",
-        search: "",
-        column: "",
-        sort: "asc",
-        loading: false,
-    },
+    initialState,
     reducers: {
         search: (state, action: { type: string; payload: string }) => {
             state.search = action.payload;
@@ -74,6 +76,7 @@ export const claimsSlice = createSlice({
         sort: (state, action: { type: string; payload: "asc" | "desc" }) => {
             state.sort = action.payload;
         },
+        reset: () => initialState,
     },
     extraReducers: builder => {
         builder.addCase(claimsFetch.fulfilled, (state, action) => {
@@ -97,4 +100,4 @@ export const claimsSlice = createSlice({
     },
 });
 
-export const { page, sort, search, column } = claimsSlice.actions;
+export const { page, sort, search, column, reset } = claimsSlice.actions;
