@@ -1,5 +1,5 @@
-import { FC, LegacyRef, memo, MutableRefObject } from "react"
-import { Claim, TClaim } from "../../types/type"
+import { memo } from "react"
+import { TClaim } from "../../types/types"
 import style from "./claimCard.module.sass"
 import ColorMap from "../../helpers/colorMap"
 import { useNavigate } from "react-router-dom"

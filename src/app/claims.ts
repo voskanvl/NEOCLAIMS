@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Claim, TClaim } from "../types/type";
+import { Claim, TClaim } from "../types/types";
 import { RootState } from "./store";
 
 export type TFetchArgs = {

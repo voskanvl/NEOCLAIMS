@@ -48,6 +48,7 @@ export const ClaimsPage: FC = () => {
             dispatch(clear())
         }, 3000)
         navigate(`/claims/${lastPage}`)
+        // eslint-disable-next-line
     }, [created])
 
     useEffect(() => {
@@ -68,7 +69,7 @@ export const ClaimsPage: FC = () => {
         if (createdElement.current) createdElement.current.scrollIntoView({ behavior: 'smooth' })
     }, 200)
 
-    const handlePageChange = useCallback(({ selected }: { selected: number }) => navigate("/claims/" + selected), [])
+    const handlePageChange = useCallback(({ selected }: { selected: number }) => navigate("/claims/" + selected), [navigate])
 
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 

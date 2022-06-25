@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TClaim } from "../types/type";
+import { TClaim } from "../types/types";
 import { shallowFlat } from "../helpers/shallowFlat";
 
 export const changeClaimFetch = createAsyncThunk(

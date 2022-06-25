@@ -1,4 +1,4 @@
-import { ReactNode, memo } from "react"
+import { ReactNode } from "react"
 import { FC } from "react"
 import { useAppSelector } from "../../app/hooks"
 import { Aside } from "../Aside/Aside"

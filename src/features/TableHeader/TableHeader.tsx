@@ -2,7 +2,7 @@ import { useState, memo } from "react"
 import { claimsFetch, column, sort } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { SortControl } from "../SortControl/SortControl"
-import { Claim } from "../../types/type"
+import { Claim } from "../../types/types"
 import style from "./table.module.sass"
 import claimsStyle from "../../pages/Claims/claims.module.sass"
 

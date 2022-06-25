@@ -1,4 +1,4 @@
-import { FC, memo } from "react"
+import { FC } from "react"
 import style from "./sortControl.module.sass"
 
 const SortUp: FC<{ matched: boolean | undefined }> = ({ matched }) => <svg viewBox="0 0 7 4" width="7" height="4" fill={matched ? "#000" : "#C2C2C2"}>

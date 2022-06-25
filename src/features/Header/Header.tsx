@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useEffect } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { currentUser } from "../../app/loginThunks/currentUser"

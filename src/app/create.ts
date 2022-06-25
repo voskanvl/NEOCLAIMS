@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TClaim } from "../types/type";
+import { TClaim } from "../types/types";
 
 type TCreate = {
     title: string;

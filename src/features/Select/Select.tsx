@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FC, memo, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, FC, useState } from "react"
 import style from "./select.module.sass"
 import colorMap from "../../helpers/colorMap"
 
