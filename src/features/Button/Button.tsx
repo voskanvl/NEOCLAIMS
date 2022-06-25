@@ -15,7 +15,8 @@ export const Button: FC<IButton> = ({ preload, error, errorMessage, label, ...pr
                 ${preload ? style.submit__preloading : ""} 
                 ${error ? style.submit__error : ""}
             `}
-            type="submit" value={errorMessage ? errorMessage : label}
+            type="submit"
+            value={errorMessage ? errorMessage : label}
             onClick={props.onClick}
             {...props}
         />
