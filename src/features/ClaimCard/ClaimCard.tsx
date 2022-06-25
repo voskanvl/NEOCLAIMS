@@ -9,9 +9,9 @@ import { forwardRef } from "react"
 export const ClaimCard = memo(
     forwardRef<any, { claim: TClaim, created: boolean }>(({ claim, created }, ref) => {
         const navigate = useNavigate()
-        return <div className={style.claimCard__container} style={{ background: created ? "red" : "" }} ref={ref}>
+        return <div className={`${style.claimCard__container} ${created ? style.claimCard__created : ""}`} ref={ref}>
             {claim && <>
-                <div className={style.claimCard__title}>{claim.title}</div>
+                <div className={`${style.claimCard__title} ${created ? style.claimCard__title_created : ""}`}>{claim.title}</div>
                 <div className={style.claimCard__body}>
                     <div className={style.claimCard__row}>
                         <div className={style.claimCard__rowLeft}>Created</div>
