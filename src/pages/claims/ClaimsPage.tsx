@@ -38,7 +38,6 @@ export const ClaimsPage: FC = () => {
     const match = useMediaMatch(1024)
 
     useEffect(() => {
-        console.log("dispatch(claimsFetch())")
         if (!isTokenCorrect(true)) return navigate("/login")
         dispatch(page(+pageLocation!))
         dispatch(claimsFetch())

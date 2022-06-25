@@ -19,7 +19,6 @@ export const Input: FC<TInput> = ({ svg, label, error, errorName, className, typ
     const [typeState, setType] = useState(type)
     const [prevTypeState, setPrevTypeState] = useState("")
     const handleSvgTap = (val: "down" | "up") => {
-        console.log("TAP")
         if (val === "down" && type === "password") {
             setPrevTypeState("password")
             setType("text")

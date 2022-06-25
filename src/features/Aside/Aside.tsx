@@ -17,8 +17,6 @@ export const Aside = memo(() => {
     ]
     const show = useAppSelector(state => state.aside.show)
 
-    console.log('show && match', show, match)
-
     return <div className={`${style.aside} ${show || !match ? "" : style.aside__hidden}`} >
         <a className={style.aside__slogan} href="#">{svg.slogan}</a>
         {
