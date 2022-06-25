@@ -16,25 +16,21 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
 
     const [firstRender, setFirstRender] = useState(true)
 
-
     useEffect(() => {
-        setFirstRender(false)
-        if (!down || loading || firstRender) return
-        if ((+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) {
-            dispatch(page(pageStore + 1))
-            dispatch(claimsFetch())
-            !loading && navigate("/claims/" + (+pageStore + 1))
-        }
-    }, [down])
+        let deltaPage = 0
 
-    useEffect(() => {
-        if (!up || loading) return
-        if ((+pageStore - 1) >= 0) {
-            dispatch(page(pageStore - 1))
-            dispatch(claimsFetch())
-            !loading && navigate("/claims/" + (+pageStore - 1))
-        }
-    }, [up])
+        if (loading || !(+up ^ +down)) return //only in case different up & down
+
+        if (down && (+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) deltaPage = 1
+        if (up && (+pageStore - 1) >= 0) deltaPage = -1
+
+        console.log("🚀 ~ deltaPage", deltaPage)
+
+        dispatch(page(pageStore + deltaPage))
+        dispatch(claimsFetch())
+        !loading && navigate("/claims/" + (+pageStore + deltaPage))
+
+    }, [up, down])
 
     return <div className={style.intersection__root}>
         <div className={style.intersection__container}>
