@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, useEffect, useState } from "react"
+import { ChangeEventHandler, FC, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, page, search } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
@@ -16,7 +16,7 @@ import { CreateButton } from "../../features/CreateButton/CreateButton"
 import { InterSection } from "../../features/InterSection/InterSection"
 import { TableHeader } from "../../features/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
-// import { JustCreated } from "../../features/JustCreated/JustCreated"
+import { clear } from "../../app/create"
 
 
 export const ClaimsPage: FC = () => {
@@ -28,6 +28,7 @@ export const ClaimsPage: FC = () => {
 
 
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
+    const { created } = useAppSelector(state => state.create)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -36,6 +37,18 @@ export const ClaimsPage: FC = () => {
     const { page: pageLocation } = useParams()
 
     const match = useMediaMatch(1024)
+
+    const createdElement = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (!created) return
+        const lastPage = ((totalItems / claimsPerPage) | 0)
+        dispatch(page(lastPage))
+        setTimeout(() => {
+            dispatch(clear())
+        }, 3000)
+        navigate(`/claims/${lastPage}`)
+    }, [created])
 
     useEffect(() => {
         if (!isTokenCorrect(true)) return navigate("/login")
@@ -51,6 +64,10 @@ export const ClaimsPage: FC = () => {
         dispatch(claimsFetch())
     }
 
+    setTimeout(() => {
+        if (createdElement.current) createdElement.current.scrollIntoView({ behavior: 'smooth' })
+    }, 200)
+
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 
         {errorLogin || errorClaims
@@ -64,7 +81,12 @@ export const ClaimsPage: FC = () => {
                     {
                         match
                             ? <InterSection>
-                                {claimsFromServer?.map((el) => <ClaimCard claim={el} key={el._id} created={el._id === String(_id)} />)}
+                                {claimsFromServer?.map((el) => <ClaimCard
+                                    claim={el}
+                                    key={el._id}
+                                    created={el._id === String(_id)}
+                                    ref={el._id === String(_id) ? createdElement : () => { }}
+                                />)}
                             </InterSection>
                             : <>
                                 <TableHeader />
