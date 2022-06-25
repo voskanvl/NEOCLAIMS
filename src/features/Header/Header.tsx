@@ -5,11 +5,15 @@ import { currentUser } from "../../app/loginThunks/currentUser"
 import { toggle } from "../../app/showAside"
 import { svg } from "../svg/svg"
 import style from "./header.module.sass"
+import { reset as resetLogin } from "../../app/login"
+import { reset as resetClaims } from "../../app/claims"
 
 export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
     const userName = useAppSelector(state => state.login.user.fullName)
+
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
     useEffect(() => {
         const token = localStorage.getItem('token')
         if (!userName) {
@@ -20,6 +24,8 @@ export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
 
     const logout = () => {
         localStorage.clear()
+        dispatch(resetLogin())
+        dispatch(resetClaims())
         navigate('/login')
     }
 
