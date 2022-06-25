@@ -8,11 +8,9 @@ const SortDown: FC<{ matched: boolean | undefined }> = ({ matched }) => <svg vie
     <use xlinkHref="/icon-sprite.svg#sortdown"></use>
 </svg>
 
-export const SortControl: FC<{ sorted: 'asc' | 'desc' | undefined }> = memo(({ sorted }) => {
+export const SortControl: FC<{ sorted: 'asc' | 'desc' | undefined }> = ({ sorted }) => {
     return <div className={style.sort}>
         <SortUp matched={sorted === 'asc'} />
         <SortDown matched={sorted === 'desc'} />
     </div>
-})
-
-// export default memo(SortControl)
+}

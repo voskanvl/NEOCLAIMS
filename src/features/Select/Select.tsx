@@ -10,7 +10,7 @@ type TSelect = {
     className?: string
 }
 
-export const Select: FC<TSelect> = memo(({ label, options, defaultValue, className, onChange, ...props }) => {
+export const Select: FC<TSelect> = ({ label, options, defaultValue, className, onChange, ...props }) => {
     const [color, setColor] = useState("")
 
     const handleChange = (ev: ChangeEvent<HTMLSelectElement>) => {
@@ -33,4 +33,4 @@ export const Select: FC<TSelect> = memo(({ label, options, defaultValue, classNa
             </div>
         </div>
     )
-})
+}

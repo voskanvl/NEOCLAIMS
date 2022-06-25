@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, useEffect, useRef, useState } from "react"
+import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, page, search } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
@@ -68,6 +68,8 @@ export const ClaimsPage: FC = () => {
         if (createdElement.current) createdElement.current.scrollIntoView({ behavior: 'smooth' })
     }, 200)
 
+    const handlePageChange = useCallback(({ selected }: { selected: number }) => navigate("/claims/" + selected), [])
+
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
 
         {errorLogin || errorClaims
@@ -107,7 +109,7 @@ export const ClaimsPage: FC = () => {
                                         forcePage={forcePage}
                                         breakLabel="..."
                                         nextLabel=">"
-                                        onPageChange={({ selected }) => navigate("/claims/" + selected)}
+                                        onPageChange={handlePageChange}
                                         pageRangeDisplayed={5}
                                         pageCount={Math.ceil(totalItems / claimsPerPage)}
                                         previousLabel="<"

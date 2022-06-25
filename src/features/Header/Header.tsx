@@ -8,7 +8,7 @@ import style from "./header.module.sass"
 import { reset as resetLogin } from "../../app/login"
 import { reset as resetClaims } from "../../app/claims"
 
-export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
+export const Header: FC<{ children?: ReactNode }> = ({ children }) => {
     const userName = useAppSelector(state => state.login.user.fullName)
 
     const dispatch = useAppDispatch()
@@ -37,4 +37,4 @@ export const Header: FC<{ children?: ReactNode }> = memo(({ children }) => {
         <div className={style.header__name}>{userName}</div>
         <button className={style.header__logout} onClick={logout}>{svg.logout}</button>
     </header>
-})
+}

@@ -9,7 +9,7 @@ type TLayout = {
     headerChildren?: ReactNode,
     children?: ReactNode
 }
-export const Layout: FC<TLayout> = memo(({ headerChildren, children }) => {
+export const Layout: FC<TLayout> = ({ headerChildren, children }) => {
     const { show } = useAppSelector(state => state.aside)
     return <div className={style.layout__layout}>
         <Aside />
@@ -23,5 +23,5 @@ export const Layout: FC<TLayout> = memo(({ headerChildren, children }) => {
             </div>
         </main>
     </div>
-})
+}
 
