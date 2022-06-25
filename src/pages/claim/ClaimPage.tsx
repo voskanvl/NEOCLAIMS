@@ -46,6 +46,7 @@ export const ClaimPage: FC = (props) => {
 
     const changeStatus = (newStatus: string, done = true) => () => {
         const selectedStatus = status.find(e => e.name === newStatus || e.slug === newStatus)
+        if (newStatus === "in-progress" && role.slug !== "admin") navigate(-1)
         if (selectedStatus) {
             dispatch(changeClaimFetch({ ...currentClaim, status: selectedStatus }))
             dispatch(claimsFetch())
