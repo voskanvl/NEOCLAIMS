@@ -1,22 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TClaim } from "../types/types";
 import { shallowFlat } from "../helpers/shallowFlat";
+import { createFetchOption } from "./createFetchOption";
 
 export const changeClaimFetch = createAsyncThunk(
     "currentClaim/change",
     async (param: TClaim) => {
         try {
-            const token = localStorage.getItem("token");
+            const option = createFetchOption();
             const response = await fetch(
                 `${process.env.REACT_APP_API_SERVER}/claim/${param._id}`,
                 {
+                    ...option,
                     method: "PUT",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
                     body: JSON.stringify(shallowFlat(param, "slug")),
-                    mode: "cors",
                 },
             );
             const result = await response.json();

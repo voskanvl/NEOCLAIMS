@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
 import { Claim, TClaim } from "../types/types";
+import { createFetchOption } from "./createFetchOption";
 import { RootState } from "./store";
 
 export type TFetchArgs = {
@@ -9,12 +10,11 @@ export type TFetchArgs = {
 };
 const claimsFetchCreator = (actionType: string) =>
     createAsyncThunk(actionType, async (_, { rejectWithValue, getState }) => {
-        // page = page || 0;
         const { column, page, search, sort, claimsPerPage } = (
             getState() as RootState
         ).claims;
         try {
-            const token = localStorage.getItem("token");
+            const option = createFetchOption();
             const response = await fetch(
                 `${
                     process.env.REACT_APP_API_SERVER
@@ -23,13 +23,7 @@ const claimsFetchCreator = (actionType: string) =>
                 )}&limit=${claimsPerPage}&offset=${
                     page * claimsPerPage
                 }&column=${column}&sort=${sort}`,
-                {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                    mode: "cors",
-                },
+                option,
             );
             const result = await response.json();
             return result;

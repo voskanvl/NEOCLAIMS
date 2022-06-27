@@ -1,17 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createFetchOption } from "./createFetchOption";
 
 export const statusFetch = createAsyncThunk("status/fetch", async () => {
     try {
-        const token = localStorage.getItem("token");
+        const option = createFetchOption();
         const response = await fetch(
             `${process.env.REACT_APP_API_SERVER}/status`,
-            {
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-                mode: "cors",
-            },
+            option,
         );
         const result = await response.json();
         return result;

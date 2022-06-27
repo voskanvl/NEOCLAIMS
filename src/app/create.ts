@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TClaim } from "../types/types";
+import { createFetchOption } from "./createFetchOption";
 
 type TCreate = {
     title: string;
@@ -12,17 +13,13 @@ export const createFetch = createAsyncThunk(
     "create/fetch",
     async (body: TCreate, { rejectWithValue }) => {
         try {
-            const token = localStorage.getItem("token");
+            const option = createFetchOption();
             const response = await fetch(
                 `${process.env.REACT_APP_API_SERVER}/claim`,
                 {
+                    ...option,
                     method: "POST",
                     body: JSON.stringify(body),
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                    mode: "cors",
                 },
             );
             const result = await response.json();
