@@ -35,6 +35,7 @@ export const ClaimsPage: FC = () => {
     const [forcePage, setForcePage] = useState<number>(0)
 
     const { page: pageLocation } = useParams()
+    console.log("🚀 ~ pageLocation", pageLocation)
 
     const match = useMediaMatch(1024)
 

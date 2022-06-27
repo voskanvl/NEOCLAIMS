@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { WritableDraft } from "immer/dist/internal";
 import { Claim, TClaim } from "../types/types";
 import { RootState } from "./store";
 
@@ -39,15 +40,6 @@ const claimsFetchCreator = (actionType: string) =>
 export const claimsFetch = claimsFetchCreator("claims/fetch");
 export const claimsPushFetch = claimsFetchCreator("claims/push");
 
-const inCaseError = (
-    state: { error: any; loading: boolean },
-    action: { error: { name?: string; message?: string; code?: string } },
-) => {
-    state.error =
-        action.error.name || action.error.message || action.error.code || "";
-    state.loading = false;
-};
-
 const initialState = {
     claims: [] as TClaim[],
     totalItems: 0,
@@ -59,6 +51,42 @@ const initialState = {
     sort: "asc",
     loading: false,
 };
+
+type typeState = typeof initialState;
+
+const inCaseError = (
+    state: { error: any; loading: boolean },
+    action: { error: { name?: string; message?: string; code?: string } },
+) => {
+    state.error =
+        action.error.name || action.error.message || action.error.code || "";
+    state.loading = false;
+};
+
+const inCasePending = (state: WritableDraft<typeState>) => {
+    state.loading = true;
+};
+
+const inCaseFulfilled =
+    (
+        saveToClaims: (
+            claims: TClaim[],
+            payload: { payload: TClaim[] },
+        ) => void,
+    ) =>
+    (
+        state: typeState,
+        action: PayloadAction<
+            any,
+            string,
+            { arg: void; requestId: string; requestStatus: "fulfilled" },
+            never
+        >,
+    ) => {
+        saveToClaims(state.claims, action.payload);
+        state.totalItems = action.payload.totalItems;
+        state.loading = false;
+    };
 
 export const claimsSlice = createSlice({
     name: "claims",
@@ -79,24 +107,23 @@ export const claimsSlice = createSlice({
         reset: () => initialState,
     },
     extraReducers: builder => {
-        builder.addCase(claimsFetch.fulfilled, (state, action) => {
-            state.claims = action.payload.claims;
-            state.totalItems = action.payload.totalItems;
-            state.loading = false;
-        });
+        builder.addCase(
+            claimsFetch.fulfilled,
+            inCaseFulfilled(
+                (claims: TClaim[], payload: any) => (claims = payload.claims),
+            ),
+        );
         builder.addCase(claimsFetch.rejected, inCaseError);
-        builder.addCase(claimsFetch.pending, (state, action) => {
-            state.loading = true;
-        });
-        builder.addCase(claimsPushFetch.fulfilled, (state, action) => {
-            state.claims = [...state.claims, ...action.payload.claims];
-            state.totalItems = action.payload.totalItems;
-            state.loading = false;
-        });
+        builder.addCase(claimsFetch.pending, inCasePending);
+        builder.addCase(
+            claimsPushFetch.fulfilled,
+            inCaseFulfilled(
+                (claims: TClaim[], payload: any) =>
+                    (claims = [...claims, payload.claims]),
+            ),
+        );
         builder.addCase(claimsPushFetch.rejected, inCaseError);
-        builder.addCase(claimsPushFetch.pending, (state, action) => {
-            state.loading = true;
-        });
+        builder.addCase(claimsPushFetch.pending, inCasePending);
     },
 });
 
