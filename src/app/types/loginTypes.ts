@@ -38,6 +38,6 @@ export type ActionPayloadError = {
 };
 
 export type CasesType = {
-    whenFullFilled: (state: StateType, action: PayloadActionType) => void;
-    whenError: (state: StateType, action: ActionPayloadError) => void;
+    fulfilled: (state: StateType, action: PayloadActionType) => void;
+    rejected: (state: StateType, action: ActionPayloadError) => void;
 };

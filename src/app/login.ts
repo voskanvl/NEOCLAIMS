@@ -10,8 +10,8 @@ const inCaseError = (state: StateType, action: ActionPayloadError) => {
 };
 
 const cases: CasesType = {
-    whenFullFilled: fullfilledHandler,
-    whenError: inCaseError,
+    fulfilled: fullfilledHandler,
+    rejected: inCaseError,
 };
 
 const initialState = {
@@ -44,8 +44,8 @@ export const loginSlice = createSlice({
 const asyncThunkCase =
     (builder: ActionReducerMapBuilder<any>) =>
     (thunk: any, cases: CasesType) => {
-        builder.addCase(thunk.fulfilled, cases.whenFullFilled);
-        builder.addCase(thunk.rejected, cases.whenError);
+        builder.addCase(thunk.fulfilled, cases.fulfilled);
+        builder.addCase(thunk.rejected, cases.rejected);
     };
 
 export const { reset } = loginSlice.actions;
