@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, page, search } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
-import style from "./claims.module.sass"
+import style from "./Сlaims.module.sass"
 import ColorMap from "../../helpers/colorMap"
 import { ClaimCard } from "../../features/ClaimCard/ClaimCard"
 import { Input } from "../../features/Input/Input"
@@ -11,13 +11,12 @@ import { svg } from "../../features/svg/svg"
 import ReactPaginate from "react-paginate"
 import { Error500 } from "../../features/Error/Error500"
 import { Layout } from "../../features/Layout/Layout"
-import paginationStyle from "./pagination.module.sass"
+import paginationStyle from "./Pagination.module.sass"
 import { CreateButton } from "../../features/CreateButton/CreateButton"
 import { InterSection } from "../../features/InterSection/InterSection"
 import { TableHeader } from "../../features/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 import { clear } from "../../app/create"
-
 
 export const ClaimsPage: FC = () => {
 
@@ -25,7 +24,6 @@ export const ClaimsPage: FC = () => {
     const errorClaims = useAppSelector(state => state.claims.error)
 
     const { _id } = useAppSelector(state => state.create.created)
-
 
     const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
     const { created } = useAppSelector(state => state.create)
@@ -66,13 +64,14 @@ export const ClaimsPage: FC = () => {
     }
 
     setTimeout(() => {
-        if (createdElement.current) createdElement.current.scrollIntoView({ behavior: 'smooth' })
+        if (createdElement.current) createdElement.current.scrollIntoView({ behavior: "smooth" })
     }, 200)
 
-    const handlePageChange = useCallback(({ selected }: { selected: number }) => navigate("/claims/" + selected), [navigate])
+    const handlePageChange =
+        useCallback(({ selected }: { selected: number }) =>
+            navigate("/claims/" + selected), [navigate])
 
     return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
-
         {errorLogin || errorClaims
             ? <Error500 error={errorLogin || errorClaims} />
             : <section className={style.claims__claims}>
@@ -96,13 +95,28 @@ export const ClaimsPage: FC = () => {
                                 {claimsFromServer?.map((el) =>
                                     <div key={el._id} className={style.claims__row}>
                                         <div>{el.title}</div>
-                                        <div>{new Date(el.createdAt).toLocaleDateString('ru').replaceAll(".", "/")}</div>
+                                        <div>
+                                            {new Date(el.createdAt)
+                                                .toLocaleDateString("ru")
+                                                .replaceAll(".", "/")}
+                                        </div>
                                         <div className={style.claims__type}>
-                                            <span className={style.claims__mark} style={{ background: el.type?.name ? ColorMap.Type.byName[el.type?.name] : "" }}></span>
+                                            <span
+                                                className={style.claims__mark}
+                                                style={{
+                                                    background: el.type?.name
+                                                        ? ColorMap.Type.byName[el.type?.name]
+                                                        : ""
+                                                }}></span>
                                             <span>{el.type?.name || ""}</span>
                                         </div>
-                                        <div className={style.claims__status} style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>{el.status?.name || ""}</div>
-                                        <div className={style.claims__link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                                        <div
+                                            className={style.claims__status}
+                                            style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>
+                                            {el.status?.name || ""}
+                                        </div>
+                                        <div
+                                            className={style.claims__link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
                                     </div>)}
                                 <div className={paginationStyle.pagination}>{
                                     forcePage < totalItems / claimsPerPage &&
@@ -118,7 +132,6 @@ export const ClaimsPage: FC = () => {
                                 </div>
                             </>
                     }
-
                 </div>
             </section>}
     </Layout>

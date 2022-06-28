@@ -8,7 +8,7 @@ import { Input } from "../../features/Input/Input"
 import { Layout } from "../../features/Layout/Layout"
 import { Select } from "../../features/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
-import claimStyle from "./claim.module.sass"
+import claimStyle from "./Сlaim.module.sass"
 import create from "../Create/create.module.sass"
 import { claimsFetch } from "../../app/claims"
 
