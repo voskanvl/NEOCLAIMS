@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { FC } from "react"
-import { useAppSelector } from "../../app/hooks"
+import { useAppSelector } from "../../app/store"
 import { Aside } from "../Aside/Aside"
 import { Header } from "../Header/Header"
 import style from "./Layout.module.sass"

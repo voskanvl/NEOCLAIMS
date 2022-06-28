@@ -1,4 +1,10 @@
-import { ChangeEventHandler, FC, FormEventHandler, InputHTMLAttributes, memo, useState } from "react"
+import {
+    ChangeEventHandler,
+    FC,
+    FormEventHandler,
+    InputHTMLAttributes,
+    useState
+} from "react"
 import style from "./Input.module.sass"
 
 type TInput = InputHTMLAttributes<HTMLInputElement> & {
@@ -47,7 +53,9 @@ export const Input: FC<TInput> = ({
                     {svg}
                 </div>
             </div>
-            <label className={error ? style.input__error_show : style.input__error}>{errorName}</label>
+            <label className={error
+                ? style.input__error_show
+                : style.input__error}>{errorName}</label>
         </div>
     )
 }

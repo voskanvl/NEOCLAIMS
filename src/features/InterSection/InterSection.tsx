@@ -1,20 +1,22 @@
 import { FC, ReactNode, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { claimsFetch, page } from "../../app/claims"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/store"
 import { useIntersection } from "../../hooks/useIntersection"
 import style from "./Intersection.module.sass"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
 
-    const { page: pageStore, claimsPerPage, totalItems, loading } = useAppSelector(state => state.claims)
+    const {
+        page: pageStore,
+        claimsPerPage,
+        totalItems,
+        loading } = useAppSelector(state => state.claims)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const { visible: down, setElement: setDown } = useIntersection(100)
     const { visible: up, setElement: setUp } = useIntersection(100)
-
-    const [firstRender, setFirstRender] = useState(true)
 
     useEffect(() => {
         let deltaPage = 0

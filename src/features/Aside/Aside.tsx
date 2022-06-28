@@ -1,19 +1,19 @@
 import { memo } from "react"
 import style from "./Aside.module.sass"
 import { svg, TSvg } from "../svg/svg"
-import { useAppSelector } from "../../app/hooks"
+import { useAppSelector } from "../../app/store"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 
 export const Aside = memo(() => {
     const match = useMediaMatch(1024)
     const refs: { slug: keyof TSvg, name: string }[] = [
-        { slug: 'home', name: 'Home' },
-        { slug: 'globe', name: 'Service' },
-        { slug: 'archive', name: 'Storage' },
-        { slug: 'pieChart', name: 'Charts' },
-        { slug: 'dollar', name: 'Currency' },
-        { slug: 'database', name: 'Base' },
-        { slug: 'navigation', name: 'Navigation' }
+        { slug: "home", name: "Home" },
+        { slug: "globe", name: "Service" },
+        { slug: "archive", name: "Storage" },
+        { slug: "pieChart", name: "Charts" },
+        { slug: "dollar", name: "Currency" },
+        { slug: "database", name: "Base" },
+        { slug: "navigation", name: "Navigation" }
     ]
     const show = useAppSelector(state => state.aside.show)
 

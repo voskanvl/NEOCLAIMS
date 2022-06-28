@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/store"
 import { currentUser } from "../../app/loginThunks/currentUser"
 import { toggle } from "../../app/showAside"
 import { svg } from "../svg/svg"
