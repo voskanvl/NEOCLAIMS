@@ -3,7 +3,7 @@ import { FC } from "react"
 import { useAppSelector } from "../../app/hooks"
 import { Aside } from "../Aside/Aside"
 import { Header } from "../Header/Header"
-import style from "./layout.module.sass"
+import style from "./Layout.module.sass"
 
 type TLayout = {
     headerChildren?: ReactNode,
@@ -18,7 +18,8 @@ export const Layout: FC<TLayout> = ({ headerChildren, children }) => {
                 {headerChildren}
             </Header>
             <div className={`${style.layout__common}`} >
-                <div className={`${style.layout} ${show ? style.layout__show : ""}`}></div>
+                <div
+                    className={`${style.layout} ${show ? style.layout__show : ""}`}></div>
                 {children}
             </div>
         </main>

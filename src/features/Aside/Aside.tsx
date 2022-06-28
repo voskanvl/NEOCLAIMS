@@ -1,5 +1,5 @@
 import { memo } from "react"
-import style from "./aside.module.sass"
+import style from "./Aside.module.sass"
 import { svg, TSvg } from "../svg/svg"
 import { useAppSelector } from "../../app/hooks"
 import { useMediaMatch } from "../../hooks/useMediaMatch"

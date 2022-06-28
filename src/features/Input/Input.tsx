@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FC, FormEventHandler, InputHTMLAttributes, memo, useState } from "react"
-import style from "./input.module.sass"
+import style from "./Input.module.sass"
 
 type TInput = InputHTMLAttributes<HTMLInputElement> & {
     svg?: JSX.Element,
@@ -15,7 +15,14 @@ type TInput = InputHTMLAttributes<HTMLInputElement> & {
 
 
 
-export const Input: FC<TInput> = ({ svg, label, error, errorName, className, type, ...props }) => {
+export const Input: FC<TInput> = ({
+    svg,
+    label,
+    error,
+    errorName,
+    className,
+    type,
+    ...props }) => {
     const [typeState, setType] = useState(type)
     const [prevTypeState, setPrevTypeState] = useState("")
     const handleSvgTap = (val: "down" | "up") => {
@@ -34,7 +41,9 @@ export const Input: FC<TInput> = ({ svg, label, error, errorName, className, typ
             <label className={style.input__label} >{label}</label>
             <div className={style.input__control} >
                 <input type={typeState} {...props} />
-                <div className={style.input__svg} onMouseDown={() => handleSvgTap("down")} onMouseUp={() => handleSvgTap("up")}>
+                <div className={style.input__svg}
+                    onMouseDown={() => handleSvgTap("down")}
+                    onMouseUp={() => handleSvgTap("up")}>
                     {svg}
                 </div>
             </div>

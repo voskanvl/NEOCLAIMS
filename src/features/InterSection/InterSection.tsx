@@ -1,9 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { claimsFetch, claimsPushFetch, page } from "../../app/claims"
+import { claimsFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { useIntersection } from "../../hooks/useIntersection"
-import style from "./intersection.module.sass"
+import style from "./Intersection.module.sass"
 
 export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
 

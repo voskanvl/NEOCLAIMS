@@ -3,7 +3,7 @@ import { claimsFetch, column, sort } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { SortControl } from "../SortControl/SortControl"
 import { Claim } from "../../types/types"
-import style from "./table.module.sass"
+import style from "./Table.module.sass"
 import claimsStyle from "../../pages/Claims/claims.module.sass"
 
 export const TableHeader = memo(() => {

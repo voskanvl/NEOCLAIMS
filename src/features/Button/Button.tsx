@@ -1,5 +1,5 @@
 import { FC, InputHTMLAttributes, MouseEventHandler } from "react"
-import style from "./button.module.sass"
+import style from "./Button.module.sass"
 interface IButton extends InputHTMLAttributes<HTMLInputElement> {
     preload?: boolean,
     error?: boolean,

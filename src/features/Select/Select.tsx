@@ -1,5 +1,5 @@
 import { ChangeEvent, ChangeEventHandler, FC, useState } from "react"
-import style from "./select.module.sass"
+import style from "./Select.module.sass"
 import colorMap from "../../helpers/colorMap"
 
 type TSelect = {
@@ -10,7 +10,13 @@ type TSelect = {
     className?: string
 }
 
-export const Select: FC<TSelect> = ({ label, options, defaultValue, className, onChange, ...props }) => {
+export const Select: FC<TSelect> = ({
+    label,
+    options,
+    defaultValue,
+    className,
+    onChange,
+    ...props }) => {
     const [color, setColor] = useState("")
 
     const handleChange = (ev: ChangeEvent<HTMLSelectElement>) => {
@@ -27,8 +33,16 @@ export const Select: FC<TSelect> = ({ label, options, defaultValue, className, o
                     className={style.mark}
                     style={{ background: color }}>
                 </div>
-                <select  {...props} className={style.select__shift} defaultValue={defaultValue} onChange={handleChange}>
-                    {options && options.map(el => <option key={el} value={el} >{el}</option>)}
+                <select
+                    {...props}
+                    className={style.select__shift}
+                    defaultValue={defaultValue}
+                    onChange={handleChange}>
+                    {options && options.map(el => <option
+                        key={el}
+                        value={el} >
+                        {el}
+                    </option>)}
                 </select>
             </div>
         </div>
