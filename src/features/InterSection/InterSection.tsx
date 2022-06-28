@@ -17,15 +17,12 @@ export const InterSection: FC<{ children: ReactNode | ReactNode[] }> = ({ childr
     const [firstRender, setFirstRender] = useState(true)
 
     useEffect(() => {
-        console.log("🚀 ~ up, down", up, down)
         let deltaPage = 0
 
         if (loading || !(+up ^ +down)) return //only in case different up & down
 
         if (down && (+pageStore + 1) <= ((totalItems / claimsPerPage) | 0)) deltaPage = 1
         if (up && (+pageStore - 1) >= 0) deltaPage = -1
-
-        console.log("🚀 ~ deltaPage", deltaPage)
 
         dispatch(page(pageStore + deltaPage))
         dispatch(claimsFetch())
