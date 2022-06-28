@@ -5,7 +5,7 @@ import { createFetchOption } from "./createFetchOption";
 
 export const changeClaimFetch = createAsyncThunk(
     "currentClaim/change",
-    async (param: TClaim) => {
+    async (param: TClaim, { rejectWithValue }) => {
         try {
             const option = createFetchOption();
             const response = await fetch(
@@ -19,7 +19,7 @@ export const changeClaimFetch = createAsyncThunk(
             const result = await response.json();
             return result;
         } catch (error) {
-            return error;
+            return rejectWithValue(error);
         }
     },
 );
@@ -39,37 +39,42 @@ export const currentClaimFetch = createAsyncThunk(
         }
     },
 );
+
+const initialState = {
+    currentClaim: {
+        _id: "",
+        title: "",
+        description: "",
+        type: {
+            name: "",
+            slug: "",
+        },
+        status: {
+            name: "",
+            slug: "",
+        },
+        user: "",
+        createdAt: "",
+        updatedAt: "",
+        __v: 0,
+    },
+    error: "",
+};
+
 export const currentClaimSlice = createSlice({
     name: "currentClaim",
-    initialState: {
-        currentClaim: {
-            _id: "",
-            title: "",
-            description: "",
-            type: {
-                name: "",
-                slug: "",
-            },
-            status: {
-                name: "",
-                slug: "",
-            },
-            user: "",
-            createdAt: "",
-            updatedAt: "",
-            __v: 0,
-        },
-        error: "",
-    },
+    initialState,
     reducers: {},
     extraReducers: builder => {
         builder.addCase(currentClaimFetch.fulfilled, (state, action) => {
-            if (action.payload instanceof Error) {
-                state.error = action.payload.name;
-            } else {
-                state.currentClaim = action.payload;
-            }
+            state.currentClaim = action.payload;
         });
-        builder.addCase(changeClaimFetch.fulfilled, (state, action) => {});
+        builder.addCase(changeClaimFetch.rejected, (state, action) => {
+            state.error =
+                action.error.name ||
+                action.error.message ||
+                action.error.code ||
+                "";
+        });
     },
 });
