@@ -27,16 +27,10 @@ export const currentClaimFetch = createAsyncThunk(
     "currentClaim/fetch",
     async (param: string) => {
         try {
-            const token = localStorage.getItem("token");
+            const option = createFetchOption();
             const response = await fetch(
                 `${process.env.REACT_APP_API_SERVER}/claim/${param}`,
-                {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                    mode: "cors",
-                },
+                option,
             );
             const result = await response.json();
             return result;
