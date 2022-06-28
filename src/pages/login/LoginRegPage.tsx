@@ -6,7 +6,7 @@ import style from "./Login.module.sass"
 import footer from "./Footer.module.sass"
 import checkbox from "./Checkbox.module.sass"
 import { loginFetch } from "../../app/loginThunks/loginFetch"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/store"
 import { svg } from "../../features/svg/svg"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import { useValidate, Valid } from "../../hooks/useValidate"
@@ -16,7 +16,15 @@ type TLoginReg = {
     fullNameInput?: boolean,
 }
 export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
-    const [{ fullName, email, password }, setAttribs] = useState<{ fullName?: string, email?: string, password?: string }>({ fullName: undefined, email: undefined, password: undefined })
+    const [{ fullName, email, password }, setAttribs] = useState<{
+        fullName?: string,
+        email?: string,
+        password?: string
+    }>({
+        fullName: undefined,
+        email: undefined,
+        password: undefined
+    })
     const [preload, setPreload] = useState<boolean>(false)
 
     const { valid: validFullName, validate: validateFullName } = useValidate()
@@ -30,10 +38,12 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
 
     useEffect(() => {
         if (isTokenCorrect(true) && !user.error)
-            navigate('/claims')
+            navigate("/claims")
     }, [user, navigate])
 
-    const validForm = (fullNameInput ? validFullName === Valid.valid : true) && validEMail === Valid.valid && validPassword === Valid.valid
+    const validForm = (fullNameInput
+        ? validFullName === Valid.valid
+        : true) && validEMail === Valid.valid && validPassword === Valid.valid
 
     const submit = (ev: MouseEvent<HTMLInputElement>) => {
         ev.preventDefault()
@@ -46,7 +56,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
     }
     return <div className={style.login__screen}>
         <main className={style.login__layout}>
-            {matchMedia('(min-width: 1024px)').matches &&
+            {matchMedia("(min-width: 1024px)").matches &&
                 <section className={style.login__layoutLeft}>
                     <img src="/cod_home_section2-1536x1491 1.svg" alt="big logo" />
                 </section>
@@ -58,10 +68,13 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
                         label="full name"
                         placeholder={"Type your full name"}
                         error={!validFullName}
-                        errorName={'Full name must contain only letters and spaces'}
-                        onChange={ev => setAttribs(state => ({ ...state, fullName: ev.target.value }))}
-                        onInput={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
-                        onBlur={ev => validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
+                        errorName={"Full name must contain only letters and spaces"}
+                        onChange={ev => setAttribs(state =>
+                            ({ ...state, fullName: ev.target.value }))}
+                        onInput={ev =>
+                            validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
+                        onBlur={ev =>
+                            validateFullName(ev.currentTarget.value, /[a-zA-Z|а-яёА-ЯЁ|\s]+/)}
                         className={style.login__control}
                         autoComplete={"name"}
                     />}
@@ -70,7 +83,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
                         label={"e-mail"}
                         placeholder={"Type your e-mail"}
                         error={!validEMail}
-                        errorName={'Input correct e-mail'}
+                        errorName={"Input correct e-mail"}
                         onChange={ev => setAttribs(state => ({ ...state, email: ev.target.value }))}
                         onInput={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
                         onBlur={ev => validateEmail(ev.currentTarget.value, /\w.*@.+\..+/)}
@@ -82,8 +95,9 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
                         label={"password"}
                         placeholder={"Type your password"}
                         error={!validPassword}
-                        errorName={'The password must contain at least 6 characters'}
-                        onChange={ev => setAttribs(state => ({ ...state, password: ev.target.value }))}
+                        errorName={"The password must contain at least 6 characters"}
+                        onChange={ev =>
+                            setAttribs(state => ({ ...state, password: ev.target.value }))}
                         type="password"
                         onInput={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}
                         onBlur={ev => validatePassword(ev.currentTarget.value, /[\w|\d]{6,}/)}

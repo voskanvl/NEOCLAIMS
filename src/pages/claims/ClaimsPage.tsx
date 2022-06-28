@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, page, search } from "../../app/claims"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/store"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./Сlaims.module.sass"
 import ColorMap from "../../helpers/colorMap"
@@ -25,7 +25,8 @@ export const ClaimsPage: FC = () => {
 
     const { _id } = useAppSelector(state => state.create.created)
 
-    const { claimsPerPage, totalItems, claims: claimsFromServer } = useAppSelector(state => state.claims)
+    const { claimsPerPage, totalItems, claims: claimsFromServer } =
+        useAppSelector(state => state.claims)
     const { created } = useAppSelector(state => state.create)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -87,7 +88,9 @@ export const ClaimsPage: FC = () => {
                                     claim={el}
                                     key={el._id}
                                     created={el._id === String(_id)}
-                                    ref={el._id === String(_id) ? createdElement : () => { }}
+                                    ref={el._id === String(_id)
+                                        ? createdElement
+                                        : null}
                                 />)}
                             </InterSection>
                             : <>
@@ -112,7 +115,11 @@ export const ClaimsPage: FC = () => {
                                         </div>
                                         <div
                                             className={style.claims__status}
-                                            style={{ background: el.status?.name ? ColorMap.Status.byName[el.status.name] : "" }}>
+                                            style={{
+                                                background: el.status?.name
+                                                    ? ColorMap.Status.byName[el.status.name]
+                                                    : ""
+                                            }}>
                                             {el.status?.name || ""}
                                         </div>
                                         <div

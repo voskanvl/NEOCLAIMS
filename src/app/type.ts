@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 export const typeFetch = createAsyncThunk("type/fetch", async () => {
     try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
         const response = await fetch(
             `${process.env.REACT_APP_API_SERVER}/types`,
             {
@@ -12,13 +12,13 @@ export const typeFetch = createAsyncThunk("type/fetch", async () => {
                 },
                 mode: "cors",
             },
-        );
-        const result = await response.json();
-        return result;
+        )
+        const result = await response.json()
+        return result
     } catch (error) {
-        return error;
+        return error
     }
-});
+})
 export const typeSlice = createSlice({
     name: "type",
     initialState: {
@@ -29,10 +29,10 @@ export const typeSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(typeFetch.fulfilled, (state, action) => {
             if (action.payload instanceof Error) {
-                state.error = action.payload.name;
+                state.error = action.payload.name
             } else {
-                state.type = action.payload;
+                state.type = action.payload
             }
-        });
+        })
     },
-});
+})

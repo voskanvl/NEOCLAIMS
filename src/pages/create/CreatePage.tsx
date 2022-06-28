@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { createFetch } from "../../app/create"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/store"
 import { typeFetch } from "../../app/type"
 import { Input } from "../../features/Input/Input"
 import { Layout } from "../../features/Layout/Layout"
@@ -20,9 +20,9 @@ export const CreatePage: FC = (props) => {
 
     const navigate = useNavigate()
 
-    const [title, setTitle] = useState('')
-    const [typeVal, setTypeVal] = useState('')
-    const [description, setDescription] = useState('')
+    const [title, setTitle] = useState("")
+    const [typeVal, setTypeVal] = useState("")
+    const [description, setDescription] = useState("")
     const handler = useCallback((eventHandler: Function) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
     const hadlerSelect =
@@ -44,7 +44,7 @@ export const CreatePage: FC = (props) => {
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
     const onCreate = () => {
-        dispatch(createFetch({ type: getSlug(typeVal) || 'hard', description, status: 'new', title }))
+        dispatch(createFetch({ type: getSlug(typeVal) || "hard", description, status: "new", title }))
         setCreated(true)
     }
 
@@ -59,7 +59,7 @@ export const CreatePage: FC = (props) => {
                 onChange={handler(setTitle)}
                 className={style.create__control} />
             <Select
-                label={'type'}
+                label={"type"}
                 options={type.map(e => e.name)}
                 onChange={hadlerSelect}
                 className={style.create__control} />

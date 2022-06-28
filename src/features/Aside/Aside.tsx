@@ -4,7 +4,7 @@ import { svg, TSvg } from "../svg/svg"
 import { useAppSelector } from "../../app/store"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 
-export const Aside = memo(() => {
+export const Aside = memo(function Aside() {
     const match = useMediaMatch(1024)
     const refs: { slug: keyof TSvg, name: string }[] = [
         { slug: "home", name: "Home" },

@@ -11,9 +11,9 @@ export const request = async (
                 "Content-Type": "application/json",
             },
         },
-    );
-    const ok = response.ok;
-    const result = await response.json();
-    if (!ok) throw Error(JSON.stringify(result));
-    return result;
-};
+    )
+    const ok = response.ok
+    const result = await response.json()
+    if (!ok) throw Error(JSON.stringify(result))
+    return result
+}

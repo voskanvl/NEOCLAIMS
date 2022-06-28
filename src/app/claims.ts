@@ -1,20 +1,20 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { WritableDraft } from "immer/dist/internal";
-import { Claim, TClaim } from "../types/types";
-import { createFetchOption } from "./createFetchOption";
-import { RootState } from "./store";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { WritableDraft } from "immer/dist/internal"
+import { Claim, TClaim } from "../types/types"
+import { createFetchOption } from "./createFetchOption"
+import { RootState } from "./store"
 
 export type TFetchArgs = {
-    search?: string;
-    page?: number | undefined;
-};
+    search?: string
+    page?: number | undefined
+}
 const claimsFetchCreator = (actionType: string) =>
     createAsyncThunk(actionType, async (_, { rejectWithValue, getState }) => {
         const { column, page, search, sort, claimsPerPage } = (
             getState() as RootState
-        ).claims;
+        ).claims
         try {
-            const option = createFetchOption();
+            const option = createFetchOption()
             const response = await fetch(
                 `${
                     process.env.REACT_APP_API_SERVER
@@ -24,15 +24,15 @@ const claimsFetchCreator = (actionType: string) =>
                     page * claimsPerPage
                 }&column=${column}&sort=${sort}`,
                 option,
-            );
-            const result = await response.json();
-            return result;
+            )
+            const result = await response.json()
+            return result
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error)
         }
-    });
-export const claimsFetch = claimsFetchCreator("claims/fetch");
-export const claimsPushFetch = claimsFetchCreator("claims/push");
+    })
+export const claimsFetch = claimsFetchCreator("claims/fetch")
+export const claimsPushFetch = claimsFetchCreator("claims/push")
 
 const initialState = {
     claims: [] as TClaim[],
@@ -44,22 +44,22 @@ const initialState = {
     column: "",
     sort: "asc",
     loading: false,
-};
+}
 
-type typeState = typeof initialState;
+type typeState = typeof initialState
 
 const inCaseError = (
     state: { error: any; loading: boolean },
     action: { error: { name?: string; message?: string; code?: string } },
 ) => {
     state.error =
-        action.error.name || action.error.message || action.error.code || "";
-    state.loading = false;
-};
+        action.error.name || action.error.message || action.error.code || ""
+    state.loading = false
+}
 
 const inCasePending = (state: WritableDraft<typeState>) => {
-    state.loading = true;
-};
+    state.loading = true
+}
 
 const inCaseFulfilled =
     (
@@ -77,26 +77,26 @@ const inCaseFulfilled =
             never
         >,
     ) => {
-        saveToClaims(state, action.payload);
-        state.totalItems = action.payload.totalItems;
-        state.loading = false;
-    };
+        saveToClaims(state, action.payload)
+        state.totalItems = action.payload.totalItems
+        state.loading = false
+    }
 
 export const claimsSlice = createSlice({
     name: "claims",
     initialState,
     reducers: {
         search: (state, action: { type: string; payload: string }) => {
-            state.search = action.payload;
+            state.search = action.payload
         },
         page: (state, action: { type: string; payload: number }) => {
-            state.page = action.payload || 0;
+            state.page = action.payload || 0
         },
         column: (state, action: { type: string; payload: keyof Claim }) => {
-            state.column = action.payload;
+            state.column = action.payload
         },
         sort: (state, action: { type: string; payload: "asc" | "desc" }) => {
-            state.sort = action.payload;
+            state.sort = action.payload
         },
         reset: () => initialState,
     },
@@ -104,21 +104,21 @@ export const claimsSlice = createSlice({
         builder.addCase(
             claimsFetch.fulfilled,
             inCaseFulfilled((state: typeState, payload: any) => {
-                state.claims = payload.claims;
+                state.claims = payload.claims
             }),
-        );
-        builder.addCase(claimsFetch.rejected, inCaseError);
-        builder.addCase(claimsFetch.pending, inCasePending);
+        )
+        builder.addCase(claimsFetch.rejected, inCaseError)
+        builder.addCase(claimsFetch.pending, inCasePending)
         builder.addCase(
             claimsPushFetch.fulfilled,
             inCaseFulfilled(
                 (state: typeState, payload: any) =>
                     (state.claims = [...state.claims, payload.claims]),
             ),
-        );
-        builder.addCase(claimsPushFetch.rejected, inCaseError);
-        builder.addCase(claimsPushFetch.pending, inCasePending);
+        )
+        builder.addCase(claimsPushFetch.rejected, inCaseError)
+        builder.addCase(claimsPushFetch.pending, inCasePending)
     },
-});
+})
 
-export const { page, sort, search, column, reset } = claimsSlice.actions;
+export const { page, sort, search, column, reset } = claimsSlice.actions

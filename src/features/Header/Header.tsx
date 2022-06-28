@@ -15,7 +15,7 @@ export const Header: FC<{ children?: ReactNode }> = ({ children }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem("token")
         if (!userName) {
             const id = JSON.parse(atob(token!.split(".")[1])).id
             dispatch(currentUser(id))
@@ -26,7 +26,7 @@ export const Header: FC<{ children?: ReactNode }> = ({ children }) => {
         localStorage.clear()
         dispatch(resetLogin())
         dispatch(resetClaims())
-        navigate('/login')
+        navigate("/login")
     }
 
     return <header className={style.header}>

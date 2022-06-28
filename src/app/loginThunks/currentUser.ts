@@ -1,8 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const currentUser = createAsyncThunk("user/user", async (id: string) => {
     try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
         const response = await fetch(
             `${process.env.REACT_APP_API_SERVER}/user/${id}`,
             {
@@ -12,10 +12,10 @@ export const currentUser = createAsyncThunk("user/user", async (id: string) => {
                 },
                 mode: "cors",
             },
-        );
-        const result = await response.json();
-        return result;
+        )
+        const result = await response.json()
+        return result
     } catch (error) {
-        return error;
+        return error
     }
-});
+})
