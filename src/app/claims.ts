@@ -64,7 +64,7 @@ const inCasePending = (state: WritableDraft<typeState>) => {
 const inCaseFulfilled =
     (
         saveToClaims: (
-            claims: TClaim[],
+            claims: typeState,
             payload: { payload: TClaim[] },
         ) => void,
     ) =>
@@ -77,7 +77,7 @@ const inCaseFulfilled =
             never
         >,
     ) => {
-        saveToClaims(state.claims, action.payload);
+        saveToClaims(state, action.payload);
         state.totalItems = action.payload.totalItems;
         state.loading = false;
     };
@@ -103,17 +103,17 @@ export const claimsSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(
             claimsFetch.fulfilled,
-            inCaseFulfilled(
-                (claims: TClaim[], payload: any) => (claims = payload.claims),
-            ),
+            inCaseFulfilled((state: typeState, payload: any) => {
+                state.claims = payload.claims;
+            }),
         );
         builder.addCase(claimsFetch.rejected, inCaseError);
         builder.addCase(claimsFetch.pending, inCasePending);
         builder.addCase(
             claimsPushFetch.fulfilled,
             inCaseFulfilled(
-                (claims: TClaim[], payload: any) =>
-                    (claims = [...claims, payload.claims]),
+                (state: typeState, payload: any) =>
+                    (state.claims = [...state.claims, payload.claims]),
             ),
         );
         builder.addCase(claimsPushFetch.rejected, inCaseError);
