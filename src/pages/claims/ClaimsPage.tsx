@@ -123,7 +123,9 @@ export const ClaimsPage: FC = () => {
                                             {el.status?.name || ""}
                                         </div>
                                         <div
-                                            className={style.claims__link}><Link to={`/claim/${el._id}`}>Browse</Link></div>
+                                            className={style.claims__link}>
+                                            <Link to={`/claim/${el._id}`}>Browse</Link>
+                                        </div>
                                     </div>)}
                                 <div className={paginationStyle.pagination}>{
                                     forcePage < totalItems / claimsPerPage &&
