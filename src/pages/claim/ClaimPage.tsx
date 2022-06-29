@@ -9,7 +9,7 @@ import { Layout } from "../../features/Layout/Layout"
 import { Select } from "../../features/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./Сlaim.module.sass"
-import createStyle from "../Create/Create.module.sass"
+import createStyle from "../Create/Сreate.module.sass"
 import { claimsFetch } from "../../app/claims"
 
 export const ClaimPage: FC = () => {

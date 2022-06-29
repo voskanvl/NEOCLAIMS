@@ -9,7 +9,7 @@ import { Select } from "../../features/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./Сreate.module.sass"
 
-export const CreatePage: FC = (props) => {
+export const CreatePage: FC = () => {
     const { type } = useAppSelector(state => state.type)
     const { error, pending } = useAppSelector(state => state.create)
     const { totalItems, claimsPerPage } = useAppSelector(state => state.claims)
@@ -23,7 +23,7 @@ export const CreatePage: FC = (props) => {
     const [title, setTitle] = useState("")
     const [typeVal, setTypeVal] = useState("")
     const [description, setDescription] = useState("")
-    const handler = useCallback((eventHandler: Function) =>
+    const handler = useCallback((eventHandler: (arg0: string) => any) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
     const hadlerSelect =
         useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
@@ -44,7 +44,12 @@ export const CreatePage: FC = (props) => {
     const getSlug = (name: string) => type.find(el => el.name === name)?.slug
 
     const onCreate = () => {
-        dispatch(createFetch({ type: getSlug(typeVal) || "hard", description, status: "new", title }))
+        dispatch(createFetch({
+            type: getSlug(typeVal) || "hard",
+            description,
+            status: "new",
+            title
+        }))
         setCreated(true)
     }
 

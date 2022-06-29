@@ -3,7 +3,7 @@ import { request } from "../request"
 
 export type TReg = { email: string; password: string; fullName: string }
 
-export const regFetch: AsyncThunk<any, TReg, {}> = createAsyncThunk(
+export const regFetch: AsyncThunk<any, TReg, Record<string, unknown>> = createAsyncThunk(
     "user/reg",
     async ({ email, password, fullName }, { rejectWithValue }) => {
         try {
