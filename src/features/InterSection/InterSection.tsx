@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { claimsFetch, page } from "../../app/claims"
 import { useAppDispatch, useAppSelector } from "../../app/store"
