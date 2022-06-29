@@ -9,7 +9,7 @@ import { Layout } from "../../features/Layout/Layout"
 import { Select } from "../../features/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./Сlaim.module.sass"
-import createStyle from "../Create/Сreate.module.sass"
+import createStyle from "../CreatePage/Сreate.module.sass"
 import { claimsFetch } from "../../app/claims"
 
 export const ClaimPage: FC = () => {
@@ -41,7 +41,7 @@ export const ClaimPage: FC = () => {
         if (!status.length) dispatch(statusFetch())
     }, [status, dispatch])
 
-    const handler = useCallback((eventHandler: (arg0: string) => any) =>
+    const handler = useCallback((eventHandler: (arg0: string) => void) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
     const changeStatus = (newStatus: string, done = true) => () => {
