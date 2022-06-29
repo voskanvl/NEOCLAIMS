@@ -4,7 +4,7 @@ import { request } from "../request"
 export const loginFetch: AsyncThunk<
     any,
     { email: string; password: string },
-    {}
+    Record<string, unknown>
 > = createAsyncThunk(
     "user/login",
     async ({ email, password }, { rejectWithValue }) => {

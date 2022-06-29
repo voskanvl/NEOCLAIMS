@@ -16,12 +16,10 @@ const claimsFetchCreator = (actionType: string) =>
         try {
             const option = createFetchOption()
             const response = await fetch(
-                `${
-                    process.env.REACT_APP_API_SERVER
+                `${process.env.REACT_APP_API_SERVER
                 }/claim?search=${encodeURIComponent(
                     search,
-                )}&limit=${claimsPerPage}&offset=${
-                    page * claimsPerPage
+                )}&limit=${claimsPerPage}&offset=${page * claimsPerPage
                 }&column=${column}&sort=${sort}`,
                 option,
             )
@@ -68,19 +66,19 @@ const inCaseFulfilled =
             payload: { payload: TClaim[] },
         ) => void,
     ) =>
-    (
-        state: typeState,
-        action: PayloadAction<
-            any,
-            string,
-            { arg: void; requestId: string; requestStatus: "fulfilled" },
-            never
-        >,
-    ) => {
-        saveToClaims(state, action.payload)
-        state.totalItems = action.payload.totalItems
-        state.loading = false
-    }
+        (
+            state: typeState,
+            action: PayloadAction<
+                any,
+                string,
+                { arg: void; requestId: string; requestStatus: "fulfilled" },
+                never
+            >,
+        ) => {
+            saveToClaims(state, action.payload)
+            state.totalItems = action.payload.totalItems
+            state.loading = false
+        }
 
 export const claimsSlice = createSlice({
     name: "claims",

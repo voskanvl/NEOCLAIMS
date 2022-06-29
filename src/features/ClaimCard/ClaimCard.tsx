@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import colorMap from "../../helpers/colorMap"
 import { forwardRef } from "react"
 
+/* eslint-disable */
 export const ClaimCard = memo(
     forwardRef<any, { claim: TClaim, created: boolean }>(({ claim, created }, ref) => {
         const navigate = useNavigate()

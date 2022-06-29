@@ -43,9 +43,9 @@ export const loginSlice = createSlice({
 
 const asyncThunkCase =
     (builder: ActionReducerMapBuilder<any>) =>
-    (thunk: any, cases: CasesType) => {
-        builder.addCase(thunk.fulfilled, cases.fulfilled)
-        builder.addCase(thunk.rejected, cases.rejected)
-    }
+        (thunk: any, cases: CasesType) => {
+            builder.addCase(thunk.fulfilled, cases.fulfilled)
+            builder.addCase(thunk.rejected, cases.rejected)
+        }
 
 export const { reset } = loginSlice.actions
