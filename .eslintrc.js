@@ -23,6 +23,6 @@ module.exports = {
         "semi": ["error", "never"],
         "react/react-in-jsx-scope": "off",
         "max-len": ["error", { code: 100 }],
-        "no-non-null-assertion": 0,
+        "@typescript-eslint/no-non-null-assertion": "warn",
     },
 };
