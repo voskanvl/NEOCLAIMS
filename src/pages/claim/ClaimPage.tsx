@@ -9,10 +9,10 @@ import { Layout } from "../../features/Layout/Layout"
 import { Select } from "../../features/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./Сlaim.module.sass"
-import create from "../Create/create.module.sass"
+import createStyle from "../Create/Create.module.sass"
 import { claimsFetch } from "../../app/claims"
 
-export const ClaimPage: FC = (props) => {
+export const ClaimPage: FC = () => {
     const [title, setTitle] = useState("")
     const [typeVal, setTypeVal] = useState("")
     const [description, setDescription] = useState("")
@@ -41,7 +41,7 @@ export const ClaimPage: FC = (props) => {
         if (!status.length) dispatch(statusFetch())
     }, [status, dispatch])
 
-    const handler = useCallback((eventHandler: Function) =>
+    const handler = useCallback((eventHandler: (arg0: string) => any) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
 
     const changeStatus = (newStatus: string, done = true) => () => {
@@ -71,20 +71,20 @@ export const ClaimPage: FC = (props) => {
                 value={description}
                 onChange={handler(setDescription)}
                 className={claimStyle.claim__control} />
-            <div className={create.create__controls}>
+            <div className={createStyle.create__controls}>
                 <button
-                    className={create.create__cancel}
+                    className={createStyle.create__cancel}
                     onClick={changeStatus("in-progress")}>
                     Cancel
                 </button>
                 <button
-                    className={create.create__create}
+                    className={createStyle.create__create}
                     disabled={role.slug === "work"}
                     onClick={changeStatus("done")}>
                     Done
                 </button>
                 <button
-                    className={create.create__decline}
+                    className={createStyle.create__decline}
                     disabled={(role.slug === "work")}
                     onClick={changeStatus("decl")}>
                     Decline
