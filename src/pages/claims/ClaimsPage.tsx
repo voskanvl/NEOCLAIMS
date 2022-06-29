@@ -47,12 +47,11 @@ export const ClaimsPage: FC = () => {
             dispatch(clear())
         }, 3000)
         navigate(`/claims/${lastPage}`)
-        // eslint-disable-next-line
     }, [created])
 
     useEffect(() => {
         if (!isTokenCorrect(true)) return navigate("/login")
-        dispatch(page(+pageLocation!))
+        dispatch(page(pageLocation ? +pageLocation : 0))
         dispatch(claimsFetch())
         setForcePage(Number(pageLocation || 0))
     }, [pageLocation, dispatch, navigate])

@@ -23,7 +23,7 @@ export const CreatePage: FC = () => {
     const [title, setTitle] = useState("")
     const [typeVal, setTypeVal] = useState("")
     const [description, setDescription] = useState("")
-    const handler = useCallback((eventHandler: (arg0: string) => any) =>
+    const handler = useCallback((eventHandler: (arg0: string) => void) =>
         (ev: ChangeEvent<HTMLInputElement>) => eventHandler(ev.currentTarget.value), [])
     const hadlerSelect =
         useCallback((ev: ChangeEvent<HTMLSelectElement>) => setTypeVal(ev.target.value), [])
