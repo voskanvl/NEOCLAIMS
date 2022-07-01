@@ -15,16 +15,27 @@ function CheckConnect() {
     return null
 }
 
+enum Paths {
+    Login = "login",
+    Reg = "reg",
+    Create = "create",
+    Claims = "claims",
+    Page = ":page",
+    Claim = "/claim/:claimId",
+    Root = "/"
+}
+
+
 export const RoutesApp = () =>
     <BrowserRouter>
         <Routes>
-            <Route path='login' element={<Page.LoginRegPage />} />
-            <Route path='reg' element={<Page.LoginRegPage fullNameInput={true} />} />
-            <Route path='create' element={<Page.CreatePage />} />
-            <Route path='claims' element={<Page.ClaimsPage />}>
-                <Route path=':page' element={<Page.ClaimsPage />} />
+            <Route path={Paths.Login} element={<Page.LoginRegPage />} />
+            <Route path={Paths.Reg} element={<Page.LoginRegPage fullNameInput={true} />} />
+            <Route path={Paths.Create} element={<Page.CreatePage />} />
+            <Route path={Paths.Claims} element={<Page.ClaimsPage />}>
+                <Route path={Paths.Page} element={<Page.ClaimsPage />} />
             </Route>
-            <Route path='/claim/:claimId' element={<Page.ClaimPage />} />
-            <Route path='/' element={<CheckConnect />} />
+            <Route path={Paths.Claim} element={<Page.ClaimPage />} />
+            <Route path={Paths.Root} element={<CheckConnect />} />
         </Routes>
     </BrowserRouter>
