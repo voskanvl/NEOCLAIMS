@@ -8,7 +8,7 @@ import style from "./Header.module.sass"
 import { reset as resetLogin } from "../../app/login"
 import { reset as resetClaims } from "../../app/claims"
 
-export const Header: FC<{ children?: ReactNode }> = ({ children }) => {
+export const Header: FC<{ children?: ReactNode | ReactNode[] }> = ({ children }) => {
     const userName = useAppSelector(state => state.login.user.fullName)
 
     const dispatch = useAppDispatch()
