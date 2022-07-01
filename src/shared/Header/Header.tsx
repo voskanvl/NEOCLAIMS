@@ -16,8 +16,8 @@ export const Header: FC<{ children?: ReactNode }> = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem("token")
-        if (!userName) {
-            const id = JSON.parse(atob(token!.split(".")[1])).id
+        if (!userName && token) {
+            const id = JSON.parse(atob(token.split(".")[1])).id
             dispatch(currentUser(id))
         }
     }, [userName, dispatch])
