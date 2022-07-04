@@ -7,7 +7,7 @@ import footer from "./Footer.module.sass"
 import checkbox from "./Сheckbox.module.sass"
 import { loginFetch } from "../../store/loginThunks/loginFetch"
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import { svg } from "../../shared/svg/svg"
+import { Svg } from "../../shared/Svg/Svg"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import { useValidate, Valid } from "../../hooks/useValidate"
 import { regFetch } from "../../store/loginThunks/regFetch"
@@ -63,7 +63,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
             }
             <section className={style.login__layoutRight}>
                 <form className={style.login__panel}>
-                    <div>{svg.sloganColor}</div>
+                    <div><Svg.SloganColor /></div>
                     {fullNameInput && <Input
                         label="full name"
                         placeholder={"Type your full name"}
@@ -79,7 +79,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
                         autoComplete={"name"}
                     />}
                     <Input
-                        svg={svg.email}
+                        svg={<Svg.Email />}
                         label={"e-mail"}
                         placeholder={"Type your e-mail"}
                         error={!validEMail}
@@ -91,7 +91,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
                         autoComplete={"email"}
                     />
                     <Input
-                        svg={svg.seal}
+                        svg={<Svg.Seal />}
                         label={"password"}
                         placeholder={"Type your password"}
                         error={!validPassword}
@@ -125,7 +125,7 @@ export const LoginRegPage: FC<TLoginReg> = ({ fullNameInput }) => {
             </section>
         </main>
         <footer className={footer.footer}>
-            <div className={footer.fooler__logo}>{svg.sloganSvgFooter}</div>
+            <div className={footer.fooler__logo}><Svg.SloganSvgFooter /></div>
         </footer>
     </div>
 }

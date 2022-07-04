@@ -7,7 +7,7 @@ import style from "./Claims.module.sass"
 import ColorMap from "../../helpers/colorMap"
 import { ClaimCard } from "../../shared/ClaimCard/ClaimCard"
 import { Input } from "../../shared/Input/Input"
-import { svg } from "../../shared/svg/svg"
+import { Svg } from "../../shared/Svg/Svg"
 import ReactPaginate from "react-paginate"
 import { Error500 } from "../../shared/Error/Error500"
 import { Layout } from "../../shared/Layout/Layout"
@@ -71,7 +71,8 @@ export const ClaimsPage: FC = () => {
         useCallback(({ selected }: { selected: number }) =>
             navigate("/claims/" + selected), [navigate])
 
-    return <Layout headerChildren={<Input label="" svg={svg.search} onChange={handleInput} />}>
+    return <Layout headerChildren={<Input label="" svg={<Svg.Search />} onChange={handleInput} />
+    }>
         {errorLogin || errorClaims
             ? <Error500 error={errorLogin || errorClaims} />
             : <section className={style.claims__claims}>
@@ -142,6 +143,6 @@ export const ClaimsPage: FC = () => {
                     }
                 </div>
             </section>}
-    </Layout>
+    </Layout >
 }
 
