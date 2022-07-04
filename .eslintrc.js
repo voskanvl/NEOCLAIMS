@@ -24,5 +24,6 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "max-len": ["error", { code: 100 }],
         "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-explicit-any": "off",
     },
-};
+}
