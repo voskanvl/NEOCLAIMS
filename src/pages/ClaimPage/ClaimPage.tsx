@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { changeClaimFetch, currentClaimFetch } from "../../app/claim"
-import { useAppDispatch, useAppSelector } from "../../app/store"
-import { statusFetch } from "../../app/status"
-import { typeFetch } from "../../app/type"
+import { changeClaimFetch, currentClaimFetch } from "../../store/claim"
+import { useAppDispatch, useAppSelector } from "../../store/store"
+import { statusFetch } from "../../store/status"
+import { typeFetch } from "../../store/type"
 import { Input } from "../../shared/Input/Input"
 import { Layout } from "../../shared/Layout/Layout"
 import { Select } from "../../shared/Select/Select"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import claimStyle from "./Сlaim.module.sass"
 import createStyle from "../CreatePage/Сreate.module.sass"
-import { claimsFetch } from "../../app/claims"
+import { claimsFetch } from "../../store/claims"
 
 export const ClaimPage: FC = () => {
     const [title, setTitle] = useState("")

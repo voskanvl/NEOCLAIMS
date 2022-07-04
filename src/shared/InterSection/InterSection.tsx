@@ -1,7 +1,7 @@
 import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { claimsFetch, page } from "../../app/claims"
-import { useAppDispatch, useAppSelector } from "../../app/store"
+import { claimsFetch, page } from "../../store/claims"
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import { useIntersection } from "../../hooks/useIntersection"
 import style from "./Intersection.module.sass"
 

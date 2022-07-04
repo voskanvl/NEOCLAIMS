@@ -1,12 +1,12 @@
 import { FC, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../../app/store"
-import { currentUser } from "../../app/loginThunks/currentUser"
-import { toggle } from "../../app/showAside"
+import { useAppDispatch, useAppSelector } from "../../store/store"
+import { currentUser } from "../../store/loginThunks/currentUser"
+import { toggle } from "../../store/showAside"
 import { svg } from "../svg/svg"
 import style from "./Header.module.sass"
-import { reset as resetLogin } from "../../app/login"
-import { reset as resetClaims } from "../../app/claims"
+import { reset as resetLogin } from "../../store/login"
+import { reset as resetClaims } from "../../store/claims"
 
 export const Header: FC<{ children?: ReactNode | ReactNode[] }> = ({ children }) => {
     const userName = useAppSelector(state => state.login.user.fullName)

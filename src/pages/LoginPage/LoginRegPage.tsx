@@ -5,12 +5,12 @@ import { Input } from "../../shared/Input/Input"
 import style from "./Login.module.sass"
 import footer from "./Footer.module.sass"
 import checkbox from "./Сheckbox.module.sass"
-import { loginFetch } from "../../app/loginThunks/loginFetch"
-import { useAppDispatch, useAppSelector } from "../../app/store"
+import { loginFetch } from "../../store/loginThunks/loginFetch"
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import { svg } from "../../shared/svg/svg"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import { useValidate, Valid } from "../../hooks/useValidate"
-import { regFetch } from "../../app/loginThunks/regFetch"
+import { regFetch } from "../../store/loginThunks/regFetch"
 
 type TLoginReg = {
     fullNameInput?: boolean,

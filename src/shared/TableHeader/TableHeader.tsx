@@ -1,6 +1,6 @@
 import { useState, memo } from "react"
-import { claimsFetch, column, sort } from "../../app/claims"
-import { useAppDispatch, useAppSelector } from "../../app/store"
+import { claimsFetch, column, sort } from "../../store/claims"
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import { SortControl } from "../SortControl/SortControl"
 import { Claim } from "../../types/types"
 import style from "./Table.module.sass"

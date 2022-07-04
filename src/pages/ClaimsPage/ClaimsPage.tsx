@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { claimsFetch, page, search } from "../../app/claims"
-import { useAppDispatch, useAppSelector } from "../../app/store"
+import { claimsFetch, page, search } from "../../store/claims"
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./Claims.module.sass"
 import ColorMap from "../../helpers/colorMap"
@@ -16,7 +16,7 @@ import { CreateButton } from "../../shared/CreateButton/CreateButton"
 import { InterSection } from "../../shared/InterSection/InterSection"
 import { TableHeader } from "../../shared/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
-import { clear } from "../../app/create"
+import { clear } from "../../store/create"
 
 export const ClaimsPage: FC = () => {
 

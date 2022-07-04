@@ -1,7 +1,7 @@
 import { memo } from "react"
 import style from "./Aside.module.sass"
 import { svg, TSvg } from "../svg/svg"
-import { useAppSelector } from "../../app/store"
+import { useAppSelector } from "../../store/store"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 
 export const Aside = memo(function Aside() {
