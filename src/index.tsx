@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import { store } from "./store/store"
@@ -6,17 +6,18 @@ import reportWebVitals from "./reportWebVitals"
 import "./index.module.sass"
 import { RoutesApp } from "./RoutesApp"
 
+
 const container = document.getElementById("root")!
 const root = createRoot(container)
 
 
 
 root.render(
-    <React.StrictMode>
+    <StrictMode>
         <Provider store={store}>
             <RoutesApp />
         </Provider>
-    </React.StrictMode>
+    </StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function
