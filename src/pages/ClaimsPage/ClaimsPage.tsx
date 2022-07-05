@@ -1,22 +1,23 @@
 import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { claimsFetch, page, search } from "../../store/claims"
 import { useAppDispatch, useAppSelector } from "../../store/store"
 import { isTokenCorrect } from "../../helpers/isTokenCorrect"
 import style from "./Claims.module.sass"
-import ColorMap from "../../helpers/colorMap"
 import { ClaimCard } from "../../shared/ClaimCard/ClaimCard"
 import { Input } from "../../shared/Input/Input"
 import { Svg } from "../../shared/Svg/Svg"
-import ReactPaginate from "react-paginate"
+
 import { Error500 } from "../../shared/Error/Error500"
 import { Layout } from "../../shared/Layout/Layout"
-import paginationStyle from "./Pagination.module.sass"
+
 import { CreateButton } from "../../shared/CreateButton/CreateButton"
 import { InterSection } from "../../shared/InterSection/InterSection"
-import { TableHeader } from "../../shared/TableHeader/TableHeader"
 import { useMediaMatch } from "../../hooks/useMediaMatch"
 import { clear } from "../../store/create"
+import { TableClaims } from "../../shared/TableClaims/TableClaims"
+import ReactPaginate from "react-paginate"
+import paginationStyle from "./Pagination.module.sass"
 
 export const ClaimsPage: FC = () => {
 
@@ -93,40 +94,7 @@ export const ClaimsPage: FC = () => {
                                         : null}
                                 />)}
                             </InterSection>
-                            : <>
-                                <TableHeader />
-                                {claimsFromServer?.map((el) =>
-                                    <div key={el._id} className={style.claims__row}>
-                                        <div>{el.title}</div>
-                                        <div>
-                                            {new Date(el.createdAt)
-                                                .toLocaleDateString("ru")
-                                                .replaceAll(".", "/")}
-                                        </div>
-                                        <div className={style.claims__type}>
-                                            <span
-                                                className={style.claims__mark}
-                                                style={{
-                                                    background: el.type?.name
-                                                        ? ColorMap.Type.byName[el.type?.name]
-                                                        : ""
-                                                }}></span>
-                                            <span>{el.type?.name || ""}</span>
-                                        </div>
-                                        <div
-                                            className={style.claims__status}
-                                            style={{
-                                                background: el.status?.name
-                                                    ? ColorMap.Status.byName[el.status.name]
-                                                    : ""
-                                            }}>
-                                            {el.status?.name || ""}
-                                        </div>
-                                        <div
-                                            className={style.claims__link}>
-                                            <Link to={`/claim/${el._id}`}>Browse</Link>
-                                        </div>
-                                    </div>)}
+                            : <><TableClaims claims={claimsFromServer} />
                                 <div className={paginationStyle.pagination}>{
                                     forcePage < totalItems / claimsPerPage &&
                                     <ReactPaginate
@@ -138,8 +106,7 @@ export const ClaimsPage: FC = () => {
                                         pageCount={Math.ceil(totalItems / claimsPerPage)}
                                         previousLabel="<"
                                     />}
-                                </div>
-                            </>
+                                </div></>
                     }
                 </div>
             </section>}

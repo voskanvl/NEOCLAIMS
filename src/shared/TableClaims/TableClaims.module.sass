@@ -1,0 +1,48 @@
+.claims
+   
+
+    &__rowTitle
+        width: 100%
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+    &__row
+        display: grid
+        grid-template-columns: repeat(5,1fr)
+        place-items: center start
+        height: 48px
+        border-bottom: 1px solid #C2C2C2
+        padding: 0 24px
+        &:not(.head):hover
+            background: #E1F3EA
+        &.head
+            background: #F1F1F1
+            @media screen and ( max-width: 1024px )
+                display: none
+
+    &__status
+        color: #fff
+        text-align: center
+        border-radius: 16px
+        width: 124px
+        padding: 9px 0
+        font-size: 12px
+        font-weight: 900
+
+    &__type
+        display: flex
+        align-items: center
+
+    &__mark
+        display: inline-block
+        width: 1em
+        height: 1em
+        border-radius: 50%
+        margin-right: 1em
+
+    &__link
+        & > a
+            color: #148BFF
+
+  
