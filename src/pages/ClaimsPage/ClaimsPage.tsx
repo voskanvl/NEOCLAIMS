@@ -42,7 +42,7 @@ export const ClaimsPage: FC = () => {
     const createdElement = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        if (!created || role.slug === 'admin') return
+        if (!created || role.slug === "admin") return
         const lastPage = ((totalItems / claimsPerPage) | 0)
         dispatch(page(lastPage))
         setTimeout(() => {
@@ -73,8 +73,27 @@ export const ClaimsPage: FC = () => {
         useCallback(({ selected }: { selected: number }) =>
             navigate("/claims/" + selected), [navigate])
 
-    return <Layout headerChildren={<Input label="" svg={<Svg.Search />} onChange={handleSearchInput} />
-    }>
+    const Pagination = () =>
+        <div className={paginationStyle.pagination}>{
+            forcePage < totalItems / claimsPerPage &&
+            <ReactPaginate
+                forcePage={forcePage}
+                breakLabel="..."
+                nextLabel=">"
+                onPageChange={handlePageChange}
+                pageRangeDisplayed={5}
+                pageCount={Math.ceil(totalItems / claimsPerPage)}
+                previousLabel="<"
+            />}
+        </div>
+
+
+    return <Layout
+        headerChildren={<Input label=""
+            svg={<Svg.Search />}
+            onChange={handleSearchInput} />
+        }
+        footer={<Pagination />}>
         {errorLogin || errorClaims
             ? <Error500 error={errorLogin || errorClaims} />
             : <section className={style.claims__claims}>
@@ -95,19 +114,7 @@ export const ClaimsPage: FC = () => {
                                         : null}
                                 />)}
                             </InterSection>
-                            : <><TableClaims claims={claimsFromServer} />
-                                <div className={paginationStyle.pagination}>{
-                                    forcePage < totalItems / claimsPerPage &&
-                                    <ReactPaginate
-                                        forcePage={forcePage}
-                                        breakLabel="..."
-                                        nextLabel=">"
-                                        onPageChange={handlePageChange}
-                                        pageRangeDisplayed={5}
-                                        pageCount={Math.ceil(totalItems / claimsPerPage)}
-                                        previousLabel="<"
-                                    />}
-                                </div></>
+                            : <TableClaims claims={claimsFromServer} />
                     }
                 </div>
             </section>}
