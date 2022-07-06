@@ -29,6 +29,7 @@ export const ClaimsPage: FC = () => {
     const { claimsPerPage, totalItems, claims: claimsFromServer } =
         useAppSelector(state => state.claims)
     const { created } = useAppSelector(state => state.create)
+    const { role } = useAppSelector(state => state.login.user)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -41,7 +42,7 @@ export const ClaimsPage: FC = () => {
     const createdElement = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        if (!created) return
+        if (!created || role.slug === 'admin') return
         const lastPage = ((totalItems / claimsPerPage) | 0)
         dispatch(page(lastPage))
         setTimeout(() => {
@@ -57,7 +58,7 @@ export const ClaimsPage: FC = () => {
         setForcePage(Number(pageLocation || 0))
     }, [pageLocation, dispatch, navigate])
 
-    const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
+    const handleSearchInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
         dispatch(search(ev.target.value))
         dispatch(page(0))
         setForcePage(1)
@@ -72,7 +73,7 @@ export const ClaimsPage: FC = () => {
         useCallback(({ selected }: { selected: number }) =>
             navigate("/claims/" + selected), [navigate])
 
-    return <Layout headerChildren={<Input label="" svg={<Svg.Search />} onChange={handleInput} />
+    return <Layout headerChildren={<Input label="" svg={<Svg.Search />} onChange={handleSearchInput} />
     }>
         {errorLogin || errorClaims
             ? <Error500 error={errorLogin || errorClaims} />
