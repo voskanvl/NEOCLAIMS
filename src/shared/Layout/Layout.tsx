@@ -27,11 +27,11 @@ export const Layout: FC<TLayout> = ({ headerChildren, children, footer }) => {
                     className={`${style.layout} ${show ? style.layout__show : ""}`}></div>
                 {children}
             </div>
+            {!match &&
+                <footer className={style.layout__footer}>
+                    {footer}
+                </footer>}
         </main>
-        {!match &&
-            <footer>
-                {footer}
-            </footer>}
     </div>
 }
 
